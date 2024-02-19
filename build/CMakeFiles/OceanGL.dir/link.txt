@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/OceanGL.dir/src/OceanGL.cpp.o -o OceanGL  external/glfw-3.3.9/src/libglfw3.a libglad.a /usr/lib/x86_64-linux-gnu/librt.a -lm -ldl /usr/lib/x86_64-linux-gnu/libX11.so 
