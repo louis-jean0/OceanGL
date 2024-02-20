@@ -37,6 +37,7 @@ void Window::setup_GLFW() {
     }
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cout << "Failed to initialize GLAD" << std::endl;
         exit(2);
     }
 

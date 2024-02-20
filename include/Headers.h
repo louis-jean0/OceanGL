@@ -17,3 +17,6 @@
 #include <sstream>
 #include <cmath>
 #include <stdbool.h>
+#include <unistd.h>
+#include <sys/sysinfo.h>
+#include <thread>
