@@ -1,61 +1,26 @@
-#include <Imgui/imgui.h>
-#include <Imgui/imgui_impl_glfw.h>
-#include <Imgui/imgui_impl_opengl3.h>
+// En-têtes de base
+#include <Headers.h>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
+// En-têtes de l'application
+#include <Window.h>
 
-
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-        glViewport(0, 0, width, height);
-}
-
-void processInput(GLFWwindow *window)
-{
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
 
 int main() {
-
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "TER - OceanGL", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout<<"Failed to create GLFW window"<<std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
-
-    glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    Window window(4, 6, 1280, 720, "TER - OceanGL", true);
+    window.setup_GLFW();
 
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplGlfw_InitForOpenGL(window.get_window(), true);
     ImGui_ImplOpenGL3_Init("#version 460");
 
 
-    while(!glfwWindowShouldClose(window))
+    while(!glfwWindowShouldClose(window.get_window()))
     {
-        processInput(window);
-        glfwSwapBuffers(window);
+        glfwPollEvents();   
 
         // Début du rendu ImGui
         ImGui_ImplOpenGL3_NewFrame();
@@ -69,22 +34,22 @@ int main() {
 
         // Fin du rendu ImGui
         ImGui::Render();
+
         int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glfwGetFramebufferSize(window.get_window(), &display_w, &display_h);
+        glViewport(0, 0, 1280, 720);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        glfwPollEvents();    
+        glfwSwapBuffers(window.get_window()); 
     }
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
-    glfwDestroyWindow(window);
-    glfwTerminate();
+    window.~Window();
     
     return 0;
 }

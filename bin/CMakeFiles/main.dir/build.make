@@ -153,10 +153,24 @@ CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_wid
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp -o CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s
 
+CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o: /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp
+CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o -MF CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o.d -o CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o -c /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp
+
+CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp > CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.i
+
+CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp -o CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.s
+
 CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o: /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c
 CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o -MF CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o.d -o CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o -c /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c
 
 CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.s: cmake
 CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o: /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp
 CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o -MF CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o.d -o CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o -c /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp
 
 CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.i: cmake_force
@@ -189,6 +203,7 @@ main_OBJECTS = \
 "CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.o" \
 "CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.o" \
 "CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.o" \
+"CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o" \
 "CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o" \
 "CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o"
 
@@ -201,12 +216,13 @@ main: CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/img
 main: CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.o
 main: CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.o
 main: CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.o
+main: CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o
 main: CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o
 main: CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o
 main: CMakeFiles/main.dir/build.make
 main: /usr/lib/x86_64-linux-gnu/libglfw.so.3.3
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

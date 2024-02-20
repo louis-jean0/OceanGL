@@ -273,6 +273,30 @@ home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s
 .PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s
 
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.o
+
+# target to build an object file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.o
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.i
+
+# target to preprocess a source file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.i
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.s
+
+# target to generate assembly for a file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.cpp.s
+
 home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o
 .PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.o
 
@@ -348,6 +372,9 @@ help:
 	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.o"
 	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.i"
 	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Window.s"
 	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.o"
 	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.i"
 	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.s"
