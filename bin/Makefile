@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/evan/Bureau/M1/Sem2/TER/Test_Window/bin
+CMAKE_SOURCE_DIR = /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/evan/Bureau/M1/Sem2/TER/Test_Window/bin
+CMAKE_BINARY_DIR = /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/evan/Bureau/M1/Sem2/TER/Test_Window/bin/CMakeFiles /home/evan/Bureau/M1/Sem2/TER/Test_Window/bin//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/evan/Bureau/M1/Sem2/TER/Test_Window/bin/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,53 +129,197 @@ main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.o: home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.o
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.o
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.o
 
 # target to build an object file
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.o
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.o
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.o
 
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.i: home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.i
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.i
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.i
 
 # target to preprocess a source file
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.i
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.i
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.i
 
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.s: home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.s
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.s
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.s
 
 # target to generate assembly for a file
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.s
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.s
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.cpp.s
 
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.o: home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.o
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.o
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.o
 
 # target to build an object file
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.o
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.o
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.o
 
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.i: home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.i
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.i
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.i
 
 # target to preprocess a source file
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.i
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.i
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.i
 
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.s: home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.s
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.s
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.s
 
 # target to generate assembly for a file
-home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.s
-.PHONY : home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.cpp.s
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.cpp.s
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.o
+
+# target to build an object file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.o
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.i
+
+# target to preprocess a source file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.i
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.s
+
+# target to generate assembly for a file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.cpp.s
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.o
+
+# target to build an object file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.o
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.i
+
+# target to preprocess a source file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.i
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.s
+
+# target to generate assembly for a file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.cpp.s
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.o
+
+# target to build an object file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.o
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.i
+
+# target to preprocess a source file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.i
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.s
+
+# target to generate assembly for a file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.cpp.s
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.o
+
+# target to build an object file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.o
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.i
+
+# target to preprocess a source file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.i
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.s
+
+# target to generate assembly for a file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.cpp.s
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.o
+
+# target to build an object file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.i
+
+# target to preprocess a source file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.i
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.s
+
+# target to generate assembly for a file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.s
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.o: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.o
+
+# target to build an object file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.o
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.i: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.i
+
+# target to preprocess a source file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.i
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.i
+
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.s: home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.s
+
+# target to generate assembly for a file
+home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.s
+.PHONY : home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.cpp.s
 
 # Help Target
 help:
@@ -186,12 +330,30 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main"
-	@echo "... home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.o"
-	@echo "... home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.i"
-	@echo "... home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.s"
-	@echo "... home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.o"
-	@echo "... home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.i"
-	@echo "... home/evan/Bureau/M1/Sem2/TER/Test_Window/src/main.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_draw.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_glfw.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_impl_opengl3.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_tables.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Imgui/imgui_widgets.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.s"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.o"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.i"
+	@echo "... home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/main.s"
 .PHONY : help
 
 

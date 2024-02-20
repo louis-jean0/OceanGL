@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/c++
 C_DEFINES = 
 
-C_INCLUDES = -I/home/evan/Bureau/M1/Sem2/TER/Test_Window/bin/../include
+C_INCLUDES = -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/../include
 
 C_FLAGS = 
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/evan/Bureau/M1/Sem2/TER/Test_Window/bin/../include
+CXX_INCLUDES = -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/../include
 
 CXX_FLAGS = -std=c++17
 

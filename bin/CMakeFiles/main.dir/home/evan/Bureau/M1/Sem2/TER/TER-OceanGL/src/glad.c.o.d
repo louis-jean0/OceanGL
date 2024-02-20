@@ -1,5 +1,5 @@
-CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.o: \
- /home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c \
+CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c.o: \
+ /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/glad.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -51,8 +51,8 @@ CMakeFiles/main.dir/home/evan/Bureau/M1/Sem2/TER/Test_Window/src/glad.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
- /home/evan/Bureau/M1/Sem2/TER/Test_Window/bin/../include/glad/glad.h \
- /home/evan/Bureau/M1/Sem2/TER/Test_Window/bin/../include/KHR/khrplatform.h \
+ /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/../include/glad/glad.h \
+ /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/bin/../include/KHR/khrplatform.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h /usr/include/dlfcn.h \
