@@ -17,4 +17,6 @@ class Camera {
         glm::vec3 getPosition();
         glm::vec3 getTarget();
         glm::vec3 getUp();
+        
+        void setTarget(glm::vec3 camera_target);
 };

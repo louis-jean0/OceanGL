@@ -5,6 +5,9 @@ int idxForSquare(int i,int j, int nX, int nY){
 }
 
 Plane::Plane(double width, double height, glm::vec3 leftCornerPlane){
+    this->width = width;
+    this->height = height;
+    this->leftCornerPlane = leftCornerPlane;
     buildPlane(width, height, leftCornerPlane);
 }
 
@@ -22,16 +25,9 @@ void Plane::buildPlane(double width, double height, glm::vec3 leftCornerPlane){
 
     for (int i = 0 ; i < 16 ; i++){
         for (int j = 0 ; j < 16 ; j++ ){
-            /*
-            float x = i*widthBetweenVertex + leftCornerPlane[0];
-            float y = 0.0 + leftCornerPlane[1];
-            // float y = (rand() % 100) / 500. + leftCornerPlane[1]; // Random y
-            float z = j*heightBetweenVertex + leftCornerPlane[2];
-            this->indexed_vertices.push_back(glm::vec3(x,y,z));
-            */
-            float x = i*widthBetweenVertex + leftCornerPlane[0];
-            float y = j*heightBetweenVertex + leftCornerPlane[1];
-            float z = 0.0 + leftCornerPlane[2];
+            float x = leftCornerPlane[0] + i*widthBetweenVertex;
+            float y = leftCornerPlane[1] + 0.0;
+            float z = leftCornerPlane[2] + j*heightBetweenVertex;
             this->indexed_vertices.push_back(glm::vec3(x,y,z));
         }
     }
@@ -59,4 +55,8 @@ std::vector<unsigned short> Plane::getIndices(){
 
 std::vector<glm::vec3> Plane::getIndexedVertices(){
     return this->indexed_vertices;
+}
+
+glm::vec3 Plane::getCenter(){
+    return glm::vec3(this->leftCornerPlane[0] + this->width/2, this->leftCornerPlane[1], this->leftCornerPlane[2] + this->height/2);
 }

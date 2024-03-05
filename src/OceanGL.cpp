@@ -51,12 +51,12 @@ void processInput(GLFWwindow *window, Camera camera)
 
 int main() {
 
-    Plane plane = Plane(1.5, 1.5, glm::vec3(-0.8,0.0,-0.8));
+    Plane plane = Plane(1.5, 1.5, glm::vec3(-1.0,-1.0,0.0));
 
     Window window(4, 6, 1280, 720, "TER - OceanGL", true);
     window.setup_GLFW();
 
-    Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f,  0.0f));
+    Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f,  0.0f));
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -67,10 +67,18 @@ int main() {
 
     glClearColor(225.0f, 235.0f, 228.0f, 1.0f);
 
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_TRIANGLES);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINES);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     GLuint programID = LoadShaders( "../shaders/vertex_shader.glsl", "../shaders/fragment_shader.glsl" );
+
+     // Enable depth test
+    glEnable(GL_DEPTH_TEST);
+    // Accept fragment if it closer to the camera than the former one
+    glDepthFunc(GL_LESS);
+
+    GLuint VertexArrayID;
+    glGenVertexArrays(1, &VertexArrayID);
+    glBindVertexArray(VertexArrayID);
 
     // Generate buffers
     GLuint vertexbuffer;
@@ -87,11 +95,15 @@ int main() {
     GLuint ViewMatrix = glGetUniformLocation(programID,"View");
     GLuint ProjectionMatrix = glGetUniformLocation(programID,"Projection");
 
+    float actualRotation = 0.0f;
+
     while (!glfwWindowShouldClose(window.get_window())) {
 
-        glUseProgram(programID);
-
         processInput(window.get_window(), camera);
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        glUseProgram(programID);
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -139,18 +151,27 @@ int main() {
 
         ImGui::End();
 
-
+        /*
         int display_w, display_h;
         glfwGetFramebufferSize(window.get_window(), &display_w, &display_h);
         glViewport(0, 0, 1280, 720);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+        */
+        
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); 
 
         // MVP matrix
         glm::mat4 Model = glm::mat4(1.f);
+
+        camera.setTarget(glm::normalize(plane.getCenter() - camera.getPosition()));
         glm::mat4 View = glm::lookAt(camera.getPosition(), camera.getPosition() + camera.getTarget(), camera.getUp());
+
+        View = glm::rotate(View, glm::radians(actualRotation),glm::vec3(0.0f,1.0f,0.0f)); // Pour faire une rotation constante
+        if (actualRotation > 360){
+            actualRotation = 0.0;
+        }
+        actualRotation += 1.0;
+
         glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)1280/(float)720,0.1f,100.0f);
 
 
@@ -184,18 +205,21 @@ int main() {
                     (void*)0           // element array buffer offset
                     );
 
-        //glDisableVertexAttribArray(0);
-
-
-
+        glDisableVertexAttribArray(0);
 
         glfwSwapBuffers(window.get_window()); 
         glfwPollEvents();   
     }
 
+    glDeleteBuffers(1, &vertexbuffer);
+    glDeleteBuffers(1, &elementbuffer);
+    glDeleteProgram(programID);
+    glDeleteVertexArrays(1, &VertexArrayID);
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
+
 
     window.~Window();
     

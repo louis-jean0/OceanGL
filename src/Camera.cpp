@@ -15,3 +15,7 @@ glm::vec3 Camera::getTarget(){
 glm::vec3 Camera::getUp(){
     return this->camera_up;
 }
+
+void Camera::setTarget(glm::vec3 camera_target){
+    this->camera_target = camera_target;
+}
