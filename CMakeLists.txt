@@ -19,11 +19,12 @@ add_library(glad STATIC external/glad/src/glad.c)
 target_include_directories(glad PRIVATE external/glad/include)
 
 # Add the executable
-add_executable(OceanGL src/OceanGL.cpp src/Window.cpp)
+add_executable(OceanGL src/OceanGL.cpp src/Window.cpp src/Plane.cpp src/Camera.cpp src/shader.cpp)
 
 # Specify the directories where to find the header files
 include_directories(external/glfw-3.3.9/include)
 include_directories(external/glad/include)
+include_directories(external/glm-1.0.1/include)
 
 # Link the libraries to the executable
 target_link_libraries(OceanGL glfw glad)

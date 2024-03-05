@@ -1,9 +1,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include "Window.h"
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -14,6 +16,11 @@
 #include <unistd.h>
 #include <sys/sysinfo.h>
 #include <thread>
+
+#include "Window.h"
+#include "Plane.h"
+#include "Camera.h"
+#include "shader.hpp"
 
 long long GetMemoryUsage() {
     long long memory_usage = 0;
@@ -35,11 +42,21 @@ long long GetMemoryUsage() {
     return memory_usage;
 }
 
+void processInput(GLFWwindow *window, Camera camera)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
+        glfwSetWindowShouldClose(window, true);
+    }
+}
+
 int main() {
+
+    Plane plane = Plane(1.5, 1.5, glm::vec3(-0.8,0.0,-0.8));
 
     Window window(4, 6, 1280, 720, "TER - OceanGL", true);
     window.setup_GLFW();
 
+    Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f,  0.0f));
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -48,9 +65,33 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window.get_window(), true);
     ImGui_ImplOpenGL3_Init("#version 460");
 
+    glClearColor(225.0f, 235.0f, 228.0f, 1.0f);
+
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_TRIANGLES);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINES);
+
+    GLuint programID = LoadShaders( "../shaders/vertex_shader.glsl", "../shaders/fragment_shader.glsl" );
+
+    // Generate buffers
+    GLuint vertexbuffer;
+    glGenBuffers(1, &vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glBufferData(GL_ARRAY_BUFFER, plane.getIndexedVertices().size() * sizeof(glm::vec3), &(plane.getIndexedVertices()[0]), GL_STATIC_DRAW);
+
+    GLuint elementbuffer;
+    glGenBuffers(1, &elementbuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, plane.getIndices().size() * sizeof(unsigned short), &(plane.getIndices()[0]) , GL_STATIC_DRAW);
+
+    GLuint ModelMatrix = glGetUniformLocation(programID,"Model");
+    GLuint ViewMatrix = glGetUniformLocation(programID,"View");
+    GLuint ProjectionMatrix = glGetUniformLocation(programID,"Projection");
 
     while (!glfwWindowShouldClose(window.get_window())) {
-        glfwPollEvents();   
+
+        glUseProgram(programID);
+
+        processInput(window.get_window(), camera);
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -102,13 +143,54 @@ int main() {
         int display_w, display_h;
         glfwGetFramebufferSize(window.get_window(), &display_w, &display_h);
         glViewport(0, 0, 1280, 720);
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); 
 
+        // MVP matrix
+        glm::mat4 Model = glm::mat4(1.f);
+        glm::mat4 View = glm::lookAt(camera.getPosition(), camera.getPosition() + camera.getTarget(), camera.getUp());
+        glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)1280/(float)720,0.1f,100.0f);
+
+
+        // Send our transformation to the currently bound shader,
+        // in the "Model View Projection" to the shader uniforms
+        glUniformMatrix4fv(ModelMatrix,1,GL_FALSE,&Model[0][0]);
+        glUniformMatrix4fv(ViewMatrix,1,GL_FALSE,&View[0][0]);
+        glUniformMatrix4fv(ProjectionMatrix,1,GL_FALSE,&Projection[0][0]);
+
+
+        // Draw the plane
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+        glVertexAttribPointer(
+                    0,                  // attribute
+                    3,                  // size
+                    GL_FLOAT,           // type
+                    GL_FALSE,           // normalized?
+                    0,                  // stride
+                    (void*)0            // array buffer offset
+                    );
+
+        // Index buffer
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+
+        // Draw the triangles !
+        glDrawElements(
+                    GL_TRIANGLES,      // mode
+                    plane.getIndices().size(),    // count
+                    GL_UNSIGNED_SHORT,   // type
+                    (void*)0           // element array buffer offset
+                    );
+
+        //glDisableVertexAttribArray(0);
+
+
+
+
         glfwSwapBuffers(window.get_window()); 
+        glfwPollEvents();   
     }
 
     ImGui_ImplOpenGL3_Shutdown();
