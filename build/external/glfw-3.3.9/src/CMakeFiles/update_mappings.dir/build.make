@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/evan/Bureau/M1/Sem2/TER
+CMAKE_SOURCE_DIR = /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/evan/Bureau/M1/Sem2/TER/build
+CMAKE_BINARY_DIR = /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build
 
 # Utility rule file for update_mappings.
 
@@ -67,8 +67,8 @@ include external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/compiler_depend.m
 include external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/progress.make
 
 external/glfw-3.3.9/src/CMakeFiles/update_mappings:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evan/Bureau/M1/Sem2/TER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Updating gamepad mappings from upstream repository"
-	cd /home/evan/Bureau/M1/Sem2/TER/external/glfw-3.3.9/src && /usr/bin/cmake -P /home/evan/Bureau/M1/Sem2/TER/external/glfw-3.3.9/CMake/GenerateMappings.cmake mappings.h.in mappings.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Updating gamepad mappings from upstream repository"
+	cd /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glfw-3.3.9/src && /usr/bin/cmake -P /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glfw-3.3.9/CMake/GenerateMappings.cmake mappings.h.in mappings.h
 
 update_mappings: external/glfw-3.3.9/src/CMakeFiles/update_mappings
 update_mappings: external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/build.make
@@ -79,10 +79,10 @@ external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/build: update_mappings
 .PHONY : external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/build
 
 external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/clean:
-	cd /home/evan/Bureau/M1/Sem2/TER/build/external/glfw-3.3.9/src && $(CMAKE_COMMAND) -P CMakeFiles/update_mappings.dir/cmake_clean.cmake
+	cd /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glfw-3.3.9/src && $(CMAKE_COMMAND) -P CMakeFiles/update_mappings.dir/cmake_clean.cmake
 .PHONY : external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/clean
 
 external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/depend:
-	cd /home/evan/Bureau/M1/Sem2/TER/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/evan/Bureau/M1/Sem2/TER /home/evan/Bureau/M1/Sem2/TER/external/glfw-3.3.9/src /home/evan/Bureau/M1/Sem2/TER/build /home/evan/Bureau/M1/Sem2/TER/build/external/glfw-3.3.9/src /home/evan/Bureau/M1/Sem2/TER/build/external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glfw-3.3.9/src /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glfw-3.3.9/src /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : external/glfw-3.3.9/src/CMakeFiles/update_mappings.dir/depend
 

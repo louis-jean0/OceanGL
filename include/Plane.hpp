@@ -5,6 +5,8 @@
 #include <EBO.hpp>
 #include <Shader.hpp>
 
+#include <Headers.hpp>
+
 class Plane {
     private:
         float x, y, z;
@@ -14,6 +16,15 @@ class Plane {
         VBO vb;
         EBO eb;
         VAO va;
+
+        // Normales
+        VBO vb_normals;
+        EBO eb_normals;
+        VAO va_normals;
+
+        std::vector<float> verts_normals;
+        std::vector<unsigned int> indices_normals;
+
 
         float size;
         int div;

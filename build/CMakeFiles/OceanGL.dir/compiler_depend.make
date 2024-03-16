@@ -23,7 +23,7 @@ CMakeFiles/OceanGL.dir/external/imgui-1.90.4/backends/imgui_impl_glfw.cpp.o: ../
   /usr/include/strings.h \
   /usr/include/assert.h \
   ../external/imgui-1.90.4/backends/imgui_impl_glfw.h \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
+  ../include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -34,7 +34,7 @@ CMakeFiles/OceanGL.dir/external/imgui-1.90.4/backends/imgui_impl_glfw.cpp.o: ../
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/GL/gl.h \
   /usr/include/GL/glext.h \
-  ../external/glad/include/KHR/khrplatform.h
+  ../include/KHR/khrplatform.h
 
 CMakeFiles/OceanGL.dir/external/imgui-1.90.4/backends/imgui_impl_opengl3.cpp.o: ../external/imgui-1.90.4/backends/imgui_impl_opengl3.cpp \
   /usr/include/stdc-predef.h \
@@ -117,8 +117,8 @@ CMakeFiles/OceanGL.dir/external/imgui-1.90.4/backends/imgui_impl_opengl3.cpp.o: 
 
 CMakeFiles/OceanGL.dir/src/EBO.cpp.o: ../src/EBO.cpp \
   /usr/include/stdc-predef.h \
-  ../external/glad/include/glad/glad.h \
-  ../external/glad/include/KHR/khrplatform.h \
+  ../include/glad/glad.h \
+  ../include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -136,7 +136,7 @@ CMakeFiles/OceanGL.dir/src/EBO.cpp.o: ../src/EBO.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
+  ../include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../include/EBO.hpp \
   /usr/include/c++/11/iostream \
@@ -305,8 +305,8 @@ CMakeFiles/OceanGL.dir/src/EBO.cpp.o: ../src/EBO.cpp \
 CMakeFiles/OceanGL.dir/src/OceanGL.cpp.o: ../src/OceanGL.cpp \
   /usr/include/stdc-predef.h \
   ../include/Headers.hpp \
-  ../external/glad/include/glad/glad.h \
-  ../external/glad/include/KHR/khrplatform.h \
+  ../include/glad/glad.h \
+  ../include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -324,7 +324,7 @@ CMakeFiles/OceanGL.dir/src/OceanGL.cpp.o: ../src/OceanGL.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
+  ../include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../external/glm/ext/matrix_clip_space.hpp \
   ../external/glm/ext/scalar_constants.hpp \
@@ -773,8 +773,8 @@ CMakeFiles/OceanGL.dir/src/Orbital.cpp.o: ../src/Orbital.cpp \
   /usr/include/stdc-predef.h \
   ../include/Orbital.hpp \
   ../include/Headers.hpp \
-  ../external/glad/include/glad/glad.h \
-  ../external/glad/include/KHR/khrplatform.h \
+  ../include/glad/glad.h \
+  ../include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -792,7 +792,7 @@ CMakeFiles/OceanGL.dir/src/Orbital.cpp.o: ../src/Orbital.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
+  ../include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../external/glm/ext/matrix_clip_space.hpp \
   ../external/glm/ext/scalar_constants.hpp \
@@ -1238,8 +1238,8 @@ CMakeFiles/OceanGL.dir/src/Orbital.cpp.o: ../src/Orbital.cpp \
 
 CMakeFiles/OceanGL.dir/src/Plane.cpp.o: ../src/Plane.cpp \
   /usr/include/stdc-predef.h \
-  ../external/glad/include/glad/glad.h \
-  ../external/glad/include/KHR/khrplatform.h \
+  ../include/glad/glad.h \
+  ../include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1425,12 +1425,288 @@ CMakeFiles/OceanGL.dir/src/Plane.cpp.o: ../src/Plane.cpp \
   ../include/VAO.hpp \
   ../include/EBO.hpp \
   ../include/Shader.hpp \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h
+  ../include/GLFW/glfw3.h \
+  ../include/Headers.hpp \
+  ../external/glm/ext/matrix_clip_space.hpp \
+  ../external/glm/ext/scalar_constants.hpp \
+  ../external/glm/detail/setup.hpp \
+  /usr/include/c++/11/cassert \
+  /usr/include/assert.h \
+  /usr/include/c++/11/cstddef \
+  ../external/glm/simd/platform.h \
+  ../external/glm/ext/scalar_constants.inl \
+  /usr/include/c++/11/limits \
+  ../external/glm/geometric.hpp \
+  ../external/glm/detail/type_vec3.hpp \
+  ../external/glm/detail/qualifier.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/detail/type_vec3.inl \
+  ../external/glm/detail/compute_vector_relational.hpp \
+  ../external/glm/detail/func_geometric.inl \
+  ../external/glm/exponential.hpp \
+  ../external/glm/detail/type_vec1.hpp \
+  ../external/glm/detail/type_vec1.inl \
+  ../external/glm/detail/type_vec2.hpp \
+  ../external/glm/detail/type_vec2.inl \
+  ../external/glm/detail/type_vec4.hpp \
+  ../external/glm/detail/type_vec4.inl \
+  /usr/include/c++/11/cmath \
+  /usr/include/math.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  ../external/glm/detail/func_exponential.inl \
+  ../external/glm/vector_relational.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/detail/func_vector_relational.inl \
+  ../external/glm/detail/_vectorize.hpp \
+  ../external/glm/common.hpp \
+  ../external/glm/detail/_fixes.hpp \
+  ../external/glm/detail/func_common.inl \
+  ../external/glm/detail/compute_common.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/trigonometric.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/detail/func_trigonometric.inl \
+  ../external/glm/ext/matrix_clip_space.inl \
+  ../external/imgui-1.90.4/include/imgui.h \
+  ../external/imgui-1.90.4/include/imconfig.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
+  ../external/imgui-1.90.4/backends/imgui_impl_glfw.h \
+  ../external/imgui-1.90.4/backends/imgui_impl_opengl3.h \
+  /usr/include/c++/11/fstream \
+  /usr/include/c++/11/bits/codecvt.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+  /usr/include/c++/11/bits/fstream.tcc \
+  /usr/include/c++/11/sstream \
+  /usr/include/c++/11/bits/sstream.tcc \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
+  /usr/include/unistd.h \
+  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+  /usr/include/x86_64-linux-gnu/bits/environments.h \
+  /usr/include/x86_64-linux-gnu/bits/confname.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
+  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
+  /usr/include/linux/close_range.h \
+  /usr/include/x86_64-linux-gnu/sys/sysinfo.h \
+  /usr/include/linux/kernel.h \
+  /usr/include/linux/sysinfo.h \
+  /usr/include/linux/types.h \
+  /usr/include/x86_64-linux-gnu/asm/types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+  /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/linux/const.h \
+  /usr/include/c++/11/thread \
+  /usr/include/c++/11/bits/std_thread.h \
+  /usr/include/c++/11/tuple \
+  /usr/include/c++/11/utility \
+  /usr/include/c++/11/bits/stl_relops.h \
+  /usr/include/c++/11/array \
+  /usr/include/c++/11/bits/uses_allocator.h \
+  /usr/include/c++/11/bits/invoke.h \
+  /usr/include/c++/11/bits/refwrap.h \
+  /usr/include/c++/11/bits/unique_ptr.h \
+  /usr/include/c++/11/bits/this_thread_sleep.h \
+  /usr/include/c++/11/chrono \
+  /usr/include/c++/11/ratio \
+  /usr/include/c++/11/ctime \
+  /usr/include/c++/11/bits/parse_numbers.h \
+  ../external/glm/glm.hpp \
+  ../external/glm/detail/_fixes.hpp \
+  ../external/glm/detail/setup.hpp \
+  /usr/include/c++/11/climits \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h \
+  /usr/include/limits.h \
+  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
+  /usr/include/linux/limits.h \
+  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
+  /usr/include/c++/11/cfloat \
+  ../external/glm/fwd.hpp \
+  ../external/glm/vec2.hpp \
+  ../external/glm/ext/vector_bool2.hpp \
+  ../external/glm/ext/vector_bool2_precision.hpp \
+  ../external/glm/ext/vector_float2.hpp \
+  ../external/glm/ext/vector_float2_precision.hpp \
+  ../external/glm/ext/vector_double2.hpp \
+  ../external/glm/ext/vector_double2_precision.hpp \
+  ../external/glm/ext/vector_int2.hpp \
+  ../external/glm/ext/vector_int2_sized.hpp \
+  ../external/glm/ext/scalar_int_sized.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/ext/vector_uint2.hpp \
+  ../external/glm/ext/vector_uint2_sized.hpp \
+  ../external/glm/ext/scalar_uint_sized.hpp \
+  ../external/glm/vec3.hpp \
+  ../external/glm/ext/vector_bool3.hpp \
+  ../external/glm/ext/vector_bool3_precision.hpp \
+  ../external/glm/ext/vector_float3.hpp \
+  ../external/glm/ext/vector_float3_precision.hpp \
+  ../external/glm/ext/vector_double3.hpp \
+  ../external/glm/ext/vector_double3_precision.hpp \
+  ../external/glm/ext/vector_int3.hpp \
+  ../external/glm/ext/vector_int3_sized.hpp \
+  ../external/glm/ext/vector_uint3.hpp \
+  ../external/glm/ext/vector_uint3_sized.hpp \
+  ../external/glm/vec4.hpp \
+  ../external/glm/ext/vector_bool4.hpp \
+  ../external/glm/ext/vector_bool4_precision.hpp \
+  ../external/glm/ext/vector_float4.hpp \
+  ../external/glm/ext/vector_float4_precision.hpp \
+  ../external/glm/ext/vector_double4.hpp \
+  ../external/glm/ext/vector_double4_precision.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/ext/vector_int4.hpp \
+  ../external/glm/ext/vector_int4_sized.hpp \
+  ../external/glm/ext/vector_uint4.hpp \
+  ../external/glm/ext/vector_uint4_sized.hpp \
+  ../external/glm/mat2x2.hpp \
+  ../external/glm/ext/matrix_double2x2.hpp \
+  ../external/glm/detail/type_mat2x2.hpp \
+  ../external/glm/detail/type_mat2x2.inl \
+  ../external/glm/matrix.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/mat2x3.hpp \
+  ../external/glm/ext/matrix_double2x3.hpp \
+  ../external/glm/detail/type_mat2x3.hpp \
+  ../external/glm/detail/type_mat2x3.inl \
+  ../external/glm/ext/matrix_double2x3_precision.hpp \
+  ../external/glm/ext/matrix_float2x3.hpp \
+  ../external/glm/ext/matrix_float2x3_precision.hpp \
+  ../external/glm/mat2x4.hpp \
+  ../external/glm/ext/matrix_double2x4.hpp \
+  ../external/glm/detail/type_mat2x4.hpp \
+  ../external/glm/detail/type_mat2x4.inl \
+  ../external/glm/ext/matrix_double2x4_precision.hpp \
+  ../external/glm/ext/matrix_float2x4.hpp \
+  ../external/glm/ext/matrix_float2x4_precision.hpp \
+  ../external/glm/mat3x2.hpp \
+  ../external/glm/ext/matrix_double3x2.hpp \
+  ../external/glm/detail/type_mat3x2.hpp \
+  ../external/glm/detail/type_mat3x2.inl \
+  ../external/glm/ext/matrix_double3x2_precision.hpp \
+  ../external/glm/ext/matrix_float3x2.hpp \
+  ../external/glm/ext/matrix_float3x2_precision.hpp \
+  ../external/glm/mat3x3.hpp \
+  ../external/glm/ext/matrix_double3x3.hpp \
+  ../external/glm/detail/type_mat3x3.hpp \
+  ../external/glm/detail/type_mat3x3.inl \
+  ../external/glm/ext/matrix_double3x3_precision.hpp \
+  ../external/glm/ext/matrix_float3x3.hpp \
+  ../external/glm/ext/matrix_float3x3_precision.hpp \
+  ../external/glm/mat3x4.hpp \
+  ../external/glm/ext/matrix_double3x4.hpp \
+  ../external/glm/detail/type_mat3x4.hpp \
+  ../external/glm/detail/type_mat3x4.inl \
+  ../external/glm/ext/matrix_double3x4_precision.hpp \
+  ../external/glm/ext/matrix_float3x4.hpp \
+  ../external/glm/ext/matrix_float3x4_precision.hpp \
+  ../external/glm/mat4x2.hpp \
+  ../external/glm/ext/matrix_double4x2.hpp \
+  ../external/glm/detail/type_mat4x2.hpp \
+  ../external/glm/detail/type_mat4x2.inl \
+  ../external/glm/ext/matrix_double4x2_precision.hpp \
+  ../external/glm/ext/matrix_float4x2.hpp \
+  ../external/glm/ext/matrix_float4x2_precision.hpp \
+  ../external/glm/mat4x3.hpp \
+  ../external/glm/ext/matrix_double4x3.hpp \
+  ../external/glm/detail/type_mat4x3.hpp \
+  ../external/glm/detail/type_mat4x3.inl \
+  ../external/glm/ext/matrix_double4x3_precision.hpp \
+  ../external/glm/ext/matrix_float4x3.hpp \
+  ../external/glm/ext/matrix_float4x3_precision.hpp \
+  ../external/glm/mat4x4.hpp \
+  ../external/glm/ext/matrix_double4x4.hpp \
+  ../external/glm/detail/type_mat4x4.hpp \
+  ../external/glm/detail/type_mat4x4.inl \
+  ../external/glm/ext/matrix_double4x4_precision.hpp \
+  ../external/glm/ext/matrix_float4x4.hpp \
+  ../external/glm/ext/matrix_float4x4_precision.hpp \
+  ../external/glm/detail/func_matrix.inl \
+  ../external/glm/ext/matrix_double2x2_precision.hpp \
+  ../external/glm/ext/matrix_float2x2.hpp \
+  ../external/glm/ext/matrix_float2x2_precision.hpp \
+  ../external/glm/packing.hpp \
+  ../external/glm/detail/func_packing.inl \
+  ../external/glm/detail/type_half.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/detail/type_half.inl \
+  ../external/glm/integer.hpp \
+  ../external/glm/detail/func_integer.inl \
+  ../external/glm/gtc/matrix_transform.hpp \
+  ../external/glm/ext/matrix_projection.hpp \
+  ../external/glm/gtc/constants.hpp \
+  ../external/glm/gtc/constants.inl \
+  ../external/glm/ext/matrix_projection.inl \
+  ../external/glm/ext/matrix_transform.hpp \
+  ../external/glm/ext/matrix_transform.inl \
+  ../external/glm/gtc/matrix_transform.inl \
+  ../external/glm/gtc/type_ptr.hpp \
+  ../external/glm/gtc/quaternion.hpp \
+  ../external/glm/ext/vector_relational.hpp \
+  ../external/glm/ext/vector_relational.inl \
+  ../external/glm/detail/type_float.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/ext/quaternion_common.hpp \
+  ../external/glm/ext/quaternion_geometric.hpp \
+  ../external/glm/ext/quaternion_geometric.inl \
+  ../external/glm/ext/quaternion_common.inl \
+  ../external/glm/ext/quaternion_float.hpp \
+  ../external/glm/detail/type_quat.hpp \
+  ../external/glm/ext/quaternion_relational.hpp \
+  ../external/glm/ext/quaternion_relational.inl \
+  ../external/glm/detail/type_quat.inl \
+  ../external/glm/ext/quaternion_float_precision.hpp \
+  ../external/glm/ext/quaternion_double.hpp \
+  ../external/glm/ext/quaternion_double_precision.hpp \
+  ../external/glm/ext/quaternion_trigonometric.hpp \
+  ../external/glm/ext/quaternion_trigonometric.inl \
+  ../external/glm/ext/quaternion_transform.hpp \
+  ../external/glm/ext/quaternion_transform.inl \
+  ../external/glm/gtc/quaternion.inl \
+  ../external/glm/gtc/epsilon.hpp \
+  ../external/glm/detail/setup.hpp \
+  ../external/glm/gtc/epsilon.inl \
+  ../external/glm/gtc/vec1.hpp \
+  ../external/glm/ext/vector_bool1.hpp \
+  ../external/glm/ext/vector_bool1_precision.hpp \
+  ../external/glm/ext/vector_float1.hpp \
+  ../external/glm/ext/vector_float1_precision.hpp \
+  ../external/glm/ext/vector_double1.hpp \
+  ../external/glm/ext/vector_double1_precision.hpp \
+  ../external/glm/ext/vector_int1.hpp \
+  ../external/glm/ext/vector_int1_sized.hpp \
+  ../external/glm/ext/vector_uint1.hpp \
+  ../external/glm/ext/vector_uint1_sized.hpp \
+  /usr/include/c++/11/cstring \
+  ../external/glm/gtc/type_ptr.inl \
+  ../include/Window.hpp \
+  ../include/Orbital.hpp
 
 CMakeFiles/OceanGL.dir/src/Shader.cpp.o: ../src/Shader.cpp \
   /usr/include/stdc-predef.h \
-  ../external/glad/include/glad/glad.h \
-  ../external/glad/include/KHR/khrplatform.h \
+  ../include/glad/glad.h \
+  ../include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1449,7 +1725,7 @@ CMakeFiles/OceanGL.dir/src/Shader.cpp.o: ../src/Shader.cpp \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   ../include/Shader.hpp \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
+  ../include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   /usr/include/c++/11/iostream \
   /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -1618,8 +1894,8 @@ CMakeFiles/OceanGL.dir/src/Shader.cpp.o: ../src/Shader.cpp \
 
 CMakeFiles/OceanGL.dir/src/VAO.cpp.o: ../src/VAO.cpp \
   /usr/include/stdc-predef.h \
-  ../external/glad/include/glad/glad.h \
-  ../external/glad/include/KHR/khrplatform.h \
+  ../include/glad/glad.h \
+  ../include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1637,14 +1913,14 @@ CMakeFiles/OceanGL.dir/src/VAO.cpp.o: ../src/VAO.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
+  ../include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../include/VAO.hpp
 
 CMakeFiles/OceanGL.dir/src/VBO.cpp.o: ../src/VBO.cpp \
   /usr/include/stdc-predef.h \
-  ../external/glad/include/glad/glad.h \
-  ../external/glad/include/KHR/khrplatform.h \
+  ../include/glad/glad.h \
+  ../include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1662,7 +1938,7 @@ CMakeFiles/OceanGL.dir/src/VBO.cpp.o: ../src/VBO.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
+  ../include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../include/VBO.hpp \
   /usr/include/c++/11/iostream \
@@ -1831,8 +2107,8 @@ CMakeFiles/OceanGL.dir/src/VBO.cpp.o: ../src/VBO.cpp \
 CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
   /usr/include/stdc-predef.h \
   ../include/Window.hpp \
-  ../external/glad/include/glad/glad.h \
-  ../external/glad/include/KHR/khrplatform.h \
+  ../include/glad/glad.h \
+  ../include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1850,7 +2126,7 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
+  ../include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   /usr/include/c++/11/iostream \
   /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -2303,6 +2579,12 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
 
+/usr/include/c++/11/bits/char_traits.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+../external/glm/detail/compute_common.hpp:
+
 ../external/glm/vec3.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
@@ -2331,15 +2613,9 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
-/usr/include/c++/11/bits/char_traits.h:
-
-/usr/include/asm-generic/errno-base.h:
-
-../external/glm/detail/compute_common.hpp:
-
-../external/glad/include/glad/glad.h:
-
 ../src/EBO.cpp:
+
+../include/glad/glad.h:
 
 /usr/include/x86_64-linux-gnu/bits/dl_find_object.h:
 
@@ -2393,11 +2669,11 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/c++/11/stdlib.h:
 
-/usr/include/c++/11/bits/functexcept.h:
+/usr/include/c++/11/cfloat:
 
-../external/glm/glm.hpp:
+/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
-/usr/include/c++/11/streambuf:
+/usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
@@ -2441,12 +2717,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/c++/11/bits/basic_string.h:
 
-/usr/include/x86_64-linux-gnu/bits/types.h:
-
-/usr/include/c++/11/cfloat:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
-
 ../external/glm/ext/vector_int1.hpp:
 
 ../external/imgui-1.90.4/backends/imgui_impl_opengl3.cpp:
@@ -2475,6 +2745,12 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 ../external/glm/detail/setup.hpp:
 
+/usr/include/c++/11/bits/functexcept.h:
+
+../external/glm/glm.hpp:
+
+/usr/include/c++/11/streambuf:
+
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
 /usr/include/x86_64-linux-gnu/bits/uio_lim.h:
@@ -2495,6 +2771,8 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 ../external/glm/ext/vector_float3.hpp:
 
+../include/GLFW/glfw3.h:
+
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
 
 /usr/include/locale.h:
@@ -2506,6 +2784,10 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 ../external/glm/detail/func_vector_relational.inl:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/c++/11/typeinfo:
+
+/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
 /usr/include/c++/11/ostream:
 
@@ -2534,6 +2816,12 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 ../external/glm/detail/type_mat4x4.hpp:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
+
+../external/glm/mat3x4.hpp:
+
+/usr/include/c++/11/bits/alloc_traits.h:
+
+/usr/include/stdc-predef.h:
 
 ../external/glm/ext/matrix_float4x4.hpp:
 
@@ -2593,19 +2881,11 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
-../external/glm/mat3x4.hpp:
+../external/glm/ext/matrix_double3x4_precision.hpp:
 
-/usr/include/c++/11/bits/alloc_traits.h:
+/usr/include/c++/11/clocale:
 
-/usr/include/stdc-predef.h:
-
-/usr/include/c++/11/typeinfo:
-
-/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
-
-../external/glad/include/KHR/khrplatform.h:
-
-/usr/include/ctype.h:
+/usr/include/c++/11/bits/ostream.tcc:
 
 /usr/include/c++/11/bits/exception_ptr.h:
 
@@ -2655,12 +2935,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
-../external/glm/ext/matrix_double3x4_precision.hpp:
-
-/usr/include/c++/11/clocale:
-
-/usr/include/c++/11/bits/ostream.tcc:
-
 /usr/include/x86_64-linux-gnu/bits/locale.h:
 
 ../external/glm/ext/quaternion_double_precision.hpp:
@@ -2672,6 +2946,8 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 ../external/glm/ext/scalar_int_sized.hpp:
 
 ../external/glm/detail/func_trigonometric.inl:
+
+/usr/include/ctype.h:
 
 ../external/glm/mat4x4.hpp:
 
@@ -2795,6 +3071,8 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/c++/11/cstddef:
 
+../include/KHR/khrplatform.h:
+
 /usr/include/c++/11/bits/stl_vector.h:
 
 /usr/include/c++/11/utility:
@@ -2864,8 +3142,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 ../external/glm/ext/scalar_constants.inl:
 
 ../src/OceanGL.cpp:
-
-../external/glfw-3.3.9/include/GLFW/glfw3.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 

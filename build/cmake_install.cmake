@@ -1,4 +1,4 @@
-# Install script for directory: /home/evan/Bureau/M1/Sem2/TER
+# Install script for directory: /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,8 +44,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/evan/Bureau/M1/Sem2/TER/build/external/glfw-3.3.9/cmake_install.cmake")
-  include("/home/evan/Bureau/M1/Sem2/TER/build/external/glm/cmake_install.cmake")
+  include("/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glfw-3.3.9/cmake_install.cmake")
+  include("/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glm/cmake_install.cmake")
 
 endif()
 
@@ -57,5 +57,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/evan/Bureau/M1/Sem2/TER/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

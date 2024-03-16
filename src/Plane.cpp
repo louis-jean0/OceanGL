@@ -9,7 +9,6 @@ Plane::Plane(float size, int div) {
 }
 
 void Plane::createPlane() {
-
     this->div = div;
     this->va.delVAO();
     this->vb.delVBO();
@@ -31,6 +30,13 @@ void Plane::createPlane() {
             
             this->verts.push_back((float)w / div);
             this->verts.push_back((float)h / div);
+
+
+            glm::vec3 normal(0., 1., 0.); 
+
+            this->verts.push_back(normal.x);
+            this->verts.push_back(normal.y);
+            this->verts.push_back(normal.z);
         }
     }
 
@@ -74,6 +80,14 @@ void Plane::subdivisediv(int div) {
             
             this->verts.push_back((float)w / div);
             this->verts.push_back((float)h / div);
+
+
+            glm::vec3 normal(0., 1., 0.); 
+
+
+            this->verts.push_back(normal.x);
+            this->verts.push_back(normal.y);
+            this->verts.push_back(normal.z);
         }
     }
 

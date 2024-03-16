@@ -1,7 +1,8 @@
 CMakeFiles/OceanGL.dir/src/Shader.cpp.o: \
- /home/evan/Bureau/M1/Sem2/TER/src/Shader.cpp /usr/include/stdc-predef.h \
- /home/evan/Bureau/M1/Sem2/TER/external/glad/include/glad/glad.h \
- /home/evan/Bureau/M1/Sem2/TER/external/glad/include/KHR/khrplatform.h \
+ /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/Shader.cpp \
+ /usr/include/stdc-predef.h \
+ /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include/glad/glad.h \
+ /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include/KHR/khrplatform.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -17,8 +18,8 @@ CMakeFiles/OceanGL.dir/src/Shader.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /home/evan/Bureau/M1/Sem2/TER/include/Shader.hpp \
- /home/evan/Bureau/M1/Sem2/TER/external/glfw-3.3.9/include/GLFW/glfw3.h \
+ /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include/Shader.hpp \
+ /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
  /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \

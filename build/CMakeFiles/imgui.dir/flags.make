@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/evan/Bureau/M1/Sem2/TER/external/imgui-1.90.4/include -I/home/evan/Bureau/M1/Sem2/TER/external/imgui-1.90.4/backends -I/home/evan/Bureau/M1/Sem2/TER/include -I/home/evan/Bureau/M1/Sem2/TER/external/glfw-3.3.9/include -I/home/evan/Bureau/M1/Sem2/TER/external/glad/include
+CXX_INCLUDES = -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/imgui-1.90.4/include -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/imgui-1.90.4/backends -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glfw-3.3.9/include -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glad/include
 
 CXX_FLAGS = -std=gnu++11
 
