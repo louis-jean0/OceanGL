@@ -1,4 +1,4 @@
-# Install script for directory: /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glfw-3.3.9/src
+# Install script for directory: /home/louis/Documents/TER-OceanGL/external/glfw-3.3.9/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,6 +43,6 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glfw-3.3.9/src/libglfw3.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/louis/Documents/TER-OceanGL/build/external/glfw-3.3.9/src/libglfw3.a")
 endif()
 

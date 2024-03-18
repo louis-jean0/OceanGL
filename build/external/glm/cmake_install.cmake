@@ -1,4 +1,4 @@
-# Install script for directory: /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glm
+# Install script for directory: /home/louis/Documents/TER-OceanGL/external/glm
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -1,8 +1,7 @@
 CMakeFiles/OceanGL.dir/src/VBO.cpp.o: \
- /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/src/VBO.cpp \
- /usr/include/stdc-predef.h \
- /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include/glad/glad.h \
- /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include/KHR/khrplatform.h \
+ /home/louis/Documents/TER-OceanGL/src/VBO.cpp /usr/include/stdc-predef.h \
+ /home/louis/Documents/TER-OceanGL/include/glad/glad.h \
+ /home/louis/Documents/TER-OceanGL/include/KHR/khrplatform.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -18,9 +17,9 @@ CMakeFiles/OceanGL.dir/src/VBO.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include/GLFW/glfw3.h \
+ /home/louis/Documents/TER-OceanGL/include/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
- /home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include/VBO.hpp \
+ /home/louis/Documents/TER-OceanGL/include/VBO.hpp \
  /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

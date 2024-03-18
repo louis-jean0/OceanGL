@@ -1,3 +1,4 @@
+#include "imgui.h"
 #include <Headers.hpp>
 
 void processInput(GLFWwindow *window);
@@ -39,10 +40,9 @@ float vertical_angle = 0.0f;
 float radius = 20.0f;
 
 // Camera settings
-glm::vec3 cameraPos = glm::vec3(0.0f, 2.0f, -3.5f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 5.0f, -10.0f);
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f,  0.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
-
 
 // Light settings (here for ImGui)
 float ambientStrength = 0.1f;
@@ -50,7 +50,7 @@ float diffuseStrength = 1.0f;
 float specularStrength = 0.5f;
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
-//Sin 
+// Sin
 float Amplitude_Sin = 1.;   // amplitude
 float L_Sin = 1.0;  // distance pic2crête
 float S_Sin = 1.0;  // Vitesse
@@ -64,10 +64,15 @@ float Steepness_Gerstner = 1.0;
 float S_Gerstner = 1.0;
 glm::vec3 Direction_Gerstner = glm::vec3(1.0f, 0.f, 0.f);
 
+// SumSine
+float Amplitude_SumSine = 1.0;
+float Frequence_SumSine = 1.0;
+int waveCount = 8;
 
 // Booléens modèles
 bool ModeleSin = true;
 bool ModeleGerstner = false;
+bool ModeleSumSine = false;
 
 
 bool materiauSin = true;
@@ -113,7 +118,7 @@ int main() {
     std::vector<Plane> grid;
     for(int i = 0; i < gridSize; i++) {
         for(int j = 0; j < gridSize; j++) {
-            Plane plane(1, 512);
+            Plane plane(50, 512);
             plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
             plane.createPlane();
             grid.push_back(plane);
@@ -196,6 +201,7 @@ int main() {
 
         if (ImGui::Checkbox("Modèle sinusoïdal", &ModeleSin)) {
             ModeleGerstner = false;
+            ModeleSumSine = false;
 
             for(int i = 0; i < gridSize * gridSize; i++) {
                 grid[i].detachShader();
@@ -208,10 +214,24 @@ int main() {
 
         if (ImGui::Checkbox("Modèle de Gerstner", &ModeleGerstner)) {
             ModeleSin = false;
+            ModeleSumSine = false;
 
             for(int i = 0; i < gridSize * gridSize; i++) {
                 grid[i].detachShader();
                 grid[i].attachShader("../shaders/GerstnerWave.vert", "../shaders/GerstnerWave.frag");
+                grid[i].createPlane();
+            }     
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::Checkbox("Modèle avec plusieurs sinusoïdales", &ModeleSumSine)) {
+            ModeleSin = false;
+            ModeleGerstner = false;
+
+            for(int i = 0; i < gridSize * gridSize; i++) {
+                grid[i].detachShader();
+                grid[i].attachShader("../shaders/SumSine.vert", "../shaders/SumSine.frag");
                 grid[i].createPlane();
             }     
         }
@@ -470,6 +490,58 @@ int main() {
             }
 
             ImGui::Separator();
+        }
+
+        if (ModeleSumSine) {
+            for(int i = 0; i < gridSize * gridSize; i++) {
+                glm::mat4 model_with_translation = glm::translate(model, glm::vec3((i % gridSize) * 1.0f, 0.0f, (i / gridSize) * 1.0f));                                    grid[i].getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model_with_translation));
+                grid[i].getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model_with_translation));
+                grid[i].getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+                grid[i].getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+                grid[i].getShader().setBind1f("time", glfwGetTime());
+                grid[i].getShader().setBind1f("amplitude", Amplitude_SumSine);
+                grid[i].getShader().setBind1f("frequence", Frequence_SumSine);
+
+                if(materiauSin == true) {
+                    grid[i].getShader().setBind1i("Debug", 0);
+                } else if(positionSin == true) {
+                    grid[i].getShader().setBind1i("Debug", 1);
+                } else if(uvSin == true) {
+                    grid[i].getShader().setBind1i("Debug", 2);
+                } else if(normalSin == true) {
+                    grid[i].getShader().setBind1i("Debug", 3);
+                } else if(binormalSin == true) {
+                    grid[i].getShader().setBind1i("Debug", 4);
+                } else if(tangentSin == true) {
+                    grid[i].getShader().setBind1i("Debug", 5);
+                }
+                
+                grid[i].useShader();
+                grid[i].updatePlane(GL_TRIANGLES);
+
+                if (i % gridSize != gridSize - 1) { 
+                    int right_index = i + 1;
+                    glm::vec3 right_translation = glm::vec3((right_index % gridSize) * 2.0f, 0.0f, (right_index / gridSize) * 2.0f);
+                    glm::mat4 right_model_with_translation = glm::translate(model, right_translation);
+                    grid[right_index].getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(right_model_with_translation));
+                    grid[right_index].useShader();
+                    grid[right_index].updatePlane(GL_TRIANGLES);
+                }
+
+                if (i < gridSize * (gridSize - 1)) {
+                    int bottom_index = i + gridSize;
+                    glm::vec3 bottom_translation = glm::vec3((bottom_index % gridSize) * 2.0f, 0.0f, (bottom_index / gridSize) * 2.0f);
+                    glm::mat4 bottom_model_with_translation = glm::translate(model, bottom_translation);
+                    grid[bottom_index].getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(bottom_model_with_translation));
+                    grid[bottom_index].useShader();
+                    grid[bottom_index].updatePlane(GL_TRIANGLES);
+                }
+            }
+
+            ImGui::Text("Paramètres du shader SumSine :");
+            ImGui::SliderFloat("Amplitude", &Amplitude_SumSine, 0.0f, 20.0f);
+            ImGui::SliderFloat("Fréquence", &Frequence_SumSine, 0.0f, 20.0f);
+
         }
 
         ImGui::Spacing();

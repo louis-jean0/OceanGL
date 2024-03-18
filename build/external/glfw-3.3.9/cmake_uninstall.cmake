@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glfw-3.3.9/install_manifest.txt")
-  message(FATAL_ERROR "Cannot find install manifest: \"/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glfw-3.3.9/install_manifest.txt\"")
+if (NOT EXISTS "/home/louis/Documents/TER-OceanGL/build/external/glfw-3.3.9/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: \"/home/louis/Documents/TER-OceanGL/build/external/glfw-3.3.9/install_manifest.txt\"")
 endif()
 
-file(READ "/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/build/external/glfw-3.3.9/install_manifest.txt" files)
+file(READ "/home/louis/Documents/TER-OceanGL/build/external/glfw-3.3.9/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})
