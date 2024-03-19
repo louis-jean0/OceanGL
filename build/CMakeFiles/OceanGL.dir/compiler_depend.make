@@ -23,7 +23,7 @@ CMakeFiles/OceanGL.dir/external/imgui-1.90.4/backends/imgui_impl_glfw.cpp.o: ../
   /usr/include/strings.h \
   /usr/include/assert.h \
   ../external/imgui-1.90.4/backends/imgui_impl_glfw.h \
-  ../include/GLFW/glfw3.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -34,7 +34,7 @@ CMakeFiles/OceanGL.dir/external/imgui-1.90.4/backends/imgui_impl_glfw.cpp.o: ../
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/GL/gl.h \
   /usr/include/GL/glext.h \
-  ../include/KHR/khrplatform.h
+  ../external/glad/include/KHR/khrplatform.h
 
 CMakeFiles/OceanGL.dir/external/imgui-1.90.4/backends/imgui_impl_opengl3.cpp.o: ../external/imgui-1.90.4/backends/imgui_impl_opengl3.cpp \
   /usr/include/stdc-predef.h \
@@ -117,8 +117,8 @@ CMakeFiles/OceanGL.dir/external/imgui-1.90.4/backends/imgui_impl_opengl3.cpp.o: 
 
 CMakeFiles/OceanGL.dir/src/EBO.cpp.o: ../src/EBO.cpp \
   /usr/include/stdc-predef.h \
-  ../include/glad/glad.h \
-  ../include/KHR/khrplatform.h \
+  ../external/glad/include/glad/glad.h \
+  ../external/glad/include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -136,7 +136,7 @@ CMakeFiles/OceanGL.dir/src/EBO.cpp.o: ../src/EBO.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../include/GLFW/glfw3.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../include/EBO.hpp \
   /usr/include/c++/11/iostream \
@@ -304,11 +304,12 @@ CMakeFiles/OceanGL.dir/src/EBO.cpp.o: ../src/EBO.cpp \
 
 CMakeFiles/OceanGL.dir/src/OceanGL.cpp.o: ../src/OceanGL.cpp \
   /usr/include/stdc-predef.h \
-  ../include/Headers.hpp \
-  ../include/glad/glad.h \
-  ../include/KHR/khrplatform.h \
-  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
-  /usr/include/stdint.h \
+  ../external/imgui-1.90.4/include/imgui.h \
+  ../external/imgui-1.90.4/include/imconfig.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+  /usr/include/string.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h \
   /usr/include/features-time64.h \
@@ -318,14 +319,22 @@ CMakeFiles/OceanGL.dir/src/OceanGL.cpp.o: ../src/OceanGL.cpp \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/strings.h \
+  /usr/include/assert.h \
+  ../include/Headers.hpp \
+  ../external/glad/include/glad/glad.h \
+  ../external/glad/include/KHR/khrplatform.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
+  /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../include/GLFW/glfw3.h \
-  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   ../external/glm/ext/matrix_clip_space.hpp \
   ../external/glm/ext/scalar_constants.hpp \
   ../external/glm/detail/setup.hpp \
@@ -333,7 +342,6 @@ CMakeFiles/OceanGL.dir/src/OceanGL.cpp.o: ../src/OceanGL.cpp \
   /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h \
-  /usr/include/assert.h \
   /usr/include/c++/11/cstddef \
   ../external/glm/simd/platform.h \
   /usr/include/c++/11/cstdint \
@@ -373,8 +381,6 @@ CMakeFiles/OceanGL.dir/src/OceanGL.cpp.o: ../src/OceanGL.cpp \
   /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
-  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
@@ -413,12 +419,6 @@ CMakeFiles/OceanGL.dir/src/OceanGL.cpp.o: ../src/OceanGL.cpp \
   ../external/glm/detail/setup.hpp \
   ../external/glm/detail/func_trigonometric.inl \
   ../external/glm/ext/matrix_clip_space.inl \
-  ../external/imgui-1.90.4/include/imgui.h \
-  ../external/imgui-1.90.4/include/imconfig.h \
-  /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
-  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
-  /usr/include/string.h \
-  /usr/include/strings.h \
   ../external/imgui-1.90.4/backends/imgui_impl_glfw.h \
   ../external/imgui-1.90.4/backends/imgui_impl_opengl3.h \
   /usr/include/c++/11/iostream \
@@ -773,8 +773,8 @@ CMakeFiles/OceanGL.dir/src/Orbital.cpp.o: ../src/Orbital.cpp \
   /usr/include/stdc-predef.h \
   ../include/Orbital.hpp \
   ../include/Headers.hpp \
-  ../include/glad/glad.h \
-  ../include/KHR/khrplatform.h \
+  ../external/glad/include/glad/glad.h \
+  ../external/glad/include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -792,7 +792,7 @@ CMakeFiles/OceanGL.dir/src/Orbital.cpp.o: ../src/Orbital.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../include/GLFW/glfw3.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../external/glm/ext/matrix_clip_space.hpp \
   ../external/glm/ext/scalar_constants.hpp \
@@ -1238,8 +1238,8 @@ CMakeFiles/OceanGL.dir/src/Orbital.cpp.o: ../src/Orbital.cpp \
 
 CMakeFiles/OceanGL.dir/src/Plane.cpp.o: ../src/Plane.cpp \
   /usr/include/stdc-predef.h \
-  ../include/glad/glad.h \
-  ../include/KHR/khrplatform.h \
+  ../external/glad/include/glad/glad.h \
+  ../external/glad/include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1425,7 +1425,7 @@ CMakeFiles/OceanGL.dir/src/Plane.cpp.o: ../src/Plane.cpp \
   ../include/VAO.hpp \
   ../include/EBO.hpp \
   ../include/Shader.hpp \
-  ../include/GLFW/glfw3.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   ../include/Headers.hpp \
   ../external/glm/ext/matrix_clip_space.hpp \
   ../external/glm/ext/scalar_constants.hpp \
@@ -1705,8 +1705,8 @@ CMakeFiles/OceanGL.dir/src/Plane.cpp.o: ../src/Plane.cpp \
 
 CMakeFiles/OceanGL.dir/src/Shader.cpp.o: ../src/Shader.cpp \
   /usr/include/stdc-predef.h \
-  ../include/glad/glad.h \
-  ../include/KHR/khrplatform.h \
+  ../external/glad/include/glad/glad.h \
+  ../external/glad/include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1725,7 +1725,7 @@ CMakeFiles/OceanGL.dir/src/Shader.cpp.o: ../src/Shader.cpp \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   ../include/Shader.hpp \
-  ../include/GLFW/glfw3.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   /usr/include/c++/11/iostream \
   /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -1894,8 +1894,8 @@ CMakeFiles/OceanGL.dir/src/Shader.cpp.o: ../src/Shader.cpp \
 
 CMakeFiles/OceanGL.dir/src/VAO.cpp.o: ../src/VAO.cpp \
   /usr/include/stdc-predef.h \
-  ../include/glad/glad.h \
-  ../include/KHR/khrplatform.h \
+  ../external/glad/include/glad/glad.h \
+  ../external/glad/include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1913,14 +1913,14 @@ CMakeFiles/OceanGL.dir/src/VAO.cpp.o: ../src/VAO.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../include/GLFW/glfw3.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../include/VAO.hpp
 
 CMakeFiles/OceanGL.dir/src/VBO.cpp.o: ../src/VBO.cpp \
   /usr/include/stdc-predef.h \
-  ../include/glad/glad.h \
-  ../include/KHR/khrplatform.h \
+  ../external/glad/include/glad/glad.h \
+  ../external/glad/include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1938,7 +1938,7 @@ CMakeFiles/OceanGL.dir/src/VBO.cpp.o: ../src/VBO.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../include/GLFW/glfw3.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   ../include/VBO.hpp \
   /usr/include/c++/11/iostream \
@@ -2107,8 +2107,8 @@ CMakeFiles/OceanGL.dir/src/VBO.cpp.o: ../src/VBO.cpp \
 CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
   /usr/include/stdc-predef.h \
   ../include/Window.hpp \
-  ../include/glad/glad.h \
-  ../include/KHR/khrplatform.h \
+  ../external/glad/include/glad/glad.h \
+  ../external/glad/include/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -2126,7 +2126,7 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  ../include/GLFW/glfw3.h \
+  ../external/glfw-3.3.9/include/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   /usr/include/c++/11/iostream \
   /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -2579,12 +2579,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
 
-/usr/include/c++/11/bits/char_traits.h:
-
-/usr/include/asm-generic/errno-base.h:
-
-../external/glm/detail/compute_common.hpp:
-
 ../external/glm/vec3.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
@@ -2613,9 +2607,15 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
-../src/EBO.cpp:
+/usr/include/c++/11/bits/char_traits.h:
 
-../include/glad/glad.h:
+/usr/include/asm-generic/errno-base.h:
+
+../external/glm/detail/compute_common.hpp:
+
+../external/glad/include/glad/glad.h:
+
+../src/EBO.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/dl_find_object.h:
 
@@ -2669,11 +2669,11 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/c++/11/stdlib.h:
 
-/usr/include/c++/11/cfloat:
+/usr/include/c++/11/bits/functexcept.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
+../external/glm/glm.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types.h:
+/usr/include/c++/11/streambuf:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
@@ -2717,6 +2717,12 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/c++/11/bits/basic_string.h:
 
+/usr/include/x86_64-linux-gnu/bits/types.h:
+
+/usr/include/c++/11/cfloat:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
+
 ../external/glm/ext/vector_int1.hpp:
 
 ../external/imgui-1.90.4/backends/imgui_impl_opengl3.cpp:
@@ -2745,12 +2751,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 ../external/glm/detail/setup.hpp:
 
-/usr/include/c++/11/bits/functexcept.h:
-
-../external/glm/glm.hpp:
-
-/usr/include/c++/11/streambuf:
-
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
 /usr/include/x86_64-linux-gnu/bits/uio_lim.h:
@@ -2771,8 +2771,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 ../external/glm/ext/vector_float3.hpp:
 
-../include/GLFW/glfw3.h:
-
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
 
 /usr/include/locale.h:
@@ -2784,10 +2782,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 ../external/glm/detail/func_vector_relational.inl:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
-
-/usr/include/c++/11/typeinfo:
-
-/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
 /usr/include/c++/11/ostream:
 
@@ -2816,12 +2810,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 ../external/glm/detail/type_mat4x4.hpp:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
-
-../external/glm/mat3x4.hpp:
-
-/usr/include/c++/11/bits/alloc_traits.h:
-
-/usr/include/stdc-predef.h:
 
 ../external/glm/ext/matrix_float4x4.hpp:
 
@@ -2881,11 +2869,19 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
-../external/glm/ext/matrix_double3x4_precision.hpp:
+../external/glm/mat3x4.hpp:
 
-/usr/include/c++/11/clocale:
+/usr/include/c++/11/bits/alloc_traits.h:
 
-/usr/include/c++/11/bits/ostream.tcc:
+/usr/include/stdc-predef.h:
+
+/usr/include/c++/11/typeinfo:
+
+/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
+
+../external/glad/include/KHR/khrplatform.h:
+
+/usr/include/ctype.h:
 
 /usr/include/c++/11/bits/exception_ptr.h:
 
@@ -2935,6 +2931,12 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
+../external/glm/ext/matrix_double3x4_precision.hpp:
+
+/usr/include/c++/11/clocale:
+
+/usr/include/c++/11/bits/ostream.tcc:
+
 /usr/include/x86_64-linux-gnu/bits/locale.h:
 
 ../external/glm/ext/quaternion_double_precision.hpp:
@@ -2946,8 +2948,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 ../external/glm/ext/scalar_int_sized.hpp:
 
 ../external/glm/detail/func_trigonometric.inl:
-
-/usr/include/ctype.h:
 
 ../external/glm/mat4x4.hpp:
 
@@ -3071,8 +3071,6 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 
 /usr/include/c++/11/cstddef:
 
-../include/KHR/khrplatform.h:
-
 /usr/include/c++/11/bits/stl_vector.h:
 
 /usr/include/c++/11/utility:
@@ -3142,6 +3140,8 @@ CMakeFiles/OceanGL.dir/src/Window.cpp.o: ../src/Window.cpp \
 ../external/glm/ext/scalar_constants.inl:
 
 ../src/OceanGL.cpp:
+
+../external/glfw-3.3.9/include/GLFW/glfw3.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 

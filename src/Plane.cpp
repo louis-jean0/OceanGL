@@ -30,9 +30,9 @@ void Plane::createPlane() {
             
             this->verts.push_back((float)w / div);
             this->verts.push_back((float)h / div);
+ 
 
-
-            glm::vec3 normal(0., 1., 0.); 
+            glm::vec3 normal(0., 1., 0.);
 
             this->verts.push_back(normal.x);
             this->verts.push_back(normal.y);
@@ -107,6 +107,12 @@ void Plane::subdivisediv(int div) {
     va.genVAO();
     eb.genEBO(indices);
 }
+
+void Plane::updateSize(float nouvelleTaille) {
+    this->size = nouvelleTaille;
+    this->subdivisediv(this->div);
+}
+
 
 // Pour le moment, seul les GL_TRIANGLES sont pris en compte
 void Plane::updatePlane(GLenum mode) {

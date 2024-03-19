@@ -20,12 +20,10 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform float time;
 
-
 uniform float Amplitude;
 uniform float L;
 uniform float S;
 uniform vec3 Direction;
-
 
 // Fonction pour une vague sinusoïdale
 vec3 Add_Wave(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) {
@@ -48,19 +46,16 @@ float Add_Wave_dz(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, f
     return (Add_Wave(newPos_dz, L, S, Amplitude, Direction, time).y - Add_Wave(Pos, L, S, Amplitude, Direction, time).y) / delta;
 }
 
-
 void main()
 {   
     vec3 newWave = Add_Wave(aPos, L, S, Amplitude, Direction, time);
     gl_Position = projection * view * model * vec4(newWave, 1.0f);
-
 
     // Binormale / Tangente / Normale
     float delta = 0.0000001;
     binormale = vec3(1., Add_Wave_dx(aPos, L, S, Amplitude, Direction, delta, time), 0.0);
     tangente = vec3(0., Add_Wave_dz(aPos, L, S, Amplitude, Direction, delta, time), 1.0);
     normal = cross(tangente, binormale);
-
 
     // Matériau
     height = newWave.y;

@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glad/include -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/include -I/home/evan/Bureau/M1/Sem2/TER/TER-OceanGL/external/glfw-3.3.9/include
+C_INCLUDES = -I/home/e20230010816/Bureau/M1/Sem2/TER/TER-OceanGL/external/glad/include -I/home/e20230010816/Bureau/M1/Sem2/TER/TER-OceanGL/include -I/home/e20230010816/Bureau/M1/Sem2/TER/TER-OceanGL/external/glfw-3.3.9/include
 
 C_FLAGS = 
 

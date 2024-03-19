@@ -26,8 +26,6 @@ uniform float Steepness;
 uniform float S;
 uniform vec3 Direction;
 
-
-
 // Fonction pour une vague basée sur le modèle de Gerstner
 vec3 Add_Wave(vec3 Pos, float g, float PI, float L, float Steepness, float Amplitude, float S, vec3 Direction, float time) {
     vec3 newPos = aPos;

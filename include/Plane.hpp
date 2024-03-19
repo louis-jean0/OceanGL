@@ -38,6 +38,7 @@ class Plane {
         void createPlane();
         void createPlaneWithNoise(double bruit);
         void subdivisediv(int div);
+        void updateSize(float nouvelleTaille);
 
         void updatePlane(GLenum mode);
         void delPlane();
