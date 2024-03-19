@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/louis/Documents/TER-OceanGL/external/glad/include -I/home/louis/Documents/TER-OceanGL/include -I/home/louis/Documents/TER-OceanGL/external/glfw-3.3.9/include
+C_INCLUDES = -I/home/e20190010736/TER-OceanGL/external/glad/include -I/home/e20190010736/TER-OceanGL/include -I/home/e20190010736/TER-OceanGL/external/glfw-3.3.9/include
 
 C_FLAGS = 
 

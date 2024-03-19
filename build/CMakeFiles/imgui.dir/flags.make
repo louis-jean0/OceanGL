@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/louis/Documents/TER-OceanGL/external/imgui-1.90.4/include -I/home/louis/Documents/TER-OceanGL/external/imgui-1.90.4/backends -I/home/louis/Documents/TER-OceanGL/include -I/home/louis/Documents/TER-OceanGL/external/glfw-3.3.9/include -I/home/louis/Documents/TER-OceanGL/external/glad/include
+CXX_INCLUDES = -I/home/e20190010736/TER-OceanGL/external/imgui-1.90.4/include -I/home/e20190010736/TER-OceanGL/external/imgui-1.90.4/backends -I/home/e20190010736/TER-OceanGL/include -I/home/e20190010736/TER-OceanGL/external/glfw-3.3.9/include -I/home/e20190010736/TER-OceanGL/external/glad/include
 
 CXX_FLAGS = -std=gnu++11
 

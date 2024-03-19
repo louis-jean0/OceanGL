@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -D_GLFW_USE_CONFIG_H
 
-C_INCLUDES = -I/home/louis/Documents/TER-OceanGL/external/glfw-3.3.9/include -I/home/louis/Documents/TER-OceanGL/external/glfw-3.3.9/src -I/home/louis/Documents/TER-OceanGL/build/external/glfw-3.3.9/src
+C_INCLUDES = -I/home/e20190010736/TER-OceanGL/external/glfw-3.3.9/include -I/home/e20190010736/TER-OceanGL/external/glfw-3.3.9/src -I/home/e20190010736/TER-OceanGL/build/external/glfw-3.3.9/src
 
 C_FLAGS = -fPIC -Wall -std=gnu99
 
