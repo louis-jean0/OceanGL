@@ -22,6 +22,7 @@ class Shader
         void setBindMatrix4fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat *value);
         void setBindMatrix3fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat *value);
         void setBind1i(const GLchar* name, GLint v0);
+        void setBind1fv(const GLchar* name, GLsizei count, const GLfloat *value);
 
         // // Texture
         // void setTex(const char* texPath, std::string texName, bool texFlip);

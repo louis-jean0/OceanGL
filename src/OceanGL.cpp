@@ -51,11 +51,16 @@ float specularStrength = 0.5f;
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 // Sin
+float Amplitudes[] = {1.0f,0.25f,0.5f,0.66f,2.0f}; 
+float Lengths[] = {2.0f,5.0f,9.0f,1.0f,0.5f};
+float Speeds[] = {1.0f,0.5f,2.0f,1.0f,1.5f};
+glm::vec3 Directions[] = {glm::vec3(1.0f, 0.f, 0.f),glm::vec3(1.0f, 0.f, 1.0f),glm::vec3(1.0f, 1.0f, 0.0f),glm::vec3(1.0f, 0.f, 0.f),glm::vec3(0.0f, 1.0f, 1.0f)};
 float Amplitude_Sin = 1.;   // amplitude
 float L_Sin = 1.0;  // distance pic2crête
 float S_Sin = 1.0;  // Vitesse
 glm::vec3 Direction_Sin = glm::vec3(1.0f, 0.f, 0.f);
-int numberWaves_Sin = 1;
+int waveCount_Sin = 1;
+int maxWaveCount_Sin = 5;
 
 // Gerstner 
 float Amplitude_Gerstner = 1.0;
@@ -65,15 +70,13 @@ float S_Gerstner = 1.0;
 glm::vec3 Direction_Gerstner = glm::vec3(1.0f, 0.f, 0.f);
 
 // SumSine
-float Amplitude_SumSine = 1.0;
-float Frequence_SumSine = 1.0;
-int waveCount = 8;
+float Amplitude_SumSine = 1.0f;
+float Frequence_SumSine = 1.0f;
 
 // Booléens modèles
 bool ModeleSin = true;
 bool ModeleGerstner = false;
 bool ModeleSumSine = false;
-
 
 bool materiauSin = true;
 bool positionSin = false;
@@ -249,6 +252,20 @@ int main() {
                 grid[i].getShader().setBind1f("L", L_Sin);
                 grid[i].getShader().setBind1f("S", S_Sin);
                 grid[i].getShader().setBind3f("Direction", Direction_Sin.x, Direction_Sin.y, Direction_Sin.z);
+                grid[i].getShader().setBind1i("waveCount",waveCount_Sin);
+                grid[i].getShader().setBindMatrix3fv("lightPos",1,GL_FALSE,glm::value_ptr(lightPos));
+                grid[i].getShader().setBindMatrix3fv("viewPos",1,GL_FALSE,glm::value_ptr(cameraPos));
+                grid[i].getShader().setBind1f("ambientStrength",ambientStrength);
+                grid[i].getShader().setBind1f("diffuseStrength",diffuseStrength);
+                grid[i].getShader().setBind1f("specularStrength",specularStrength);
+                grid[i].getShader().setBind1fv("Amplitudes",maxWaveCount_Sin,Amplitudes);
+                grid[i].getShader().setBind1fv("Lengths",maxWaveCount_Sin,Lengths);
+                grid[i].getShader().setBind1fv("Speeds",maxWaveCount_Sin,Speeds);
+                for (int j = 0; j < maxWaveCount_Sin; j++) {
+                    char uniformName[256];
+                    sprintf(uniformName, "Directions[%d]", j);
+                    grid[i].getShader().setBind3f(uniformName,Directions[j].x,Directions[j].y,Directions[j].z);
+                }
 
                 if(materiauSin == true) {
                     grid[i].getShader().setBind1i("Debug", 0);
@@ -269,6 +286,7 @@ int main() {
             }
 
             ImGui::Text("Paramètres du shader sinusoïdal :");
+            ImGui::SliderInt("Nombre de vagues",&waveCount_Sin,1,maxWaveCount_Sin);
             ImGui::SliderFloat("Amplitude", &Amplitude_Sin, 0.0f, 20.0f);
             ImGui::SliderFloat("L", &L_Sin, 0.0f, 10.0f);
 
