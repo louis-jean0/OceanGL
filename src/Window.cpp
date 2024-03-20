@@ -1,4 +1,4 @@
-#include "Window.h"
+#include <Window.hpp>
 
 Window::Window(unsigned int major, unsigned int minor, int width, int height, const char *title, bool Vsync) {
     this->minor = minor;

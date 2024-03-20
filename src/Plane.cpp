@@ -1,62 +1,171 @@
-#include "Plane.h"
+#include <glad/glad.h>
+#include <Plane.hpp>
 
-int idxForSquare(int i,int j, int nX, int nY){
-    return i * nY + j;
+Plane::Plane(float size, int div) {
+    this->size = size;
+    this->div = div;
+    this->ex = this->div;
+    this->texIter = this->div;
 }
 
-Plane::Plane(double width, double height, glm::vec3 leftCornerPlane){
-    this->width = width;
-    this->height = height;
-    this->leftCornerPlane = leftCornerPlane;
-    buildPlane(width, height, leftCornerPlane);
+void Plane::createPlane() {
+    this->div = div;
+    this->va.delVAO();
+    this->vb.delVBO();
+    this->eb.delEBO();
+    delArrays();
+
+    int numVertices = (div + 1) * (div + 1);
+    float scale = size / div;
+
+    for (int h = 0; h < this->div + 1; h++) {
+        for (int w = 0; w < this->div + 1; w++) {
+            float x = (float)w * scale - size / 2.0f;
+            float y = 0.0f;
+            float z = (float)h * scale - size / 2.0f; 
+
+            this->verts.push_back(x);
+            this->verts.push_back(y);
+            this->verts.push_back(z);
+            
+            this->verts.push_back((float)w / div);
+            this->verts.push_back((float)h / div);
+ 
+
+            glm::vec3 normal(0., 1., 0.);
+
+            this->verts.push_back(normal.x);
+            this->verts.push_back(normal.y);
+            this->verts.push_back(normal.z);
+        }
+    }
+
+    for (int h = 0; h < div; h++) {
+        for (int w = 0; w < div; w++) {
+            int index = h * (div + 1) + w;
+            indices.push_back(index);
+            indices.push_back(index + 1);
+            indices.push_back(index + div + 1);
+            indices.push_back(index + 1);
+            indices.push_back(index + div + 2);
+            indices.push_back(index + div + 1);
+        }
+    }
+
+    vb.genVBO(verts);
+    va.genVAO();
+    eb.genEBO(indices);
 }
 
-void Plane::buildPlane(double width, double height, glm::vec3 leftCornerPlane){
-    std::cout << "Plane is building\n";
+void Plane::subdivisediv(int div) {
+    this->div = div;
 
-    /*
-    this->indexed_vertices.clear();
+    this->va.delVAO();
+    this->vb.delVBO();
+    this->eb.delEBO();
+    delArrays();
+
+    int numVertices = (div + 1) * (div + 1);
+    float scale = size / div;
+
+    for (int h = 0; h < this->div + 1; h++) {
+        for (int w = 0; w < this->div + 1; w++) {
+            float x = (float)w * scale - size / 2.0f;
+            float y = 0.0f;
+            float z = (float)h * scale - size / 2.0f; 
+
+            this->verts.push_back(x);
+            this->verts.push_back(y);
+            this->verts.push_back(z);
+            
+            this->verts.push_back((float)w / div);
+            this->verts.push_back((float)h / div);
+
+
+            glm::vec3 normal(0., 1., 0.); 
+
+
+            this->verts.push_back(normal.x);
+            this->verts.push_back(normal.y);
+            this->verts.push_back(normal.z);
+        }
+    }
+
+    for (int h = 0; h < div; h++) {
+        for (int w = 0; w < div; w++) {
+            int index = h * (div + 1) + w;
+            indices.push_back(index);
+            indices.push_back(index + 1);
+            indices.push_back(index + div + 1);
+            indices.push_back(index + 1);
+            indices.push_back(index + div + 2);
+            indices.push_back(index + div + 1);
+        }
+    }
+
+    vb.genVBO(verts);
+    va.genVAO();
+    eb.genEBO(indices);
+}
+
+void Plane::updateSize(float nouvelleTaille) {
+    this->size = nouvelleTaille;
+    this->subdivisediv(this->div);
+}
+
+
+// Pour le moment, seul les GL_TRIANGLES sont pris en compte
+void Plane::updatePlane(GLenum mode) {
+    glBindVertexArray(this->va.getVAO()); 
+    glDrawElements(mode, this->indices.size(), GL_UNSIGNED_INT, 0); 
+}
+
+void Plane::delPlane() {
+    delArrays();
+    this->plane.deleteShader();
+    this->va.delVAO();
+    this->vb.delVBO();
+    this->eb.delEBO();
+}
+
+void Plane::delArrays() {
+    this->verts.clear();
     this->indices.clear();
-    */
-    
-    // 16x16 vertices
-    double widthBetweenVertex = width / (16-1);
-    double heightBetweenVertex = height / (16-1);
-
-    for (int i = 0 ; i < 16 ; i++){
-        for (int j = 0 ; j < 16 ; j++ ){
-            float x = leftCornerPlane[0] + i*widthBetweenVertex;
-            float y = leftCornerPlane[1] + 0.0;
-            float z = leftCornerPlane[2] + j*heightBetweenVertex;
-            this->indexed_vertices.push_back(glm::vec3(x,y,z));
-        }
-    }
-
-    for (int i = 0 ; i < 16-1; i++){
-    	for (int j = 0 ; j < 16-1; j++){
-        	int i0 = idxForSquare(i,j,16,16);
-            int i1 = idxForSquare(i+1,j,16,16);
-            int i2 = idxForSquare(i+1,j+1,16,16);
-            int i3 = idxForSquare(i,j+1,16,16);
-           
-            this->indices.push_back(i0);
-            this->indices.push_back(i1);
-            this->indices.push_back(i2);
-            this->indices.push_back(i0);
-            this->indices.push_back(i2);
-            this->indices.push_back(i3);
-        }
-    }
 }
 
-std::vector<unsigned short> Plane::getIndices(){
-    return this->indices;
+// Shader
+void Plane::useShader() {
+    this->plane.useShader();
 }
 
-std::vector<glm::vec3> Plane::getIndexedVertices(){
-    return this->indexed_vertices;
+void Plane::attachShader(const GLchar* vertexPath, const GLchar* fragmentPath) {
+    this->plane.setShader(vertexPath, fragmentPath);
 }
 
-glm::vec3 Plane::getCenter(){
-    return glm::vec3(this->leftCornerPlane[0] + this->width/2, this->leftCornerPlane[1], this->leftCornerPlane[2] + this->height/2);
+void Plane::detachShader() {
+    this->plane.Program = NULL;
+}
+
+void Plane::Shaderbind1f(const GLchar* name, GLfloat v0) {
+    this->plane.setBind1f(name, v0);
+}
+
+void Plane::Shaderbind3f(const GLchar* name, GLfloat v0, GLfloat v1, GLfloat v2) {
+    this->plane.setBind3f(name, v0, v1, v2);
+}
+
+void Plane::ShaderbindMatrix4fv(const GLchar* name, const GLfloat *value) {
+    this->plane.setBindMatrix4fv(name, 1, GL_FALSE, value);
+}
+
+void Plane::ShaderbindMatrix3fv(const GLchar* name, const GLfloat *value) {
+    this->plane.setBindMatrix3fv(name, 1, GL_FALSE, value);
+}
+
+void Plane::Shaderbind1i(const GLchar* name, GLint v0) {
+    this->plane.setBind1i(name, v0);
+}
+
+Shader Plane::getShader() {
+    return this->plane;
 }

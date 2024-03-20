@@ -1,8 +1,6 @@
 #pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
+#include <Headers.h>
 
 class Window {
     private : 
@@ -25,3 +23,5 @@ class Window {
         unsigned int get_minor();
         GLFWwindow* get_window();  
 };
+
+

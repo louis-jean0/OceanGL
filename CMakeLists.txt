@@ -1,70 +1,70 @@
 cmake_minimum_required(VERSION 3.10)
 
-# Set the project name and version
-project(OceanGL VERSION 0.1)
+# Always generate compile_commands.json for clangd
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-# Specify the C++ standard
+# Project information
+project(OceanGL VERSION 0.1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Add the GLFW subdirectory if you have cloned GLFW into your project
-# This assumes that GLFW's CMakeLists.txt is in the external/glfw directory
+# Disable GLFW docs, tests, and examples to avoid unnecessary builds
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+# Third-party libraries
+# GLFW for windowing
 add_subdirectory(external/glfw-3.3.9)
 
-# Glad does not use CMake, you have to add it manually
+# GLM
+add_subdirectory(external/glm)
+
+# GLAD for OpenGL function loading
 add_library(glad STATIC external/glad/src/glad.c)
 target_include_directories(glad PRIVATE external/glad/include)
 
-# Add the executable
-add_executable(OceanGL src/OceanGL.cpp src/Window.cpp src/Plane.cpp src/Camera.cpp src/shader.cpp)
-
-# Specify the directories where to find the header files
-include_directories(external/glfw-3.3.9/include)
-include_directories(external/glad/include)
-include_directories(external/glm-1.0.1/include)
-
-# Link the libraries to the executable
-target_link_libraries(OceanGL glfw glad)
-
-# Définir le chemin d'ImGui
+# ImGui setup
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/imgui-1.90.4)
-
-# Ajouter la bibliothèque ImGui
 file(GLOB IMGUI_SOURCES ${IMGUI_DIR}/src/*.cpp)
 add_library(imgui STATIC ${IMGUI_SOURCES})
-target_include_directories(imgui PUBLIC ${IMGUI_DIR}/include)
-target_include_directories(imgui PUBLIC ${IMGUI_DIR}/backends)
+target_include_directories(imgui PUBLIC ${IMGUI_DIR}/include ${IMGUI_DIR}/backends)
 
-# Lier OpenGL et GLFW à ImGui
+# Find and link OpenGL
 find_package(OpenGL REQUIRED)
-target_link_libraries(imgui PUBLIC ${OPENGL_gl_LIBRARY})
-target_link_libraries(imgui PUBLIC glfw)
+target_link_libraries(imgui PUBLIC ${OPENGL_gl_LIBRARY} glfw)
 
-# Ajouter les implémentations spécifiques à la bibliothèque de votre système de fenêtrage et de rendu
+# ImGui GLFW and OpenGL3 implementations
 target_sources(imgui PUBLIC 
     ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp 
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
 
-# Ajoutez les répertoires d'en-tête nécessaires pour ces implémentations
-target_include_directories(imgui PUBLIC 
-    ${IMGUI_DIR}/backends
-    # ${IMGUI_DIR}/misc/freetype # Si vous utilisez FreeType, assurez-vous d'ajouter les dépendances requises
+# Executable definition
+add_executable(OceanGL
+    src/OceanGL.cpp
+    src/Window.cpp
+    src/EBO.cpp
+    src/VAO.cpp
+    src/VBO.cpp
+    src/Plane.cpp
+    src/Shader.cpp
+    src/Orbital.cpp
+    )
+
+# Include directories for our project
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    external/glfw-3.3.9/include
+    external/glad/include
 )
 
-# Assurez-vous que ImGui trouve également les en-têtes de GLFW et GLAD
-target_include_directories(imgui PUBLIC external/glfw-3.3.9/include)
-target_include_directories(imgui PUBLIC external/glad/include)
+# Linking libraries
+target_link_libraries(OceanGL glfw glad imgui)
 
-# Link ImGui with the OceanGL executable
-target_link_libraries(OceanGL imgui)
-
-target_include_directories(OceanGL PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
+# Output directories
 set_target_properties(glad imgui PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
