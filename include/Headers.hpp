@@ -24,3 +24,6 @@
 #include <Plane.hpp>
 #include <Shader.hpp>
 #include <Orbital.hpp>
+
+#include <stb_image.h>
+#include <Texture.h>

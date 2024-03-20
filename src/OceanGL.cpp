@@ -125,6 +125,13 @@ int main() {
     plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
     plane.createPlane();
 
+    // Chargement des textures
+    GLint nxSkybox = loadTexture2DFromFilePath("../Textures/Skybox/nx.png");
+    GLint nySkybox = loadTexture2DFromFilePath("../Textures/Skybox/ny.png");
+    GLint nzSkybox = loadTexture2DFromFilePath("../Textures/Skybox/nz.png");
+    GLint pxSkybox = loadTexture2DFromFilePath("../Textures/Skybox/px.png");
+    GLint pySkybox = loadTexture2DFromFilePath("../Textures/Skybox/py.png");
+    GLint pzSkybox = loadTexture2DFromFilePath("../Textures/Skybox/pz.png");
 
     glEnable(GL_DEPTH_TEST);
 
@@ -476,6 +483,13 @@ int main() {
                 plane.getShader().setBind1f("time", glfwGetTime());
                 plane.getShader().setBind1f("amplitude", Amplitude_SumSine);
                 plane.getShader().setBind1f("frequence", Frequence_SumSine);
+                
+                plane.getShader().setBind1i("nxTexture", nxSkybox);
+                plane.getShader().setBind1i("nyTexture", nySkybox);
+                plane.getShader().setBind1i("nzTexture", nzSkybox);
+                plane.getShader().setBind1i("pxTexture", pxSkybox);
+                plane.getShader().setBind1i("pyTexture", pySkybox);
+                plane.getShader().setBind1i("pzTexture", pzSkybox);
 
                 if(materiauSin == true) {
                     plane.getShader().setBind1i("Debug", 0);
