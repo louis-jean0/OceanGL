@@ -40,7 +40,7 @@ float vertical_angle = 0.0f;
 float radius = 20.0f;
 
 // Camera settings
-glm::vec3 cameraPos = glm::vec3(0.0f, 5.0f, -10.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
 // Initialement, la caméra regarde vers le centre du plan
 glm::vec3 cameraTarget = glm::vec3(-0.0f, -5.0f, 10.0f); // Donc inverse de la position de caméra
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
@@ -120,13 +120,20 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window.get_window(), true);
     ImGui_ImplOpenGL3_Init("#version 460");
 
+    // Temporaire --------------------------------------------------------------------------------------------------------
+    GLuint VertexArrayID;
+    glGenVertexArrays(1, &VertexArrayID);
+    glBindVertexArray(VertexArrayID);
+
+    // Création de la skybox
+    Skybox *sky = new Skybox(20, 20, glm::vec3(-10.0f,-10.0f,-10.0f));
+    sky->loadSkyboxBuffer();
+    // --------------------------------------------------------------------------------------------------------------------
+    
     // Plane
     Plane plane(taillePlan, resolution);
     plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
     plane.createPlane();
-
-    // Création de la skybox
-    Skybox *sky = new Skybox(256, 20, glm::vec3(0.0f,0.0f,0.0f));
 
     // Chargement des textures
     GLint nxSkybox = loadTexture2DFromFilePath("../Textures/Skybox/nx.png");
@@ -493,6 +500,10 @@ int main() {
             plane.getShader().setBind1i("pxTexture", pxSkybox);
             plane.getShader().setBind1i("pyTexture", pySkybox);
             plane.getShader().setBind1i("pzTexture", pzSkybox);
+
+            // Temporarire --------------------------------------------------------------------------------------------------
+            sky->sendToBuffer();
+            // --------------------------------------------------------------------------------------------------------------
 
             if(materiauSin == true) {
                 plane.getShader().setBind1i("Debug", 0);

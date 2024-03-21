@@ -42,7 +42,7 @@ void Skybox::buildFaces(){
 
         for (int h = 0; h < this->resolutionFace; h++) {
             for (int w = 0; w < this->resolutionFace; w++) {
-                int index = h * (this->resolutionFace + 1) + w;
+                unsigned short index = h * (this->resolutionFace + 1) + w;
                 f->indicesTriangles.push_back(index);
                 f->indicesTriangles.push_back(index + 1);
                 f->indicesTriangles.push_back(index + this->resolutionFace + 1);
@@ -57,38 +57,54 @@ void Skybox::buildFaces(){
 }
 
 void Skybox::loadSkyboxBuffer(){
-    glGenBuffers(1, &(this->vertexbuffer));
-    glBindBuffer(GL_ARRAY_BUFFER, this->vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, (this->facesSkybox[0])->vertices.size() * sizeof(glm::vec3), &((this->facesSkybox[0])->vertices[0]), GL_STATIC_DRAW);
-
-    // Generate a buffer for the indices as well
-    glGenBuffers(1, &(this->elementbuffer));
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->elementbuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,  (this->facesSkybox[0])->indicesTriangles.size() * sizeof(unsigned int), &((this->facesSkybox[0])->indicesTriangles[0]) , GL_STATIC_DRAW);
+    for (int i = 0; i < 6 ; i++){
+        glGenBuffers(1, &(this->facesSkybox[i]->vertexbuffer));
+        glBindBuffer(GL_ARRAY_BUFFER, this->facesSkybox[i]->vertexbuffer);
+        glBufferData(GL_ARRAY_BUFFER, (this->facesSkybox[i])->vertices.size() * sizeof(glm::vec3), &(this->facesSkybox[i]->vertices[0]), GL_STATIC_DRAW);
+        
+        // Generate a buffer for the indices as well
+        glGenBuffers(1, &(this->facesSkybox[i]->elementbuffer));
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->facesSkybox[i]->elementbuffer);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, (this->facesSkybox[i])->indicesTriangles.size()* sizeof(unsigned short), &(this->facesSkybox[i]->indicesTriangles[0]) , GL_STATIC_DRAW);
+    }
 }
 
 void Skybox::sendToBuffer(){
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, this->vertexbuffer);
-    glVertexAttribPointer(
-                    0,                  // attribute
-                    3,                  // size
-                    GL_FLOAT,           // type
-                    GL_FALSE,           // normalized?
-                    0,                  // stride
-                    (void*)0            // array buffer offset
-                    );
+    for (int i = 0; i < 6 ; i++){
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, this->facesSkybox[i]->vertexbuffer);
+        glVertexAttribPointer(
+                        0,                  // attribute
+                        3,                  // size
+                        GL_FLOAT,           // type
+                        GL_FALSE,           // normalized?
+                        0,                  // stride
+                        (void*)0            // array buffer offset
+                        );
 
-    // Index buffer
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->elementbuffer);
+        // Index buffer
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->facesSkybox[i]->elementbuffer);
 
-    // Draw the triangles !
-    glDrawElements(
-                    GL_TRIANGLES,      // mode
-                    (this->facesSkybox[0])->indicesTriangles.size(),    // count
-                    GL_UNSIGNED_INT,   // type
-                    (void*)0           // element array buffer offset
-                    );
+        // Draw the triangles !
+        glDrawElements(
+                        GL_TRIANGLES,      // mode
+                        this->facesSkybox[i]->indicesTriangles.size(), // count
+                        GL_UNSIGNED_SHORT,   // type
+                        (void*)0           // element array buffer offset
+                        );
 
-    glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(0);
+    }
+}
+
+void Skybox::useShader() {
+    this->shader.useShader();
+}
+
+void Skybox::attachShader(const GLchar* vertexPath, const GLchar* fragmentPath) {
+    this->shader.setShader(vertexPath, fragmentPath);
+}
+
+void Skybox::detachShader() {
+    this->shader.Program = NULL;
 }
