@@ -126,7 +126,7 @@ int main() {
     plane.createPlane();
 
     // Création de la skybox
-    Skybox *sky = new Skybox(512, 20, glm::vec3(0.0f,0.0f,0.0f));
+    Skybox *sky = new Skybox(256, 20, glm::vec3(0.0f,0.0f,0.0f));
 
     // Chargement des textures
     GLint nxSkybox = loadTexture2DFromFilePath("../Textures/Skybox/nx.png");
