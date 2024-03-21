@@ -125,6 +125,9 @@ int main() {
     plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
     plane.createPlane();
 
+    // Création de la skybox
+    Skybox *sky = new Skybox(512, 20, glm::vec3(0.0f,0.0f,0.0f));
+
     // Chargement des textures
     GLint nxSkybox = loadTexture2DFromFilePath("../Textures/Skybox/nx.png");
     GLint nySkybox = loadTexture2DFromFilePath("../Textures/Skybox/ny.png");
@@ -134,7 +137,7 @@ int main() {
     GLint pzSkybox = loadTexture2DFromFilePath("../Textures/Skybox/pz.png");
 
     glEnable(GL_DEPTH_TEST);
-
+    
     // Render loop
     while (!glfwWindowShouldClose(window.get_window())) {
         // Variables de la boucle
@@ -477,33 +480,33 @@ int main() {
         }
 
         if (ModeleSumSine) {
-                plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
-                plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
-                plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
-                plane.getShader().setBind1f("time", glfwGetTime());
-                plane.getShader().setBind1f("amplitude", Amplitude_SumSine);
-                plane.getShader().setBind1f("frequence", Frequence_SumSine);
+            plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
+            plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            plane.getShader().setBind1f("time", glfwGetTime());
+            plane.getShader().setBind1f("amplitude", Amplitude_SumSine);
+            plane.getShader().setBind1f("frequence", Frequence_SumSine);
                 
-                plane.getShader().setBind1i("nxTexture", nxSkybox);
-                plane.getShader().setBind1i("nyTexture", nySkybox);
-                plane.getShader().setBind1i("nzTexture", nzSkybox);
-                plane.getShader().setBind1i("pxTexture", pxSkybox);
-                plane.getShader().setBind1i("pyTexture", pySkybox);
-                plane.getShader().setBind1i("pzTexture", pzSkybox);
+            plane.getShader().setBind1i("nxTexture", nxSkybox);
+            plane.getShader().setBind1i("nyTexture", nySkybox);
+            plane.getShader().setBind1i("nzTexture", nzSkybox);
+            plane.getShader().setBind1i("pxTexture", pxSkybox);
+            plane.getShader().setBind1i("pyTexture", pySkybox);
+            plane.getShader().setBind1i("pzTexture", pzSkybox);
 
-                if(materiauSin == true) {
-                    plane.getShader().setBind1i("Debug", 0);
-                } else if(positionSin == true) {
-                    plane.getShader().setBind1i("Debug", 1);
-                } else if(uvSin == true) {
-                    plane.getShader().setBind1i("Debug", 2);
-                } else if(normalSin == true) {
-                    plane.getShader().setBind1i("Debug", 3);
-                } else if(binormalSin == true) {
-                    plane.getShader().setBind1i("Debug", 4);
-                } else if(tangentSin == true) {
-                    plane.getShader().setBind1i("Debug", 5);
-                }
+            if(materiauSin == true) {
+                plane.getShader().setBind1i("Debug", 0);
+            } else if(positionSin == true) {
+                plane.getShader().setBind1i("Debug", 1);
+            } else if(uvSin == true) {
+                plane.getShader().setBind1i("Debug", 2);
+            } else if(normalSin == true) {
+                plane.getShader().setBind1i("Debug", 3);
+            } else if(binormalSin == true) {
+                plane.getShader().setBind1i("Debug", 4);
+            } else if(tangentSin == true) {
+                plane.getShader().setBind1i("Debug", 5);
+            }
                 
             plane.useShader();
             plane.updatePlane(GL_TRIANGLES);

@@ -27,3 +27,5 @@
 
 #include <stb_image.h>
 #include <Texture.h>
+
+#include <Skybox.hpp>

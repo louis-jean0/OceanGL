@@ -52,6 +52,7 @@ add_executable(OceanGL
     src/Orbital.cpp
     src/Texture.cpp
     src/stb_image.cpp
+    src/Skybox.cpp
     )
 
 # Include directories for our project
