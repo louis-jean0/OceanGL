@@ -14,4 +14,6 @@ class EBO {
 
         // Fonction pour supprimer l'EBO
         void delEBO();
+
+        unsigned int getEBO();
 };

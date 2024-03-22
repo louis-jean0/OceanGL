@@ -17,3 +17,7 @@ void VBO::genVBO(std::vector<float> verts) {
 void VBO::delVBO() {
     glDeleteBuffers(1, &this->VertexBufferObject);
 }
+
+unsigned int VBO::getVBO(){
+    return this->VertexBufferObject;
+}

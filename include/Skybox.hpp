@@ -5,11 +5,13 @@
 #include <Shader.hpp>
 
 struct Face {
-    std::vector<glm::vec3> vertices;
-    std::vector<unsigned short> indicesTriangles;
+    std::vector<float> vertices;
+    std::vector<unsigned int> indicesTriangles;
 
-    GLuint vertexbuffer;
-    GLuint elementbuffer;
+    VBO vb;
+    EBO eb;
+    VAO va;
+
 };
 
 class Skybox {
@@ -20,14 +22,13 @@ class Skybox {
         std::vector<Face*> facesSkybox;
 
         Shader shader;
-
     public:
         Skybox(int sizeFace, int resolutionFace, glm::vec3 position);
         void buildFaces();
-        void loadSkyboxBuffer();
-        void sendToBuffer();
 
         void useShader();
         void attachShader(const GLchar* vertexPath, const GLchar* fragmentPath);
         void detachShader();
+
+        void updateSkybox(GLenum mode);
 };

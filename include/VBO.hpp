@@ -10,4 +10,5 @@ class VBO {
         VBO();
         void genVBO(std::vector<float> verts);
         void delVBO();
+        unsigned int getVBO();
 };

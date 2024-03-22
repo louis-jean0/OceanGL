@@ -120,15 +120,11 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window.get_window(), true);
     ImGui_ImplOpenGL3_Init("#version 460");
 
-    // Temporaire --------------------------------------------------------------------------------------------------------
-    GLuint VertexArrayID;
-    glGenVertexArrays(1, &VertexArrayID);
-    glBindVertexArray(VertexArrayID);
-
     // Création de la skybox
-    Skybox *sky = new Skybox(20, 20, glm::vec3(-10.0f,-10.0f,-10.0f));
-    sky->loadSkyboxBuffer();
-    // --------------------------------------------------------------------------------------------------------------------
+    int skyboxSize = 2000;
+    int resolutionSkybox = 200;
+    Skybox *sky = new Skybox(skyboxSize, resolutionSkybox, glm::vec3(-1.*(skyboxSize/2),-1.*(skyboxSize/2),-1.*(skyboxSize/2)));
+    sky->attachShader("../shaders/SkyboxVertex.vert", "../shaders/SkyboxFragment.frag");
     
     // Plane
     Plane plane(taillePlan, resolution);
@@ -160,7 +156,7 @@ int main() {
         }
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::lookAt(cameraPos,cameraPos + cameraTarget,cameraUp);
-        glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT,0.1f,500.0f);
+        glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT,0.1f,2000.0f);
 
         // Gestion des entrées
         processInput(window.get_window());
@@ -246,10 +242,11 @@ int main() {
             ModeleSin = false;
             ModeleGerstner = false;
 
-
+            sky->detachShader();
+            sky->attachShader("../shaders/SkyboxVertex.vert", "../shaders/SkyboxFragment.frag");
+            
             plane.detachShader();
-            plane.attachShader("../shaders/SkyboxVertex.vert", "../shaders/SkyboxFragment.frag");
-            //plane.attachShader("../shaders/SumSine.vert", "../shaders/SumSine.frag");
+            plane.attachShader("../shaders/SumSine.vert", "../shaders/SumSine.frag");
             plane.createPlane();    
         }
 
@@ -502,9 +499,6 @@ int main() {
             plane.getShader().setBind1i("pyTexture", pySkybox);
             plane.getShader().setBind1i("pzTexture", pzSkybox);
 
-            // Temporarire --------------------------------------------------------------------------------------------------
-            sky->sendToBuffer();
-            // --------------------------------------------------------------------------------------------------------------
 
             if(materiauSin == true) {
                 plane.getShader().setBind1i("Debug", 0);
@@ -519,7 +513,10 @@ int main() {
             } else if(tangentSin == true) {
                 plane.getShader().setBind1i("Debug", 5);
             }
-                
+
+            sky->useShader();
+            sky->updateSkybox(GL_TRIANGLES);
+
             plane.useShader();
             plane.updatePlane(GL_TRIANGLES);
 
