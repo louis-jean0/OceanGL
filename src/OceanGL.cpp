@@ -248,7 +248,8 @@ int main() {
 
 
             plane.detachShader();
-            plane.attachShader("../shaders/SumSine.vert", "../shaders/SumSine.frag");
+            plane.attachShader("../shaders/SkyboxVertex.vert", "../shaders/SkyboxFragment.frag");
+            //plane.attachShader("../shaders/SumSine.vert", "../shaders/SumSine.frag");
             plane.createPlane();    
         }
 
