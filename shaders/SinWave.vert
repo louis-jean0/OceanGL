@@ -24,26 +24,44 @@ uniform float Amplitude;
 uniform float L;
 uniform float S;
 uniform vec3 Direction;
+uniform float PI;
+
 
 // Fonction pour une vague sinusoïdale
 vec3 Add_Wave(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) {
     vec3 newPos = Pos; 
-    float w = 2.0f / L;
+    float w = (2.0f * PI) / L;
     float phi_t = (S * w) * time;
     newPos.y = Amplitude * sin(dot(Direction.xyz, aPos.xyz) * w + phi_t);
     return newPos;
 }
 
-// Dérivée partielle : df/dx
-float Add_Wave_dx(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float delta, float time) {
-    vec3 newPos_dx = Pos + vec3(delta, 0.0, 0.0); 
-    return (Add_Wave(newPos_dx, L, S, Amplitude, Direction, time).y - Add_Wave(Pos, L, S, Amplitude, Direction, time).y) / delta;
+vec3 ComputeBinormale(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) {
+    vec3 newPos = Pos; 
+    float w = (2.0f * PI) / L;
+    float phi_t = (S * w) * time;
+    newPos.y = Amplitude * w * Direction.x * cos(dot(Direction.xyz, aPos.xyz) * w + phi_t);
+
+    return normalize(vec3(1.0f, newPos.y, 0.f));
 }
 
-// Dérivée partielle : df/dz
-float Add_Wave_dz(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float delta, float time) {
-    vec3 newPos_dz = Pos + vec3(0.0, 0.0, delta); 
-    return (Add_Wave(newPos_dz, L, S, Amplitude, Direction, time).y - Add_Wave(Pos, L, S, Amplitude, Direction, time).y) / delta;
+vec3 ComputeTangente(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) {
+    vec3 newPos = Pos; 
+    float w = (2.0f * PI) / L;
+    float phi_t = (S * w) * time;
+    newPos.y = Amplitude * w * Direction.z * cos(dot(Direction.xyz, aPos.xyz) * w + phi_t);
+
+    return normalize(vec3(0.0f, newPos.y, 1.0f));
+}
+
+vec3 ComputeNormal(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) {
+    vec3 newPos = Pos; 
+    float w = (2.0f * PI) / L;
+    float phi_t = (S * w) * time;
+    newPos.x = (-1.0f) * Amplitude * w * Direction.x * cos(dot(Direction.xyz, aPos.xyz) * w + phi_t);
+    newPos.z = (-1.0f) * Amplitude * w * Direction.z * cos(dot(Direction.xyz, aPos.xyz) * w + phi_t);
+
+    return normalize(vec3(newPos.x, 1.0f, newPos.z));
 }
 
 void main()
@@ -52,10 +70,12 @@ void main()
     gl_Position = projection * view * model * vec4(newWave, 1.0f);
 
     // Binormale / Tangente / Normale
-    float delta = 0.0000001;
-    binormale = vec3(1., Add_Wave_dx(aPos, L, S, Amplitude, Direction, delta, time), 0.0);
-    tangente = vec3(0., Add_Wave_dz(aPos, L, S, Amplitude, Direction, delta, time), 1.0);
-    normal = cross(tangente, binormale);
+    binormale = ComputeBinormale(aPos, L, S, Amplitude, Direction, time);
+    tangente = ComputeTangente(aPos, L, S, Amplitude, Direction, time);
+    normal = ComputeNormal(aPos, L, S, Amplitude, Direction, time);
+    // Pareil que :
+    //normal = cross(tangente, binormale);
+
 
     // Matériau
     height = newWave.y;

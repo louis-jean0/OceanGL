@@ -27,8 +27,8 @@ long long GetMemoryUsage() {
 }
 
 // Window settings
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 720;
+const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_HEIGHT = 1080;
 
 // Timing
 float deltaTime = 0.0f;	
@@ -50,30 +50,66 @@ float diffuseStrength = 1.0f;
 float specularStrength = 0.5f;
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
+
 // Sin
 float Amplitude_Sin = 1.;   // amplitude
 float L_Sin = 1.0;  // distance pic2crête
 float S_Sin = 1.0;  // Vitesse
 glm::vec3 Direction_Sin = glm::vec3(1.0f, 0.f, 0.f);
-int numberWaves_Sin = 1;
 
 // Gerstner 
 float Amplitude_Gerstner = 1.0;
 float L_Gerstner = 1.0;
-float Steepness_Gerstner = 1.0;
 float S_Gerstner = 1.0;
+float Steepness_Gerstner = 1.0;
 glm::vec3 Direction_Gerstner = glm::vec3(1.0f, 0.f, 0.f);
 
-// SumSine
-float Amplitude_SumSine = 1.0;
-float Frequence_SumSine = 1.0;
-int waveCount = 8;
+// SumSin
+// Généraux
+int numWave_SumSines = 1;
+int seed = 0;
+bool FBM_SumSines = false;
+bool DomainWarping_SumSines = false;
+
+// Sans FBM
+float Amplitude_SumSines_min = 0.1; 
+float Amplitude_SumSines_max = 1.;  
+float L_min_SumSines = 0.5;  
+float L_max_SumSines = 1.0;
+float S_SumSines = 1.0;  
+glm::vec3 Direction_SumSines = glm::vec3(1.0f, 0.f, 0.f);
+
+// Avec FBM
+float Amplitude_SumSines_FBM = 1.0;
+float Gain_A_SumSines = 0.82;
+float Gain_W_SumSines = 1.18;
+float L_FBM_SumSines = 1.0;
+
+// SumGerstner
+// Généraux
+float Amplitude_SumGerstner_min = 0.1;
+float Amplitude_SumGerstner_max = 1.0;
+
+float L_SumGerstner_min = 1.0;
+float L_SumGerstner_max = 1.0;
+float Steepness_SumGerstner = 1.0;
+float S_SumGerstner = 1.0;
+glm::vec3 Direction_SumGerstner = glm::vec3(1.0f, 0.f, 0.f);
+int numWave_SumGerstner = 1;
+
+// Avec FBM
+float Amplitude_SumGerstner_FBM = 1.0;
+float Gain_A_SumGerstner = 0.82;
+float Gain_W_SumGerstner = 1.18;
+float L_FBM_SumGerstner = 1.0;
+bool FBM_SumGerstner = false;
+
 
 // Booléens modèles
 bool ModeleSin = true;
 bool ModeleGerstner = false;
 bool ModeleSumSine = false;
-
+bool ModeleSumGerstner = false;
 
 bool materiauSin = true;
 bool positionSin = false;
@@ -89,16 +125,35 @@ bool normalGerstner = false;
 bool binormalGerstner = false;
 bool tangentGerstner = false;
 
+bool materiauSumSines = true;
+bool positionSumSines = false;
+bool uvSumSines = false;
+bool normalSumSines = false;
+bool binormalSumSines = false;
+bool tangentSumSines = false;
+
+bool materiauSumGerstner = true;
+bool positionSumGerstner = false;
+bool uvSumGerstner = false;
+bool normalSumGerstner = false;
+bool binormalSumGerstner = false;
+bool tangentSumGerstner = false;
+
+
 bool arretduTemps_Sin = false;
 bool arretduTemps_Gerstner = false;
+bool arretduTemps_SumSines = false;
+bool arretduTemps_SumGerstner = false;
+
 double temps = 0.;
 
 // Booléen wireframe
 bool fildefer = false;
+bool points = false;
 
 // Plan
 int resolution = 512;
-int taillePlan = 1;
+int taillePlan = 10;
 
 int main() {
     
@@ -134,7 +189,7 @@ int main() {
         // Camera
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::lookAt(cameraPos,cameraTarget,cameraUp);
-        glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT,0.1f,500.0f);
+        glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT,0.1f,5000000.0f);
 
         // Gestion des entrées
         processInput(window.get_window());
@@ -197,6 +252,7 @@ int main() {
         if (ImGui::Checkbox("Modèle sinusoïdal", &ModeleSin)) {
             ModeleGerstner = false;
             ModeleSumSine = false;
+            ModeleSumGerstner = false;
 
             plane.detachShader();
             plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
@@ -208,6 +264,7 @@ int main() {
         if (ImGui::Checkbox("Modèle de Gerstner", &ModeleGerstner)) {
             ModeleSin = false;
             ModeleSumSine = false;
+            ModeleSumGerstner = false;
 
             plane.detachShader();
             plane.attachShader("../shaders/GerstnerWave.vert", "../shaders/GerstnerWave.frag");
@@ -219,48 +276,59 @@ int main() {
         if (ImGui::Checkbox("Modèle avec plusieurs sinusoïdales", &ModeleSumSine)) {
             ModeleSin = false;
             ModeleGerstner = false;
-
+            ModeleSumGerstner = false;
 
             plane.detachShader();
-            plane.attachShader("../shaders/SumSine.vert", "../shaders/SumSine.frag");
+            plane.attachShader("../shaders/SumSinWave.vert", "../shaders/SumSinWave.frag");
+            plane.createPlane();    
+        }
+
+        if (ImGui::Checkbox("Modèle avec plusieurs vagues de Gerstner", &ModeleSumGerstner)) {
+            ModeleSin = false;
+            ModeleGerstner = false;
+            ModeleSumSine = false;
+
+            plane.detachShader();
+            plane.attachShader("../shaders/SumGerstnerWave.vert", "../shaders/SumGerstnerWave.frag");
             plane.createPlane();    
         }
 
         ImGui::Spacing();
 
         if (ModeleSin) {
-                plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
-                plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
-                plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
-                plane.getShader().setBind1f("time", glfwGetTime());
-                plane.getShader().setBind1f("Amplitude", Amplitude_Sin);
-                plane.getShader().setBind1f("L", L_Sin);
-                plane.getShader().setBind1f("S", S_Sin);
-                plane.getShader().setBind3f("Direction", Direction_Sin.x, Direction_Sin.y, Direction_Sin.z);
+            plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
+            plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            plane.getShader().setBind1f("time", glfwGetTime());
+            plane.getShader().setBind1f("Amplitude", Amplitude_Sin);
+            plane.getShader().setBind1f("L", L_Sin);
+            plane.getShader().setBind1f("S", S_Sin);
+            plane.getShader().setBind3f("Direction", Direction_Sin.x, Direction_Sin.y, Direction_Sin.z);
+            plane.getShader().setBind1f("PI", M_PI);
 
-                if(materiauSin == true) {
-                    plane.getShader().setBind1i("Debug", 0);
-                } else if(positionSin == true) {
-                    plane.getShader().setBind1i("Debug", 1);
-                } else if(uvSin == true) {
-                    plane.getShader().setBind1i("Debug", 2);
-                } else if(normalSin == true) {
-                    plane.getShader().setBind1i("Debug", 3);
-                } else if(binormalSin == true) {
-                    plane.getShader().setBind1i("Debug", 4);
-                } else if(tangentSin == true) {
-                    plane.getShader().setBind1i("Debug", 5);
-                }
+            if(materiauSin == true) {
+                plane.getShader().setBind1i("Debug", 0);
+            } else if(positionSin == true) {
+                plane.getShader().setBind1i("Debug", 1);
+            } else if(uvSin == true) {
+                plane.getShader().setBind1i("Debug", 2);
+            } else if(normalSin == true) {
+                plane.getShader().setBind1i("Debug", 3);
+            } else if(binormalSin == true) {
+                plane.getShader().setBind1i("Debug", 4);
+            } else if(tangentSin == true) {
+                plane.getShader().setBind1i("Debug", 5);
+            }
                 
-                plane.useShader();
-                plane.updatePlane(GL_TRIANGLES);     
+            plane.useShader();
+            plane.updatePlane(GL_TRIANGLES);     
             
 
             ImGui::Text("Paramètres du shader sinusoïdal :");
             ImGui::SliderFloat("Amplitude", &Amplitude_Sin, 0.0f, 20.0f);
-            ImGui::SliderFloat("L", &L_Sin, 0.0f, 10.0f);
+            ImGui::SliderFloat("Wavelength", &L_Sin, 0.0f, 10.0f);
 
-            if(ImGui::SliderFloat("S", &S_Sin, 0.0f, 10.0f) != 0.) {
+            if(ImGui::SliderFloat("Speed", &S_Sin, 0.0f, 10.0f) != 0.) {
                 arretduTemps_Sin = false;
             }
 
@@ -343,42 +411,42 @@ int main() {
         }
 
         if (ModeleGerstner) {
-                plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
-                plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));                  
-                plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
-                plane.getShader().setBind1f("time", glfwGetTime());
-                plane.getShader().setBind1f("Amplitude", Amplitude_Gerstner);
-                plane.getShader().setBind1f("PI", M_PI);
-                plane.getShader().setBind1f("g", 9.81); // Accélération de la pesanteur
-                plane.getShader().setBind1f("L", L_Gerstner);
-                plane.getShader().setBind1f("S", S_Gerstner);
-                plane.getShader().setBind1f("Steepness", Steepness_Gerstner);
-                plane.getShader().setBind3f("Direction", Direction_Gerstner.x, Direction_Gerstner.y, Direction_Gerstner.z);
+            plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
+            plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));                  
+            plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            plane.getShader().setBind1f("time", glfwGetTime());
+            plane.getShader().setBind1f("Amplitude", Amplitude_Gerstner);
+            plane.getShader().setBind1f("PI", M_PI);
+            plane.getShader().setBind1f("g", 9.81); // Accélération de la pesanteur
+            plane.getShader().setBind1f("Wavelength", L_Gerstner);
+            plane.getShader().setBind1f("Steepness", Steepness_Gerstner);
+            plane.getShader().setBind1f("Speed", S_Gerstner);
+            plane.getShader().setBind3f("Direction", Direction_Gerstner.x, Direction_Gerstner.y, Direction_Gerstner.z);
 
-                if(materiauGerstner == true) {
-                    plane.getShader().setBind1i("Debug", 0);
-                } else if(positionGerstner == true) {
-                    plane.getShader().setBind1i("Debug", 1);
-                } else if(uvGerstner == true) {
-                    plane.getShader().setBind1i("Debug", 2);
-                } else if(normalGerstner == true) {
-                    plane.getShader().setBind1i("Debug", 3);
-                } else if(binormalGerstner == true) {
-                    plane.getShader().setBind1i("Debug", 4);
-                } else if(tangentGerstner == true) {
-                    plane.getShader().setBind1i("Debug", 5);
-                }
+            if(materiauGerstner == true) {
+                plane.getShader().setBind1i("Debug", 0);
+            } else if(positionGerstner == true) {
+                plane.getShader().setBind1i("Debug", 1);
+            } else if(uvGerstner == true) {
+                plane.getShader().setBind1i("Debug", 2);
+            } else if(normalGerstner == true) {
+                plane.getShader().setBind1i("Debug", 3);
+            } else if(binormalGerstner == true) {
+                plane.getShader().setBind1i("Debug", 4);
+            } else if(tangentGerstner == true) {
+                plane.getShader().setBind1i("Debug", 5);
+            }
 
-                plane.useShader();
-                plane.updatePlane(GL_TRIANGLES);
+            plane.useShader();
+            plane.updatePlane(GL_TRIANGLES);
                 
 
             ImGui::Text("Paramètres du shader Gerstner :");
             ImGui::SliderFloat("Amplitude", &Amplitude_Gerstner, 0.0f, 20.0f);
-            ImGui::SliderFloat("L", &L_Gerstner, 0.0f, 10.0f);
-            ImGui::SliderFloat("Steepness", &Steepness_Gerstner, 0.0f, 10.0f);
-            
-            if(ImGui::SliderFloat("S", &S_Gerstner, 0.0f, 10.0f) != 0.) {
+            ImGui::SliderFloat("Wavelength", &L_Gerstner, 0.0f, 10.0f);
+            ImGui::SliderFloat("Steepness", &Steepness_Gerstner, 0.0f, 1.0f);
+
+            if(ImGui::SliderFloat("Speed", &S_Gerstner, 0.0f, 10.0f) != 0.) {
                 arretduTemps_Gerstner = false;
             }
 
@@ -461,34 +529,307 @@ int main() {
         }
 
         if (ModeleSumSine) {
-                plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
-                plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
-                plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
-                plane.getShader().setBind1f("time", glfwGetTime());
-                plane.getShader().setBind1f("amplitude", Amplitude_SumSine);
-                plane.getShader().setBind1f("frequence", Frequence_SumSine);
+            plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
+            plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            plane.getShader().setBind1f("time", glfwGetTime());
+            plane.getShader().setBind1f("Amplitude_min", Amplitude_SumSines_min);
+            plane.getShader().setBind1f("Amplitude_max", Amplitude_SumSines_max);
+            plane.getShader().setBind1f("L_min", L_min_SumSines);
+            plane.getShader().setBind1f("L_max", L_max_SumSines);
+            plane.getShader().setBind1f("S", S_SumSines);
+            plane.getShader().setBind3f("Direction", Direction_SumSines.x, Direction_SumSines.y, Direction_SumSines.z);
+            plane.getShader().setBind1f("PI", M_PI);
+            plane.getShader().setBind1f("Amplitude_FBM", Amplitude_SumSines_FBM);
+            plane.getShader().setBind1f("Gain_A", Gain_A_SumSines);
+            plane.getShader().setBind1f("Gain_W", Gain_W_SumSines);
+            plane.getShader().setBind1f("L_FBM", L_FBM_SumSines);
 
-                if(materiauSin == true) {
-                    plane.getShader().setBind1i("Debug", 0);
-                } else if(positionSin == true) {
-                    plane.getShader().setBind1i("Debug", 1);
-                } else if(uvSin == true) {
-                    plane.getShader().setBind1i("Debug", 2);
-                } else if(normalSin == true) {
-                    plane.getShader().setBind1i("Debug", 3);
-                } else if(binormalSin == true) {
-                    plane.getShader().setBind1i("Debug", 4);
-                } else if(tangentSin == true) {
-                    plane.getShader().setBind1i("Debug", 5);
-                }
-                
+            if(materiauSumSines == true) {
+                plane.getShader().setBind1i("Debug", 0);
+            } else if(positionSumSines == true) {
+                plane.getShader().setBind1i("Debug", 1);
+            } else if(uvSumSines == true) {
+                plane.getShader().setBind1i("Debug", 2);
+            } else if(normalSumSines == true) {
+                plane.getShader().setBind1i("Debug", 3);
+            } else if(binormalSumSines == true) {
+                plane.getShader().setBind1i("Debug", 4);
+            } else if(tangentSumSines == true) {
+                plane.getShader().setBind1i("Debug", 5);
+            }
+
+            plane.getShader().setBind1i("nbVagues", numWave_SumSines);
+            plane.getShader().setBind1i("seed", seed);
+
+            if(FBM_SumSines == false) {
+                plane.getShader().setBind1i("FBM", 0);
+            } else {
+                plane.getShader().setBind1i("FBM", 1);
+            }
+
+            if(DomainWarping_SumSines == false) {
+                plane.getShader().setBind1i("DW", 0);
+            } else {
+                plane.getShader().setBind1i("DW", 1);
+            }
+
             plane.useShader();
             plane.updatePlane(GL_TRIANGLES);
 
-
             ImGui::Text("Paramètres du shader SumSine :");
-            ImGui::SliderFloat("Amplitude", &Amplitude_SumSine, 0.0f, 20.0f);
-            ImGui::SliderFloat("Fréquence", &Frequence_SumSine, 0.0f, 20.0f);
+
+            if(FBM_SumSines == false) {
+                ImGui::SliderFloat("Amplitude min", &Amplitude_SumSines_min, 0.0f, 20.0f);
+                ImGui::SliderFloat("Amplitude max", &Amplitude_SumSines_max, 0.0f, 20.0f);
+                ImGui::SliderFloat("Wavelength min", &L_min_SumSines, 0.0f, 10.0f);
+                ImGui::SliderFloat("Wavelength max", &L_max_SumSines, 0.0f, 10.0f);
+                if(ImGui::SliderFloat("Speed", &S_SumSines, 0.0f, 10.0f) != 0.) {
+                    arretduTemps_SumSines = false;
+                }
+                ImGui::SliderFloat("X", &Direction_SumSines.x, -1.0f, 1.0f);
+                ImGui::SliderFloat("Z", &Direction_SumSines.z, -1.0f, 1.0f);         
+            } else {
+                ImGui::SliderFloat("Amplitude", &Amplitude_SumSines_FBM, 0.0f, 2.0f);
+                if(ImGui::SliderFloat("Speed", &S_SumSines, 0.0f, 10.0f) != 0.) {
+                    arretduTemps_SumSines = false;
+                }
+                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumSines, 0.0f, 2.0f);
+                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumSines, 0.0f, 2.0f);
+                ImGui::SliderFloat("Wavelength", &L_FBM_SumSines, 0.0f, 50.0f);
+            }
+
+            ImGui::SliderInt("Nombre de vagues", &numWave_SumSines, 1, 256);
+            ImGui::SliderInt("Seed", &seed, 0, 25);
+            ImGui::Checkbox("Fractionnal Brownian Motion", &FBM_SumSines);
+            if(FBM_SumSines == true) {
+                ImGui::Checkbox("Domain Warping", &DomainWarping_SumSines);
+            }
+
+            ImGui::Separator();
+            ImGui::Text("Debug du shader");
+
+            if (ImGui::Checkbox("Material", &materiauSumSines)) {
+                if (materiauSumSines) {
+                    positionSumSines= false;
+                    uvSumSines = false;
+                    normalSumSines = false;
+                    binormalSumSines = false;
+                    tangentSumSines = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Position", &positionSumSines)) {
+                if (positionSumSines) {
+                    materiauSumSines = false;
+                    uvSumSines = false;
+                    normalSumSines = false;
+                    binormalSumSines = false;
+                    tangentSumSines = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("UV", &uvSumSines)) {
+                if (uvSumSines) {
+                    materiauSumSines = false;
+                    positionSumSines = false;
+                    normalSumSines = false;
+                    binormalSumSines = false;
+                    tangentSumSines = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Normal", &normalSumSines)) {
+                if (normalSumSines) {
+                    materiauSumSines = false;
+                    positionSumSines = false;
+                    uvSumSines = false;
+                    binormalSumSines = false;
+                    tangentSumSines = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Binormale", &binormalSumSines)) {
+                if (binormalSumSines) {
+                    materiauSumSines = false;
+                    positionSumSines = false;
+                    uvSumSines = false;
+                    normalSumSines = false;
+                    tangentSumSines = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Tangente", &tangentSumSines)) {
+                if (tangentSumSines) {
+                    materiauSumSines = false;
+                    positionSumSines = false;
+                    uvSumSines = false;
+                    normalSumSines = false;
+                    binormalSumSines = false;
+                }
+            }
+
+            if (ImGui::Checkbox("Arrêt du temps", &arretduTemps_SumSines)) {
+                float S_SumSines_save = S_SumSines;
+                if (arretduTemps_SumSines) {
+                    S_SumSines = 0.0;
+                } else {
+                    S_SumSines = 1.0;
+                }
+            }
+
+            ImGui::Separator();
+        }
+        if (ModeleSumGerstner) {
+            plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
+            plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));                  
+            plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            plane.getShader().setBind1f("time", glfwGetTime());
+            plane.getShader().setBind1f("Amplitude_min", Amplitude_SumGerstner_min);
+            plane.getShader().setBind1f("Amplitude_max", Amplitude_SumGerstner_max);
+            plane.getShader().setBind1f("PI", M_PI);
+            plane.getShader().setBind1f("g", 9.81); // Accélération de la pesanteur
+            plane.getShader().setBind1f("L_min", L_SumGerstner_min);
+            plane.getShader().setBind1f("L_max", L_SumGerstner_max);
+            plane.getShader().setBind1f("S", S_SumGerstner);
+            plane.getShader().setBind1f("Steepness", Steepness_SumGerstner);
+            plane.getShader().setBind3f("Direction", Direction_SumGerstner.x, Direction_SumGerstner.y, Direction_SumGerstner.z);
+            plane.getShader().setBind1f("Amplitude_FBM", Amplitude_SumGerstner_FBM);
+            plane.getShader().setBind1f("Gain_A", Gain_A_SumGerstner);
+            plane.getShader().setBind1f("Gain_W", Gain_W_SumGerstner);
+            plane.getShader().setBind1f("L_FBM", L_FBM_SumGerstner);
+
+            if(materiauSumGerstner == true) {
+                plane.getShader().setBind1i("Debug", 0);
+            } else if(positionSumGerstner == true) {
+                plane.getShader().setBind1i("Debug", 1);
+            } else if(uvSumGerstner == true) {
+                plane.getShader().setBind1i("Debug", 2);
+            } else if(normalSumGerstner == true) {
+                plane.getShader().setBind1i("Debug", 3);
+            } else if(binormalSumGerstner == true) {
+                plane.getShader().setBind1i("Debug", 4);
+            } else if(tangentSumGerstner == true) {
+                plane.getShader().setBind1i("Debug", 5);
+            }
+
+            plane.getShader().setBind1i("nbVagues", numWave_SumGerstner);
+            plane.getShader().setBind1i("seed", seed);
+
+            if(FBM_SumGerstner == false) {
+                plane.getShader().setBind1i("FBM", 0);
+            } else {
+                plane.getShader().setBind1i("FBM", 1);
+            }
+
+
+            plane.useShader();
+            plane.updatePlane(GL_TRIANGLES);
+                
+
+            ImGui::Text("Paramètres du shader SumGerstner :");
+
+
+            if(FBM_SumGerstner == false) {
+                ImGui::SliderFloat("Amplitude min", &Amplitude_SumGerstner_min, 0.0f, 2.0f);
+                ImGui::SliderFloat("Amplitude max", &Amplitude_SumGerstner_max, 0.0f, 2.0f);
+                ImGui::SliderFloat("Wavelength min", &L_SumGerstner_min, 0.0f, 10.0f);
+                ImGui::SliderFloat("Wavelength max", &L_SumGerstner_max, 0.0f, 10.0f);
+                ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 1.0f);
+                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 10.0f) != 0.) {
+                    arretduTemps_SumGerstner = false;
+                }
+                ImGui::SliderFloat("X", &Direction_SumGerstner.x, -1.0f, 1.0f);
+                ImGui::SliderFloat("Z", &Direction_SumGerstner.z, -1.0f, 1.0f);         
+            } else {
+                ImGui::SliderFloat("Amplitude", &Amplitude_SumGerstner_FBM, 0.0f, 2.0f);
+                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 10.0f) != 0.) {
+                    arretduTemps_SumGerstner = false;
+                }
+                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumGerstner, 0.0f, 2.0f);
+                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumGerstner, 0.0f, 2.0f);
+                ImGui::SliderFloat("Wavelength", &L_FBM_SumGerstner, 0.0f, 50.0f);
+                ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 1.0f);
+            }
+
+            ImGui::SliderInt("Nombre de vagues", &numWave_SumGerstner, 1, 256);
+            ImGui::SliderInt("Seed", &seed, 0, 25);
+            ImGui::Checkbox("Fractionnal Brownian Motion", &FBM_SumGerstner);
+
+
+            ImGui::Separator();
+            ImGui::Text("Debug du shader");
+
+            if (ImGui::Checkbox("Material", &materiauSumGerstner)) {
+                if (materiauSumGerstner) {
+                    positionSumGerstner = false;
+                    uvSumGerstner = false;
+                    normalSumGerstner = false;
+                    binormalSumGerstner = false;
+                    tangentSumGerstner = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Position", &positionSumGerstner)) {
+                if (positionSumGerstner) {
+                    materiauSumGerstner = false;
+                    uvSumGerstner = false;
+                    normalSumGerstner = false;
+                    binormalSumGerstner = false;
+                    tangentSumGerstner = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("UV", &uvSumGerstner)) {
+                if (uvSumGerstner) {
+                    materiauSumGerstner = false;
+                    positionSumGerstner = false;
+                    normalSumGerstner = false;
+                    binormalSumGerstner = false;
+                    tangentSumGerstner = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Normal", &normalSumGerstner)) {
+                if (normalSumGerstner) {
+                    materiauSumGerstner = false;
+                    positionSumGerstner = false;
+                    uvSumGerstner = false;
+                    binormalSumGerstner = false;
+                    tangentSumGerstner = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Binormale", &binormalSumGerstner)) {
+                if (binormalSumGerstner) {
+                    materiauSumGerstner = false;
+                    positionSumGerstner = false;
+                    uvSumGerstner = false;
+                    normalSumGerstner = false;
+                    tangentSumGerstner = false;
+                }
+            }
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Tangente", &tangentSumGerstner)) {
+                if (tangentSumGerstner) {
+                    materiauSumGerstner = false;
+                    positionSumGerstner = false;
+                    uvSumGerstner = false;
+                    normalSumGerstner = false;
+                    binormalSumGerstner = false;
+                }
+            }
+
+            if (ImGui::Checkbox("Arrêt du temps", &arretduTemps_SumGerstner)) {
+                float S_SumGerstner_save = S_SumGerstner;
+                if (arretduTemps_SumGerstner) {
+                    S_SumGerstner = 0.0;
+                } else {
+                    S_SumGerstner = 1.0;
+                }
+            }
+
+            ImGui::Separator();
         }
 
         ImGui::Spacing();
@@ -500,7 +841,7 @@ int main() {
 
         ImGui::Spacing();
 
-        if(ImGui::SliderInt("Résolution de la grille", &taillePlan, 1, 50)) {
+        if(ImGui::SliderInt("Résolution de la grille", &taillePlan, 1, 500)) {
             plane.updateSize(taillePlan);
         }
 
@@ -508,7 +849,17 @@ int main() {
 
         if (ImGui::Checkbox("Fil de fer", &fildefer)) {
             if (fildefer) {
+                points = false;
                 glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            } else {
+                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            }
+        }
+        ImGui::SameLine();
+        if (ImGui::Checkbox("Points", &points)) {
+            if (points) {
+                fildefer = false;
+                glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
             } else {
                 glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             }
