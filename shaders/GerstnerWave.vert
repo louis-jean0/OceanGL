@@ -52,8 +52,8 @@ vec3 compute_Binormal(vec3 newPos, float g, float PI, float L, float Steepness, 
     float phi_t = (S * (2. / L)) * time;
 
     float WA = w * Amplitude;
-    float SA = sin(w * dot(Direction.xyz, newPos.xyz) + phi_t);
-    float CA = cos(w * dot(Direction.xyz, newPos.xyz) + phi_t);
+    float SA = sin(w * dot(Direction.xyz, aPos.xyz) + phi_t);
+    float CA = cos(w * dot(Direction.xyz, aPos.xyz) + phi_t);
 
     binormal.x = 1. - (Q * (Direction.x * Direction.x) * WA * SA);
     binormal.z = 0. - (Q * (Direction.x * Direction.z) * WA * SA);
@@ -70,8 +70,8 @@ vec3 compute_Tangent(vec3 newPos, float g, float PI, float L, float Steepness, f
     float phi_t = (S * (2. / L)) * time;
 
     float WA = w * Amplitude;
-    float SA = sin(w * dot(Direction.xyz, newPos.xyz) + phi_t);
-    float CA = cos(w * dot(Direction.xyz, newPos.xyz) + phi_t);
+    float SA = sin(w * dot(Direction.xyz, aPos.xyz) + phi_t);
+    float CA = cos(w * dot(Direction.xyz, aPos.xyz) + phi_t);
 
     tangent.x = 0. - (Q * (Direction.x * Direction.z) * WA * SA);
     tangent.z = 1. - (Q * (Direction.z * Direction.z) * WA * SA);
@@ -88,8 +88,8 @@ vec3 compute_Normal(vec3 newPos, float g, float PI, float L, float Steepness, fl
     float phi_t = (S * (2. / L)) * time;
 
     float WA = w * Amplitude;
-    float SA = sin(w * dot(Direction.xyz, newPos.xyz) + phi_t);
-    float CA = cos(w * dot(Direction.xyz, newPos.xyz) + phi_t);
+    float SA = sin(w * dot(Direction.xyz, aPos.xyz) + phi_t);
+    float CA = cos(w * dot(Direction.xyz, aPos.xyz) + phi_t);
 
     normal.x = 0. - (Direction.x * WA * CA);
     normal.z = 0. - (Direction.z * WA * CA);
