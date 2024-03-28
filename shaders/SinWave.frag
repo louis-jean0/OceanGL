@@ -17,9 +17,7 @@ in vec4 positionWorld;
 in vec3 o_positionWorld;
 in vec3 o_normalWorld;
 
-
 const float PI = 3.14159265359;
-
 
 // Functions
 // ----------------------------------------------------------------------------
@@ -64,9 +62,6 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
 }
 // ----------------------------------------------------------------------------
 
-
-
-
 uniform int Debug;
 
 // Light
@@ -75,7 +70,6 @@ uniform float roughness;
 uniform float ao;
 uniform float metallic;
 uniform vec3 albedo;
-
 
 void main() {
     vec3 N = normalize(o_normalWorld);

@@ -1,3 +1,4 @@
+#include "imgui.h"
 #include <Headers.hpp>
 
 void processInput(GLFWwindow *window);
@@ -47,11 +48,14 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
 // Light settings (here for ImGui)
 glm::vec3 LightPos = glm::vec3(0., 0., 0.);
 glm::vec3 ViewPos = cameraPos;
+glm::vec3 LightColor = glm::vec3(0.2,0.2,0.85);
+float ambientStrength = 0.5f;
+float diffuseStrength = 1.0f;
+float specularStrength = 0.5f;
 float roughness = 0.5f;
 float ao = 0.5f;
 float metallic = 0.5f;
 glm::vec3 albedo = glm::vec3(1., 0., 0.);
-
 
 // Sin
 float Amplitude_Sin = 0.5;   // amplitude
@@ -239,17 +243,33 @@ int main() {
         ImGui::Spacing();
         ImGui::Separator();
 
-        ImGui::Text("Paramètres de la lumière :");
-        ImGui::Spacing();
-        ImGui::SliderFloat("Roughness", &roughness, 0.0f, 1.0f);
-        ImGui::SliderFloat("Occlusion ambiante", &ao, 0.0f, 1.0f);
-        ImGui::SliderFloat("Métallique", &metallic, 0.0f, 1.0f);
-        ImGui::ColorEdit3("Albedo", &albedo[0]);
-        ImGui::Text("Position de la lumière");
-        ImGui::SliderFloat("X_lightpos", &LightPos.x, -10.0f, 10.0f);
-        ImGui::SliderFloat("Y_lightpos", &LightPos.y, -10.0f, 10.0f);
-        ImGui::SliderFloat("Z_lightpos", &LightPos.z, -10.0f, 10.0f);
-        ImGui::Separator();
+        if(ModeleSin) {
+            ImGui::Text("Paramètres de la lumière :");
+            ImGui::Spacing();
+            ImGui::SliderFloat("Roughness", &roughness, 0.0f, 1.0f);
+            ImGui::SliderFloat("Occlusion ambiante", &ao, 0.0f, 1.0f);
+            ImGui::SliderFloat("Métallique", &metallic, 0.0f, 1.0f);
+            ImGui::ColorEdit3("Albedo", &albedo[0]);
+            ImGui::Text("Position de la lumière");
+            ImGui::SliderFloat("X_lightpos", &LightPos.x, -10.0f, 10.0f);
+            ImGui::SliderFloat("Y_lightpos", &LightPos.y, -10.0f, 10.0f);
+            ImGui::SliderFloat("Z_lightpos", &LightPos.z, -10.0f, 10.0f);
+            ImGui::Separator();
+        }
+
+        if(ModeleSumSine) {
+            ImGui::Text("Paramètres de la lumière :");
+            ImGui::Spacing();
+            ImGui::SliderFloat("Ambient", &ambientStrength, 0.0f, 1.0f);
+            ImGui::SliderFloat("Diffuse", &diffuseStrength, 0.0f, 1.0f);
+            ImGui::SliderFloat("Specular", &specularStrength, 0.0f, 1.0f);
+            ImGui::ColorEdit3("Couleur de la lumière", &LightColor[0]);
+            ImGui::Text("Position de la lumière :");
+            ImGui::SliderFloat("X", &LightPos.x, -10.0f, 10.0f);
+            ImGui::SliderFloat("Y", &LightPos.y, -10.0f, 10.0f);
+            ImGui::SliderFloat("Z", &LightPos.z, -10.0f, 10.0f);
+            ImGui::Separator();
+        }
 
         ImGui::Spacing();
 
@@ -557,6 +577,12 @@ int main() {
             plane.getShader().setBind1f("Gain_A", Gain_A_SumSines);
             plane.getShader().setBind1f("Gain_W", Gain_W_SumSines);
             plane.getShader().setBind1f("L_FBM", L_FBM_SumSines);
+            plane.getShader().setBind3f("lightPosition", LightPos.x, LightPos.y, LightPos.z);
+            plane.getShader().setBind3f("viewPosition",cameraPos.x,cameraPos.y,cameraPos.z);
+            plane.getShader().setBind3f("lightColor", LightColor.x, LightColor.y, LightColor.z);
+            plane.getShader().setBind1f("ambientStrength", ambientStrength);
+            plane.getShader().setBind1f("diffuseStrength", diffuseStrength);
+            plane.getShader().setBind1f("specularStrength", specularStrength);
 
             if(materiauSumSines == true) {
                 plane.getShader().setBind1i("Debug", 0);

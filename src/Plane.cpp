@@ -41,13 +41,13 @@ void Plane::createPlane() {
             this->verts.push_back(normal.y);
             this->verts.push_back(normal.z);
 
-            this->verts.push_back(tangente.x);
-            this->verts.push_back(tangente.y);
-            this->verts.push_back(tangente.z);
+            // this->verts.push_back(tangente.x);
+            // this->verts.push_back(tangente.y);
+            // this->verts.push_back(tangente.z);
 
-            this->verts.push_back(bitangente.x);
-            this->verts.push_back(bitangente.y);
-            this->verts.push_back(bitangente.z);
+            // this->verts.push_back(bitangente.x);
+            // this->verts.push_back(bitangente.y);
+            // this->verts.push_back(bitangente.z);
         }
     }
 
