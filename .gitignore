@@ -1,6 +1,6 @@
-/build/
-/bin/
-/lib/
-/.vscode/
+build/
+bin/
+lib/
+.vscode/
 .cache/
 compile_commands.json
