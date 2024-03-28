@@ -54,7 +54,7 @@ glm::vec3 albedo = glm::vec3(1., 0., 0.);
 
 
 // Sin
-float Amplitude_Sin = 1.;   // amplitude
+float Amplitude_Sin = 0.5;   // amplitude
 float L_Sin = 1.0;  // distance pic2crête
 float S_Sin = 1.0;  // Vitesse
 glm::vec3 Direction_Sin = glm::vec3(1.0f, 0.f, 0.f);
@@ -68,24 +68,24 @@ glm::vec3 Direction_Gerstner = glm::vec3(1.0f, 0.f, 0.f);
 
 // SumSin
 // Généraux
-int numWave_SumSines = 1;
+int numWave_SumSines = 30;
 int seed = 0;
-bool FBM_SumSines = false;
-bool DomainWarping_SumSines = false;
+bool FBM_SumSines = true;
+bool DomainWarping_SumSines = true;
 
 // Sans FBM
 float Amplitude_SumSines_min = 0.1; 
 float Amplitude_SumSines_max = 1.;  
 float L_min_SumSines = 0.5;  
 float L_max_SumSines = 1.0;
-float S_SumSines = 1.0;  
+float S_SumSines = 1.0;
 glm::vec3 Direction_SumSines = glm::vec3(1.0f, 0.f, 0.f);
 
 // Avec FBM
-float Amplitude_SumSines_FBM = 1.0;
-float Gain_A_SumSines = 0.82;
-float Gain_W_SumSines = 1.18;
-float L_FBM_SumSines = 1.0;
+float Amplitude_SumSines_FBM = 0.5;
+float Gain_A_SumSines = 0.8;
+float Gain_W_SumSines = 1.2;
+float L_FBM_SumSines = 20.0;
 
 // SumGerstner
 // Généraux
@@ -94,18 +94,17 @@ float Amplitude_SumGerstner_max = 1.0;
 
 float L_SumGerstner_min = 1.0;
 float L_SumGerstner_max = 1.0;
-float Steepness_SumGerstner = 1.0;
-float S_SumGerstner = 1.0;
+float Steepness_SumGerstner = 0.5;
+float S_SumGerstner = 20.0;
 glm::vec3 Direction_SumGerstner = glm::vec3(1.0f, 0.f, 0.f);
-int numWave_SumGerstner = 1;
+int numWave_SumGerstner = 50;
 
 // Avec FBM
-float Amplitude_SumGerstner_FBM = 1.0;
-float Gain_A_SumGerstner = 0.82;
-float Gain_W_SumGerstner = 1.18;
-float L_FBM_SumGerstner = 1.0;
-bool FBM_SumGerstner = false;
-
+float Amplitude_SumGerstner_FBM = 0.5;
+float Gain_A_SumGerstner = 0.5;
+float Gain_W_SumGerstner = 1.5;
+float L_FBM_SumGerstner = 25;
+bool FBM_SumGerstner = true;
 
 // Booléens modèles
 bool ModeleSin = true;
@@ -175,7 +174,6 @@ int main() {
     Plane plane(taillePlan, resolution);
     plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
     plane.createPlane();
-
 
     glEnable(GL_DEPTH_TEST);
 
@@ -340,7 +338,7 @@ int main() {
             
 
             ImGui::Text("Paramètres du shader sinusoïdal :");
-            ImGui::SliderFloat("Amplitude", &Amplitude_Sin, 0.0f, 4.0f);
+            ImGui::SliderFloat("Amplitude", &Amplitude_Sin, 0.0f, 5.0f);
             ImGui::SliderFloat("Wavelength", &L_Sin, 0.01f, 10.0f);
 
             if(ImGui::SliderFloat("Speed", &S_Sin, 0.0f, 15.0f) != 0.) {
@@ -609,8 +607,8 @@ int main() {
                 if(ImGui::SliderFloat("Speed", &S_SumSines, 0.0f, 10.0f) != 0.) {
                     arretduTemps_SumSines = false;
                 }
-                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumSines, 0.0f, 2.0f);
-                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumSines, 0.0f, 2.0f);
+                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumSines, 0.01f, 0.99f);
+                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumSines, 0.01, 5.0f);
                 ImGui::SliderFloat("Wavelength", &L_FBM_SumSines, 0.01f, 50.0f);
             }
 
@@ -761,8 +759,8 @@ int main() {
                 if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 20.0f) != 0.) {
                     arretduTemps_SumGerstner = false;
                 }
-                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumGerstner, 0.01f, 2.0f);
-                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumGerstner,0.01f, 2.0f);
+                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumGerstner, 0.01f, 0.99f);
+                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumGerstner,0.01, 5.0f);
                 ImGui::SliderFloat("Wavelength", &L_FBM_SumGerstner, 0.01f, 50.0f);
                 ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 0.5f);
             }
