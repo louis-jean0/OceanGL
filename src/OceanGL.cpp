@@ -55,7 +55,7 @@ glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 float Amplitude_Sin = 1.;   // amplitude
 float L_Sin = 1.0;  // distance pic2crête
 float S_Sin = 1.0;  // Vitesse
-glm::vec3 Direction_Sin = glm::vec3(1.0f, 0.f, 0.f);
+glm::vec3 Direction_Sin = glm::vec3(1.0f, 0.0f, 0.0f);
 
 // Gerstner 
 float Amplitude_Gerstner = 1.0;

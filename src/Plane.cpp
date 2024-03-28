@@ -30,7 +30,6 @@ void Plane::createPlane() {
             
             this->verts.push_back((float)w / div);
             this->verts.push_back((float)h / div);
- 
 
             glm::vec3 normal(0., 1., 0.);
 
