@@ -1,8 +1,7 @@
 #include <Skybox.hpp>
 
-Skybox::Skybox(int sizeFace, int resolutionFace, glm::vec3 position){
+Skybox::Skybox(int sizeFace, glm::vec3 position){
     this->sizeFace = sizeFace;
-    this->resolutionFace = resolutionFace;
     this->backBottomLeftCorner = position;
     this->buildFaces();
 }
@@ -10,8 +9,50 @@ Skybox::Skybox(int sizeFace, int resolutionFace, glm::vec3 position){
 void Skybox::buildFaces(){
     std::cout << "Construction des faces de la skybox\n";
 
-    float step = this->sizeFace / this->resolutionFace;
+    float size = 10.f;
+    int div = 1;
+    int numVertices = (div + 1) * (div + 1);
+    float scale = size / div;
 
+    for (int h = 0; h < div + 1; h++) {
+        for (int w = 0; w < div + 1; w++) {
+            float x = (float)w * scale - size / 2.0f;
+            float y = 0.0f;
+            float z = (float)h * scale - size / 2.0f; 
+
+            this->verts.push_back(x);
+            this->verts.push_back(y);
+            this->verts.push_back(z);
+            
+            this->verts.push_back((float)w / div);
+            this->verts.push_back((float)h / div);
+ 
+
+            glm::vec3 normal(0., 1., 0.);
+
+            this->verts.push_back(normal.x);
+            this->verts.push_back(normal.y);
+            this->verts.push_back(normal.z);
+        }
+    }
+
+    for (int h = 0; h < div; h++) {
+        for (int w = 0; w < div; w++) {
+            int index = h * (div + 1) + w;
+            indices.push_back(index);
+            indices.push_back(index + 1);
+            indices.push_back(index + div + 1);
+            indices.push_back(index + 1);
+            indices.push_back(index + div + 2);
+            indices.push_back(index + div + 1);
+        }
+    }
+
+    vb.genVBO(verts);
+    va.genVAO();
+    eb.genEBO(indices);
+
+    /*
     for (int i = 0 ; i < 6 ; i++){
         std::cout << "Face " << i << "\n";
         Face *f = new Face;
@@ -62,6 +103,7 @@ void Skybox::buildFaces(){
 
         this->facesSkybox.push_back(f);
     }
+    */
 }
 
 void Skybox::useShader() {
@@ -77,36 +119,6 @@ void Skybox::detachShader() {
 }
 
 void Skybox::updateSkybox(GLenum mode){
-    for (int i = 0 ; i < 6 ; i++){
-        glBindVertexArray(this->facesSkybox[i]->va.getVAO()); 
-
-        glDrawElements(mode, this->facesSkybox[i]->indicesTriangles.size(), GL_UNSIGNED_INT, 0); 
-
-        /*
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, this->facesSkybox[i]->vb.getVBO());
-        glVertexAttribPointer(
-                    0,                  // attribute
-                    3,                  // size
-                    GL_FLOAT,           // type
-                    GL_FALSE,           // normalized?
-                    0,                  // stride
-                    (void*)0            // array buffer offset
-                    );
-
-        // Index buffer
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->facesSkybox[i]->eb.getEBO());
-
-        // Draw the triangles !
-        glDrawElements(
-                    GL_TRIANGLES,      // mode
-                    this->facesSkybox[i]->indicesTriangles.size(),    // count
-                    GL_UNSIGNED_INT,   // type
-                    (void*)0           // element array buffer offset
-                    );
-
-        glDisableVertexAttribArray(0);
-        */
-
-    }
+    glBindVertexArray(this->va.getVAO()); 
+    glDrawElements(mode, this->indices.size(), GL_UNSIGNED_INT, 0); 
 }

@@ -9,7 +9,7 @@
 
 class Plane {
     private:
-        float x, y, z;
+        // float x, y, z;
         std::vector<float> verts;
         std::vector<unsigned int> indices;
 

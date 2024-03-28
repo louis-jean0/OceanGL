@@ -122,8 +122,7 @@ int main() {
 
     // Création de la skybox
     int skyboxSize = 2000;
-    int resolutionSkybox = 200;
-    Skybox *sky = new Skybox(skyboxSize, resolutionSkybox, glm::vec3(-1.*(skyboxSize/2),-1.*(skyboxSize/2),-1.*(skyboxSize/2)));
+    Skybox *sky = new Skybox(skyboxSize, glm::vec3(-1.*(skyboxSize/2),-1.*(skyboxSize/2),-1.*(skyboxSize/2)));
     sky->attachShader("../shaders/SkyboxVertex.vert", "../shaders/SkyboxFragment.frag");
     
     // Plane
@@ -514,11 +513,11 @@ int main() {
                 plane.getShader().setBind1i("Debug", 5);
             }
 
+            //plane.useShader();
+            //plane.updatePlane(GL_TRIANGLES);
+
             sky->useShader();
             sky->updateSkybox(GL_TRIANGLES);
-
-            plane.useShader();
-            plane.updatePlane(GL_TRIANGLES);
 
 
             ImGui::Text("Paramètres du shader SumSine :");

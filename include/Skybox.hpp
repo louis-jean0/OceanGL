@@ -5,8 +5,8 @@
 #include <Shader.hpp>
 
 struct Face {
-    std::vector<float> vertices;
-    std::vector<unsigned int> indicesTriangles;
+    std::vector<float> verts;
+    std::vector<unsigned int> indices;
 
     VBO vb;
     EBO eb;
@@ -16,14 +16,20 @@ struct Face {
 
 class Skybox {
     private:
+        std::vector<float> verts;
+        std::vector<unsigned int> indices;
+
+        VBO vb;
+        EBO eb;
+        VAO va;
+        
         int sizeFace; // La skybox est composé de 6 faces carrées de taille sizeFace x sizeFace
-        int resolutionFace;
         glm::vec3 backBottomLeftCorner; // Ce point permet de placer la skybox
         std::vector<Face*> facesSkybox;
 
         Shader shader;
     public:
-        Skybox(int sizeFace, int resolutionFace, glm::vec3 position);
+        Skybox(int sizeFace, glm::vec3 position);
         void buildFaces();
 
         void useShader();
