@@ -3,8 +3,6 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aTex;
 layout (location = 2) in vec3 aNormal;
-layout (location = 3) in vec3 aTangente;
-layout (location = 4) in vec3 aBitangente;
 
 // Variables de sorties
 out float height;
@@ -46,36 +44,24 @@ vec3 Add_Wave(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float
     vec3 newPos = Pos; 
     float w = (2.0f * PI) / L;
     float phi_t = (S * w) * time;
-    newPos.y = Amplitude * sin(dot(Direction.xyz, aPos.xyz) * w + phi_t);
+    newPos.y = Amplitude * sin(dot(Direction.xz, Pos.xz) * w + phi_t);
     return newPos;
 }
 
-vec3 ComputeBinormale(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) {
-    vec3 newPos = Pos; 
+vec3 ComputeBinormale(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) { 
     float w = (2.0f * PI) / L;
     float phi_t = (S * w) * time;
-    newPos.y = Amplitude * w * Direction.x * cos(dot(Direction.xyz, aPos.xyz) * w + phi_t);
+    float dx = Amplitude * w * Direction.x * cos(dot(Direction.xz, Pos.xz) * w + phi_t);
 
-    return normalize(vec3(1.0f, newPos.y, 0.f));
+    return normalize(vec3(1.0f, dx, 0.f));
 }
 
 vec3 ComputeTangente(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) {
-    vec3 newPos = Pos; 
     float w = (2.0f * PI) / L;
     float phi_t = (S * w) * time;
-    newPos.y = Amplitude * w * Direction.z * cos(dot(Direction.xyz, aPos.xyz) * w + phi_t);
+    float dz = Amplitude * w * Direction.z * cos(dot(Direction.xz, Pos.xz) * w + phi_t);
 
-    return normalize(vec3(0.0f, newPos.y, 1.0f));
-}
-
-vec3 ComputeNormal(vec3 Pos, float L, float S, float Amplitude, vec3 Direction, float time) {
-    vec3 newPos = Pos; 
-    float w = (2.0f * PI) / L;
-    float phi_t = (S * w) * time;
-    newPos.x = (-1.0f) * Amplitude * w * Direction.x * cos(dot(Direction.xyz, aPos.xyz) * w + phi_t);
-    newPos.z = (-1.0f) * Amplitude * w * Direction.z * cos(dot(Direction.xyz, aPos.xyz) * w + phi_t);
-
-    return normalize(vec3(newPos.x, 1.0f, newPos.z));
+    return normalize(vec3(0.0f, dz, 1.0f));
 }
 
 void main()
@@ -86,11 +72,7 @@ void main()
     // Binormale / Tangente / Normale
     binormale = ComputeBinormale(aPos, L, S, Amplitude, Direction, time);
     tangente = ComputeTangente(aPos, L, S, Amplitude, Direction, time);
-    normal = ComputeNormal(aPos, L, S, Amplitude, Direction, time);
-    // Pareil que :
-    //normal = cross(tangente, binormale);
-
-
+    normal = normalize(cross(tangente,binormale));
 
     // Autres
     pos = newWave;
@@ -114,7 +96,6 @@ void main()
     TangentFragPos  = TBN * Pos;
 
     binormale = B;
-
 
     // Matériau
     height = newWave.y;
