@@ -1,11 +1,25 @@
 #pragma once
 
+// Glad & GLFW
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "../external/glm/ext/matrix_clip_space.hpp"
+
+// Imgui
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+
+// GLM
+#include <../external/glm/ext.hpp>
+#include <../external/glm/vec2.hpp> 
+#include <../external/glm/vec3.hpp> 
+#include <../external/glm/vec4.hpp> 
+#include <../external/glm/mat4x4.hpp> 
+#include <../external/glm/ext/matrix_clip_space.hpp>
+#include <../external/glm/gtc/matrix_transform.hpp> 
+#include <../external/glm/gtc/type_ptr.hpp>
+
+// Common
 #include <iostream>
 #include <vector>
 #include <string>
@@ -16,11 +30,12 @@
 #include <unistd.h>
 #include <sys/sysinfo.h>
 #include <thread>
-#include "../external/glm/glm.hpp"
-#include "../external/glm/gtc/matrix_transform.hpp"
-#include "../external/glm/gtc/type_ptr.hpp"
 
 #include <Window.hpp>
 #include <Plane.hpp>
-#include <Shader.hpp>
 #include <Orbital.hpp>
+#include <Skybox.hpp>
+#include <EBO.hpp>
+#include <VBO.hpp>
+#include <VAO.hpp>
+#include <Shader.hpp>

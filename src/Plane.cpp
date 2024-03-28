@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <Plane.hpp>
 
+
 Plane::Plane(float size, int div) {
     this->size = size;
     this->div = div;
@@ -32,11 +33,21 @@ void Plane::createPlane() {
             this->verts.push_back((float)h / div);
  
 
-            glm::vec3 normal(0., 1., 0.);
+            glm::vec3 normal(0., -1., 0.);
+            glm::vec3 tangente(1., 0., 0.); 
+            glm::vec3 bitangente(0., 0., 1.); 
 
             this->verts.push_back(normal.x);
             this->verts.push_back(normal.y);
             this->verts.push_back(normal.z);
+
+            this->verts.push_back(tangente.x);
+            this->verts.push_back(tangente.y);
+            this->verts.push_back(tangente.z);
+
+            this->verts.push_back(bitangente.x);
+            this->verts.push_back(bitangente.y);
+            this->verts.push_back(bitangente.z);
         }
     }
 

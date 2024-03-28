@@ -1,4 +1,3 @@
-#include "imgui.h"
 #include <Headers.hpp>
 
 void processInput(GLFWwindow *window);
@@ -44,11 +43,14 @@ glm::vec3 cameraPos = glm::vec3(0.0f, 5.0f, -10.0f);
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f,  0.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
 
+
 // Light settings (here for ImGui)
-float ambientStrength = 0.1f;
-float diffuseStrength = 1.0f;
-float specularStrength = 0.5f;
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 LightPos = glm::vec3(0., 0., 0.);
+glm::vec3 ViewPos = cameraPos;
+float roughness = 0.5f;
+float ao = 0.5f;
+float metallic = 0.5f;
+glm::vec3 albedo = glm::vec3(1., 0., 0.);
 
 
 // Sin
@@ -174,6 +176,12 @@ int main() {
     plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
     plane.createPlane();
 
+    Skybox sky;
+    sky.attachShader("../shaders/Skybox.vert", "../shaders/Skybox.frag");
+    sky.createSkybox();
+
+
+
 
     glEnable(GL_DEPTH_TEST);
 
@@ -188,8 +196,9 @@ int main() {
 
         // Camera
         glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = glm::lookAt(cameraPos,cameraTarget,cameraUp);
-        glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT,0.1f,5000000.0f);
+        glm::mat4 modelSkybox = glm::mat4(1.0f);
+        glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
+        glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 5000000.0f);
 
         // Gestion des entrées
         processInput(window.get_window());
@@ -240,11 +249,14 @@ int main() {
 
         ImGui::Text("Paramètres de la lumière :");
         ImGui::Spacing();
-
-        ImGui::SliderFloat3("Position de la lumière", glm::value_ptr(lightPos), -10.0f, 10.0f);
-        ImGui::SliderFloat("Ambiant", &ambientStrength, 0.0f, 1.0f);
-        ImGui::SliderFloat("Diffuse", &diffuseStrength, 0.0f, 2.0f);
-        ImGui::SliderFloat("Spéculaire", &specularStrength, 0.0f, 1.0f);
+        ImGui::SliderFloat("Roughness", &roughness, 0.0f, 1.0f);
+        ImGui::SliderFloat("Occlusion ambiante", &ao, 0.0f, 1.0f);
+        ImGui::SliderFloat("Métallique", &metallic, 0.0f, 1.0f);
+        ImGui::ColorEdit3("Albedo", &albedo[0]);
+        ImGui::Text("Position de la lumière");
+        ImGui::SliderFloat("X_lightpos", &LightPos.x, -10.0f, 10.0f);
+        ImGui::SliderFloat("Y_lightpos", &LightPos.y, -10.0f, 10.0f);
+        ImGui::SliderFloat("Z_lightpos", &LightPos.z, -10.0f, 10.0f);
         ImGui::Separator();
 
         ImGui::Spacing();
@@ -305,6 +317,15 @@ int main() {
             plane.getShader().setBind1f("S", S_Sin);
             plane.getShader().setBind3f("Direction", Direction_Sin.x, Direction_Sin.y, Direction_Sin.z);
             plane.getShader().setBind1f("PI", M_PI);
+
+            // PBR
+            plane.getShader().setBind3f("LightPos", LightPos.x, LightPos.y, LightPos.z);
+            plane.getShader().setBind3f("ViewPos", cameraPos.x, cameraPos.y, cameraPos.z);
+            plane.getShader().setBind1f("roughness", roughness);
+            plane.getShader().setBind1f("ao", ao);
+            plane.getShader().setBind1f("metallic", metallic);
+            plane.getShader().setBind3f("albedo", albedo.x, albedo.y, albedo.z);
+
 
             if(materiauSin == true) {
                 plane.getShader().setBind1i("Debug", 0);
@@ -869,6 +890,13 @@ int main() {
 
         // Light
         glm::vec3 viewPos = cameraPos;
+
+        sky.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelSkybox));
+        sky.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+        sky.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+        sky.useShader();
+        sky.updateSkybox(GL_TRIANGLES);
+        sky.useShader();
 
         // Render GUI window
         ImGui::Render();
