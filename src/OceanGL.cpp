@@ -176,12 +176,6 @@ int main() {
     plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
     plane.createPlane();
 
-    Skybox sky;
-    sky.attachShader("../shaders/Skybox.vert", "../shaders/Skybox.frag");
-    sky.createSkybox();
-
-
-
 
     glEnable(GL_DEPTH_TEST);
 
@@ -346,10 +340,10 @@ int main() {
             
 
             ImGui::Text("Paramètres du shader sinusoïdal :");
-            ImGui::SliderFloat("Amplitude", &Amplitude_Sin, 0.0f, 20.0f);
-            ImGui::SliderFloat("Wavelength", &L_Sin, 0.0f, 10.0f);
+            ImGui::SliderFloat("Amplitude", &Amplitude_Sin, 0.0f, 4.0f);
+            ImGui::SliderFloat("Wavelength", &L_Sin, 0.01f, 10.0f);
 
-            if(ImGui::SliderFloat("Speed", &S_Sin, 0.0f, 10.0f) != 0.) {
+            if(ImGui::SliderFloat("Speed", &S_Sin, 0.0f, 15.0f) != 0.) {
                 arretduTemps_Sin = false;
             }
 
@@ -463,11 +457,11 @@ int main() {
                 
 
             ImGui::Text("Paramètres du shader Gerstner :");
-            ImGui::SliderFloat("Amplitude", &Amplitude_Gerstner, 0.0f, 20.0f);
-            ImGui::SliderFloat("Wavelength", &L_Gerstner, 0.0f, 10.0f);
+            ImGui::SliderFloat("Amplitude", &Amplitude_Gerstner, 0.01f, 4.0f);
+            ImGui::SliderFloat("Wavelength", &L_Gerstner, 0.01f, 30.0f);
             ImGui::SliderFloat("Steepness", &Steepness_Gerstner, 0.0f, 1.0f);
 
-            if(ImGui::SliderFloat("Speed", &S_Gerstner, 0.0f, 10.0f) != 0.) {
+            if(ImGui::SliderFloat("Speed", &S_Gerstner, 0.0f, 30.0f) != 0.) {
                 arretduTemps_Gerstner = false;
             }
 
@@ -601,10 +595,10 @@ int main() {
             ImGui::Text("Paramètres du shader SumSine :");
 
             if(FBM_SumSines == false) {
-                ImGui::SliderFloat("Amplitude min", &Amplitude_SumSines_min, 0.0f, 20.0f);
-                ImGui::SliderFloat("Amplitude max", &Amplitude_SumSines_max, 0.0f, 20.0f);
-                ImGui::SliderFloat("Wavelength min", &L_min_SumSines, 0.0f, 10.0f);
-                ImGui::SliderFloat("Wavelength max", &L_max_SumSines, 0.0f, 10.0f);
+                ImGui::SliderFloat("Amplitude min", &Amplitude_SumSines_min, 0.0f, 2.0f);
+                ImGui::SliderFloat("Amplitude max", &Amplitude_SumSines_max, 0.0f, 2.0f);
+                ImGui::SliderFloat("Wavelength min", &L_min_SumSines, 0.01f, 10.0f);
+                ImGui::SliderFloat("Wavelength max", &L_max_SumSines, 0.01f, 10.0f);
                 if(ImGui::SliderFloat("Speed", &S_SumSines, 0.0f, 10.0f) != 0.) {
                     arretduTemps_SumSines = false;
                 }
@@ -617,7 +611,7 @@ int main() {
                 }
                 ImGui::SliderFloat("Gain amplitude", &Gain_A_SumSines, 0.0f, 2.0f);
                 ImGui::SliderFloat("Gain wavelength", &Gain_W_SumSines, 0.0f, 2.0f);
-                ImGui::SliderFloat("Wavelength", &L_FBM_SumSines, 0.0f, 50.0f);
+                ImGui::SliderFloat("Wavelength", &L_FBM_SumSines, 0.01f, 50.0f);
             }
 
             ImGui::SliderInt("Nombre de vagues", &numWave_SumSines, 1, 256);
@@ -752,25 +746,25 @@ int main() {
 
 
             if(FBM_SumGerstner == false) {
-                ImGui::SliderFloat("Amplitude min", &Amplitude_SumGerstner_min, 0.0f, 2.0f);
-                ImGui::SliderFloat("Amplitude max", &Amplitude_SumGerstner_max, 0.0f, 2.0f);
-                ImGui::SliderFloat("Wavelength min", &L_SumGerstner_min, 0.0f, 10.0f);
-                ImGui::SliderFloat("Wavelength max", &L_SumGerstner_max, 0.0f, 10.0f);
+                ImGui::SliderFloat("Amplitude min", &Amplitude_SumGerstner_min, 0.01f, 2.0f);
+                ImGui::SliderFloat("Amplitude max", &Amplitude_SumGerstner_max, 0.01f, 2.0f);
+                ImGui::SliderFloat("Wavelength min", &L_SumGerstner_min, 0.01f, 10.0f);
+                ImGui::SliderFloat("Wavelength max", &L_SumGerstner_max, 0.01f, 10.0f);
                 ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 1.0f);
-                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 10.0f) != 0.) {
+                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 20.0f) != 0.) {
                     arretduTemps_SumGerstner = false;
                 }
                 ImGui::SliderFloat("X", &Direction_SumGerstner.x, -1.0f, 1.0f);
                 ImGui::SliderFloat("Z", &Direction_SumGerstner.z, -1.0f, 1.0f);         
             } else {
-                ImGui::SliderFloat("Amplitude", &Amplitude_SumGerstner_FBM, 0.0f, 2.0f);
-                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 10.0f) != 0.) {
+                ImGui::SliderFloat("Amplitude", &Amplitude_SumGerstner_FBM, 0.01f, 2.0f);
+                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 20.0f) != 0.) {
                     arretduTemps_SumGerstner = false;
                 }
-                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumGerstner, 0.0f, 2.0f);
-                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumGerstner, 0.0f, 2.0f);
-                ImGui::SliderFloat("Wavelength", &L_FBM_SumGerstner, 0.0f, 50.0f);
-                ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 1.0f);
+                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumGerstner, 0.01f, 2.0f);
+                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumGerstner,0.01f, 2.0f);
+                ImGui::SliderFloat("Wavelength", &L_FBM_SumGerstner, 0.01f, 50.0f);
+                ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 0.5f);
             }
 
             ImGui::SliderInt("Nombre de vagues", &numWave_SumGerstner, 1, 256);
@@ -890,13 +884,6 @@ int main() {
 
         // Light
         glm::vec3 viewPos = cameraPos;
-
-        sky.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelSkybox));
-        sky.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
-        sky.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
-        sky.useShader();
-        sky.updateSkybox(GL_TRIANGLES);
-        sky.useShader();
 
         // Render GUI window
         ImGui::Render();
