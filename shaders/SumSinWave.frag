@@ -21,7 +21,7 @@ void main() {
     vec3 colBase = vec3(0.6, 0.8, 0.98); // Crête
     vec3 ColClaire = vec3(0.01, 0.36, 0.7); // Creux
 
-    float gradient = 0.2;
+    float gradient = 0.8;
 
     float mixF = smoothstep(gradient, gradient + 0.1, height);
     //vec3 fin = mix(colBase, ColClaire, mixF);
@@ -42,7 +42,7 @@ void main() {
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     vec3 specular = specularStrength * spec * lightColor;
 
-    vec3 fin = (ambient + diffuse + specular);
+    vec3 fin = (ambient + diffuse + specular) + mixF;
 
     if(Debug == 0) {
         FragColor = vec4(fin, 1.0);
