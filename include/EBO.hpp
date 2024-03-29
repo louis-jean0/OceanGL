@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+
 class EBO {
     private:
         unsigned int ElementsBufferObject;

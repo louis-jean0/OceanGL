@@ -50,7 +50,7 @@ add_executable(OceanGL
     src/Plane.cpp
     src/Shader.cpp
     src/Orbital.cpp
-
+    src/Skybox.cpp
     )
 
 # Include directories for our project

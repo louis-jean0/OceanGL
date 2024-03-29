@@ -44,15 +44,21 @@ glm::vec3 cameraPos = glm::vec3(0.0f, 5.0f, -10.0f);
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f,  0.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
 
+
 // Light settings (here for ImGui)
-float ambientStrength = 0.1f;
+glm::vec3 LightPos = glm::vec3(0., 0., 0.);
+glm::vec3 ViewPos = cameraPos;
+glm::vec3 LightColor = glm::vec3(0.2,0.2,0.85);
+float ambientStrength = 0.5f;
 float diffuseStrength = 1.0f;
 float specularStrength = 0.5f;
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-
+float roughness = 0.5f;
+float ao = 0.5f;
+float metallic = 0.5f;
+glm::vec3 albedo = glm::vec3(1., 0., 0.);
 
 // Sin
-float Amplitude_Sin = 1.;   // amplitude
+float Amplitude_Sin = 0.5;   // amplitude
 float L_Sin = 1.0;  // distance pic2crête
 float S_Sin = 1.0;  // Vitesse
 glm::vec3 Direction_Sin = glm::vec3(1.0f, 0.f, 0.f);
@@ -66,24 +72,24 @@ glm::vec3 Direction_Gerstner = glm::vec3(1.0f, 0.f, 0.f);
 
 // SumSin
 // Généraux
-int numWave_SumSines = 1;
+int numWave_SumSines = 30;
 int seed = 0;
-bool FBM_SumSines = false;
-bool DomainWarping_SumSines = false;
+bool FBM_SumSines = true;
+bool DomainWarping_SumSines = true;
 
 // Sans FBM
 float Amplitude_SumSines_min = 0.1; 
 float Amplitude_SumSines_max = 1.;  
 float L_min_SumSines = 0.5;  
 float L_max_SumSines = 1.0;
-float S_SumSines = 1.0;  
+float S_SumSines = 1.0;
 glm::vec3 Direction_SumSines = glm::vec3(1.0f, 0.f, 0.f);
 
 // Avec FBM
-float Amplitude_SumSines_FBM = 1.0;
-float Gain_A_SumSines = 0.82;
-float Gain_W_SumSines = 1.18;
-float L_FBM_SumSines = 1.0;
+float Amplitude_SumSines_FBM = 0.5;
+float Gain_A_SumSines = 0.8;
+float Gain_W_SumSines = 1.2;
+float L_FBM_SumSines = 20.0;
 
 // SumGerstner
 // Généraux
@@ -92,18 +98,17 @@ float Amplitude_SumGerstner_max = 1.0;
 
 float L_SumGerstner_min = 1.0;
 float L_SumGerstner_max = 1.0;
-float Steepness_SumGerstner = 1.0;
-float S_SumGerstner = 1.0;
+float Steepness_SumGerstner = 0.5;
+float S_SumGerstner = 20.0;
 glm::vec3 Direction_SumGerstner = glm::vec3(1.0f, 0.f, 0.f);
-int numWave_SumGerstner = 1;
+int numWave_SumGerstner = 50;
 
 // Avec FBM
-float Amplitude_SumGerstner_FBM = 1.0;
-float Gain_A_SumGerstner = 0.82;
-float Gain_W_SumGerstner = 1.18;
-float L_FBM_SumGerstner = 1.0;
-bool FBM_SumGerstner = false;
-
+float Amplitude_SumGerstner_FBM = 0.5;
+float Gain_A_SumGerstner = 0.5;
+float Gain_W_SumGerstner = 1.5;
+float L_FBM_SumGerstner = 25;
+bool FBM_SumGerstner = true;
 
 // Booléens modèles
 bool ModeleSin = true;
@@ -174,7 +179,6 @@ int main() {
     plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
     plane.createPlane();
 
-
     glEnable(GL_DEPTH_TEST);
 
     // Render loop
@@ -188,8 +192,9 @@ int main() {
 
         // Camera
         glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = glm::lookAt(cameraPos,cameraTarget,cameraUp);
-        glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT,0.1f,5000000.0f);
+        glm::mat4 modelSkybox = glm::mat4(1.0f);
+        glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
+        glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 5000000.0f);
 
         // Gestion des entrées
         processInput(window.get_window());
@@ -238,14 +243,33 @@ int main() {
         ImGui::Spacing();
         ImGui::Separator();
 
-        ImGui::Text("Paramètres de la lumière :");
-        ImGui::Spacing();
+        if(ModeleSin) {
+            ImGui::Text("Paramètres de la lumière :");
+            ImGui::Spacing();
+            ImGui::SliderFloat("Roughness", &roughness, 0.0f, 1.0f);
+            ImGui::SliderFloat("Occlusion ambiante", &ao, 0.0f, 1.0f);
+            ImGui::SliderFloat("Métallique", &metallic, 0.0f, 1.0f);
+            ImGui::ColorEdit3("Albedo", &albedo[0]);
+            ImGui::Text("Position de la lumière");
+            ImGui::SliderFloat("X_lightpos", &LightPos.x, -10.0f, 10.0f);
+            ImGui::SliderFloat("Y_lightpos", &LightPos.y, -10.0f, 10.0f);
+            ImGui::SliderFloat("Z_lightpos", &LightPos.z, -10.0f, 10.0f);
+            ImGui::Separator();
+        }
 
-        ImGui::SliderFloat3("Position de la lumière", glm::value_ptr(lightPos), -10.0f, 10.0f);
-        ImGui::SliderFloat("Ambiant", &ambientStrength, 0.0f, 1.0f);
-        ImGui::SliderFloat("Diffuse", &diffuseStrength, 0.0f, 2.0f);
-        ImGui::SliderFloat("Spéculaire", &specularStrength, 0.0f, 1.0f);
-        ImGui::Separator();
+        if(ModeleSumSine) {
+            ImGui::Text("Paramètres de la lumière :");
+            ImGui::Spacing();
+            ImGui::SliderFloat("Ambient", &ambientStrength, 0.0f, 1.0f);
+            ImGui::SliderFloat("Diffuse", &diffuseStrength, 0.0f, 1.0f);
+            ImGui::SliderFloat("Specular", &specularStrength, 0.0f, 1.0f);
+            ImGui::ColorEdit3("Couleur de la lumière", &LightColor[0]);
+            ImGui::Text("Position de la lumière :");
+            ImGui::SliderFloat("X", &LightPos.x, -10.0f, 10.0f);
+            ImGui::SliderFloat("Y", &LightPos.y, -10.0f, 10.0f);
+            ImGui::SliderFloat("Z", &LightPos.z, -10.0f, 10.0f);
+            ImGui::Separator();
+        }
 
         ImGui::Spacing();
 
@@ -306,6 +330,15 @@ int main() {
             plane.getShader().setBind3f("Direction", Direction_Sin.x, Direction_Sin.y, Direction_Sin.z);
             plane.getShader().setBind1f("PI", M_PI);
 
+            // PBR
+            plane.getShader().setBind3f("LightPos", LightPos.x, LightPos.y, LightPos.z);
+            plane.getShader().setBind3f("ViewPos", cameraPos.x, cameraPos.y, cameraPos.z);
+            plane.getShader().setBind1f("roughness", roughness);
+            plane.getShader().setBind1f("ao", ao);
+            plane.getShader().setBind1f("metallic", metallic);
+            plane.getShader().setBind3f("albedo", albedo.x, albedo.y, albedo.z);
+
+
             if(materiauSin == true) {
                 plane.getShader().setBind1i("Debug", 0);
             } else if(positionSin == true) {
@@ -325,10 +358,10 @@ int main() {
             
 
             ImGui::Text("Paramètres du shader sinusoïdal :");
-            ImGui::SliderFloat("Amplitude", &Amplitude_Sin, 0.0f, 20.0f);
-            ImGui::SliderFloat("Wavelength", &L_Sin, 0.0f, 10.0f);
+            ImGui::SliderFloat("Amplitude", &Amplitude_Sin, 0.0f, 5.0f);
+            ImGui::SliderFloat("Wavelength", &L_Sin, 0.01f, 10.0f);
 
-            if(ImGui::SliderFloat("Speed", &S_Sin, 0.0f, 10.0f) != 0.) {
+            if(ImGui::SliderFloat("Speed", &S_Sin, 0.0f, 15.0f) != 0.) {
                 arretduTemps_Sin = false;
             }
 
@@ -442,11 +475,11 @@ int main() {
                 
 
             ImGui::Text("Paramètres du shader Gerstner :");
-            ImGui::SliderFloat("Amplitude", &Amplitude_Gerstner, 0.0f, 20.0f);
-            ImGui::SliderFloat("Wavelength", &L_Gerstner, 0.0f, 10.0f);
+            ImGui::SliderFloat("Amplitude", &Amplitude_Gerstner, 0.01f, 4.0f);
+            ImGui::SliderFloat("Wavelength", &L_Gerstner, 0.01f, 30.0f);
             ImGui::SliderFloat("Steepness", &Steepness_Gerstner, 0.0f, 1.0f);
 
-            if(ImGui::SliderFloat("Speed", &S_Gerstner, 0.0f, 10.0f) != 0.) {
+            if(ImGui::SliderFloat("Speed", &S_Gerstner, 0.0f, 30.0f) != 0.) {
                 arretduTemps_Gerstner = false;
             }
 
@@ -544,6 +577,12 @@ int main() {
             plane.getShader().setBind1f("Gain_A", Gain_A_SumSines);
             plane.getShader().setBind1f("Gain_W", Gain_W_SumSines);
             plane.getShader().setBind1f("L_FBM", L_FBM_SumSines);
+            plane.getShader().setBind3f("lightPosition", LightPos.x, LightPos.y, LightPos.z);
+            plane.getShader().setBind3f("viewPosition",cameraPos.x,cameraPos.y,cameraPos.z);
+            plane.getShader().setBind3f("lightColor", LightColor.x, LightColor.y, LightColor.z);
+            plane.getShader().setBind1f("ambientStrength", ambientStrength);
+            plane.getShader().setBind1f("diffuseStrength", diffuseStrength);
+            plane.getShader().setBind1f("specularStrength", specularStrength);
 
             if(materiauSumSines == true) {
                 plane.getShader().setBind1i("Debug", 0);
@@ -580,10 +619,10 @@ int main() {
             ImGui::Text("Paramètres du shader SumSine :");
 
             if(FBM_SumSines == false) {
-                ImGui::SliderFloat("Amplitude min", &Amplitude_SumSines_min, 0.0f, 20.0f);
-                ImGui::SliderFloat("Amplitude max", &Amplitude_SumSines_max, 0.0f, 20.0f);
-                ImGui::SliderFloat("Wavelength min", &L_min_SumSines, 0.0f, 10.0f);
-                ImGui::SliderFloat("Wavelength max", &L_max_SumSines, 0.0f, 10.0f);
+                ImGui::SliderFloat("Amplitude min", &Amplitude_SumSines_min, 0.0f, 2.0f);
+                ImGui::SliderFloat("Amplitude max", &Amplitude_SumSines_max, 0.0f, 2.0f);
+                ImGui::SliderFloat("Wavelength min", &L_min_SumSines, 0.01f, 10.0f);
+                ImGui::SliderFloat("Wavelength max", &L_max_SumSines, 0.01f, 10.0f);
                 if(ImGui::SliderFloat("Speed", &S_SumSines, 0.0f, 10.0f) != 0.) {
                     arretduTemps_SumSines = false;
                 }
@@ -594,9 +633,9 @@ int main() {
                 if(ImGui::SliderFloat("Speed", &S_SumSines, 0.0f, 10.0f) != 0.) {
                     arretduTemps_SumSines = false;
                 }
-                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumSines, 0.0f, 2.0f);
-                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumSines, 0.0f, 2.0f);
-                ImGui::SliderFloat("Wavelength", &L_FBM_SumSines, 0.0f, 50.0f);
+                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumSines, 0.01f, 0.99f);
+                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumSines, 0.01, 5.0f);
+                ImGui::SliderFloat("Wavelength", &L_FBM_SumSines, 0.01f, 50.0f);
             }
 
             ImGui::SliderInt("Nombre de vagues", &numWave_SumSines, 1, 256);
@@ -731,25 +770,25 @@ int main() {
 
 
             if(FBM_SumGerstner == false) {
-                ImGui::SliderFloat("Amplitude min", &Amplitude_SumGerstner_min, 0.0f, 2.0f);
-                ImGui::SliderFloat("Amplitude max", &Amplitude_SumGerstner_max, 0.0f, 2.0f);
-                ImGui::SliderFloat("Wavelength min", &L_SumGerstner_min, 0.0f, 10.0f);
-                ImGui::SliderFloat("Wavelength max", &L_SumGerstner_max, 0.0f, 10.0f);
+                ImGui::SliderFloat("Amplitude min", &Amplitude_SumGerstner_min, 0.01f, 2.0f);
+                ImGui::SliderFloat("Amplitude max", &Amplitude_SumGerstner_max, 0.01f, 2.0f);
+                ImGui::SliderFloat("Wavelength min", &L_SumGerstner_min, 0.01f, 10.0f);
+                ImGui::SliderFloat("Wavelength max", &L_SumGerstner_max, 0.01f, 10.0f);
                 ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 1.0f);
-                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 10.0f) != 0.) {
+                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 20.0f) != 0.) {
                     arretduTemps_SumGerstner = false;
                 }
                 ImGui::SliderFloat("X", &Direction_SumGerstner.x, -1.0f, 1.0f);
                 ImGui::SliderFloat("Z", &Direction_SumGerstner.z, -1.0f, 1.0f);         
             } else {
-                ImGui::SliderFloat("Amplitude", &Amplitude_SumGerstner_FBM, 0.0f, 2.0f);
-                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 10.0f) != 0.) {
+                ImGui::SliderFloat("Amplitude", &Amplitude_SumGerstner_FBM, 0.01f, 2.0f);
+                if(ImGui::SliderFloat("Speed", &S_SumGerstner, 0.0f, 20.0f) != 0.) {
                     arretduTemps_SumGerstner = false;
                 }
-                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumGerstner, 0.0f, 2.0f);
-                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumGerstner, 0.0f, 2.0f);
-                ImGui::SliderFloat("Wavelength", &L_FBM_SumGerstner, 0.0f, 50.0f);
-                ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 1.0f);
+                ImGui::SliderFloat("Gain amplitude", &Gain_A_SumGerstner, 0.01f, 0.99f);
+                ImGui::SliderFloat("Gain wavelength", &Gain_W_SumGerstner,0.01, 5.0f);
+                ImGui::SliderFloat("Wavelength", &L_FBM_SumGerstner, 0.01f, 50.0f);
+                ImGui::SliderFloat("Steepness", &Steepness_SumGerstner, 0.0f, 0.5f);
             }
 
             ImGui::SliderInt("Nombre de vagues", &numWave_SumGerstner, 1, 256);
