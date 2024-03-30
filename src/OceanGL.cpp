@@ -121,7 +121,7 @@ int main() {
     ImGui_ImplOpenGL3_Init("#version 460");
 
     // Création de la skybox
-    int skyboxSize = 2000;
+    int skyboxSize = 100;
     Skybox *sky = new Skybox(skyboxSize, glm::vec3(-1.*(skyboxSize/2),-1.*(skyboxSize/2),-1.*(skyboxSize/2)));
     sky->attachShader("../shaders/SkyboxVertex.vert", "../shaders/SkyboxFragment.frag");
     
@@ -222,6 +222,7 @@ int main() {
             plane.detachShader();
             plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
             plane.createPlane();
+
         }
         
         ImGui::SameLine();
@@ -240,9 +241,6 @@ int main() {
         if (ImGui::Checkbox("Modèle avec plusieurs sinusoïdales", &ModeleSumSine)) {
             ModeleSin = false;
             ModeleGerstner = false;
-
-            sky->detachShader();
-            sky->attachShader("../shaders/SkyboxVertex.vert", "../shaders/SkyboxFragment.frag");
             
             plane.detachShader();
             plane.attachShader("../shaders/SumSine.vert", "../shaders/SumSine.frag");
@@ -277,6 +275,9 @@ int main() {
                 
                 plane.useShader();
                 plane.updatePlane(GL_TRIANGLES);     
+
+                sky->useShader();
+                sky->updateSkybox(GL_TRIANGLES);   
             
 
             ImGui::Text("Paramètres du shader sinusoïdal :");
@@ -513,12 +514,8 @@ int main() {
                 plane.getShader().setBind1i("Debug", 5);
             }
 
-            //plane.useShader();
-            //plane.updatePlane(GL_TRIANGLES);
-
-            sky->useShader();
-            sky->updateSkybox(GL_TRIANGLES);
-
+            plane.useShader();
+            plane.updatePlane(GL_TRIANGLES);
 
             ImGui::Text("Paramètres du shader SumSine :");
             ImGui::SliderFloat("Amplitude", &Amplitude_SumSine, 0.0f, 20.0f);
