@@ -19,6 +19,7 @@
 #include <../external/glm/gtc/matrix_transform.hpp> 
 #include <../external/glm/gtc/type_ptr.hpp>
 
+
 // Common
 #include <iostream>
 #include <vector>
@@ -39,3 +40,7 @@
 #include <VBO.hpp>
 #include <VAO.hpp>
 #include <Shader.hpp>
+#include <ComputeShader.hpp>
+
+#include <stb_image.hpp>
+#include <Texture.hpp>

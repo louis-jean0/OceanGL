@@ -1,6 +1,7 @@
 #include "imgui.h"
 #include <Headers.hpp>
 
+
 void processInput(GLFWwindow *window);
 void initGUI(GLFWwindow* window);
 void renderGUI();
@@ -115,6 +116,7 @@ bool ModeleSin = true;
 bool ModeleGerstner = false;
 bool ModeleSumSine = false;
 bool ModeleSumGerstner = false;
+bool ModeleFFT = false;
 
 bool materiauSin = true;
 bool positionSin = false;
@@ -159,6 +161,13 @@ bool points = false;
 // Plan
 int resolution = 512;
 int taillePlan = 10;
+
+// Compute Shader
+int tailleImage = 512;
+int nbThreads = 16;
+
+// Textures
+Texture test;
 
 int main() {
     
@@ -277,6 +286,7 @@ int main() {
             ModeleGerstner = false;
             ModeleSumSine = false;
             ModeleSumGerstner = false;
+            ModeleFFT = false;
 
             plane.detachShader();
             plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
@@ -289,6 +299,7 @@ int main() {
             ModeleSin = false;
             ModeleSumSine = false;
             ModeleSumGerstner = false;
+            ModeleFFT = false;
 
             plane.detachShader();
             plane.attachShader("../shaders/GerstnerWave.vert", "../shaders/GerstnerWave.frag");
@@ -301,6 +312,7 @@ int main() {
             ModeleSin = false;
             ModeleGerstner = false;
             ModeleSumGerstner = false;
+            ModeleFFT = false;
 
             plane.detachShader();
             plane.attachShader("../shaders/SumSinWave.vert", "../shaders/SumSinWave.frag");
@@ -311,10 +323,27 @@ int main() {
             ModeleSin = false;
             ModeleGerstner = false;
             ModeleSumSine = false;
+            ModeleFFT = false;
 
             plane.detachShader();
             plane.attachShader("../shaders/SumGerstnerWave.vert", "../shaders/SumGerstnerWave.frag");
             plane.createPlane();    
+        }
+
+        if (ImGui::Checkbox("Modèle FFT", &ModeleFFT)) {
+            ModeleSin = false;
+            ModeleSumSine = false;
+            ModeleGerstner = false;
+            ModeleSumGerstner = false;
+
+            plane.ComputeWorkGroup();
+
+            plane.detachShader();
+            plane.attachShader("../shaders/FFT.vert", "../shaders/FFT.frag");
+            plane.attachShaderComp("../shaders/comp.cs");
+            plane.createPlane();
+            //test.setTexture("../textures/grass.png", "asaz", true);
+            test.createTexture(tailleImage, tailleImage);
         }
 
         ImGui::Spacing();
@@ -868,6 +897,29 @@ int main() {
                 }
             }
 
+            ImGui::Separator();
+        }
+
+        if (ModeleFFT) {
+            plane.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
+            plane.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            plane.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            plane.getShader().setBind1f("time", glfwGetTime());
+
+            plane.useShader();
+
+            glActiveTexture(GL_TEXTURE0);
+            test.useTexture();
+            plane.getShader().setBind1i("tex", 0);
+
+            plane.useComputeShader();
+            plane.DispatchWorkGroup(tailleImage, tailleImage, nbThreads, nbThreads);
+            plane.getShaderComp().setBind1f("time", glfwGetTime());
+
+            plane.useShader();
+            plane.updatePlane(GL_TRIANGLES);
+
+            
             ImGui::Separator();
         }
 

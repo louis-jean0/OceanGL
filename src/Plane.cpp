@@ -40,14 +40,6 @@ void Plane::createPlane() {
             this->verts.push_back(normal.x);
             this->verts.push_back(normal.y);
             this->verts.push_back(normal.z);
-
-            // this->verts.push_back(tangente.x);
-            // this->verts.push_back(tangente.y);
-            // this->verts.push_back(tangente.z);
-
-            // this->verts.push_back(bitangente.x);
-            // this->verts.push_back(bitangente.y);
-            // this->verts.push_back(bitangente.z);
         }
     }
 
@@ -124,7 +116,6 @@ void Plane::updateSize(float nouvelleTaille) {
     this->subdivisediv(this->div);
 }
 
-
 // Pour le moment, seul les GL_TRIANGLES sont pris en compte
 void Plane::updatePlane(GLenum mode) {
     glBindVertexArray(this->va.getVAO()); 
@@ -149,8 +140,17 @@ void Plane::useShader() {
     this->plane.useShader();
 }
 
+void Plane::useComputeShader() {
+    this->planeComp.useComputeShader();
+}
+
+
 void Plane::attachShader(const GLchar* vertexPath, const GLchar* fragmentPath) {
     this->plane.setShader(vertexPath, fragmentPath);
+}
+
+void Plane::attachShaderComp(const GLchar* compPath) {
+    this->planeComp.setComputeShader(compPath);
 }
 
 void Plane::detachShader() {
@@ -179,4 +179,25 @@ void Plane::Shaderbind1i(const GLchar* name, GLint v0) {
 
 Shader Plane::getShader() {
     return this->plane;
+}
+
+ComputeShader Plane::getShaderComp() {
+    return this->planeComp;
+}
+
+void Plane::ComputeWorkGroup() {
+    int max_compute_work_group_count[3];
+	int max_compute_work_group_size[3];
+	int max_compute_work_group_invocations;
+
+	for (int idx = 0; idx < 3; idx++) {
+		glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_COUNT, idx, &max_compute_work_group_count[idx]);
+		glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_SIZE, idx, &max_compute_work_group_size[idx]);
+	}	
+	glGetIntegerv(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS, &max_compute_work_group_invocations);    
+}
+
+void Plane::DispatchWorkGroup(int width, int height, int wkw, int wkh) {
+	glDispatchCompute((unsigned int)width/wkw, (unsigned int)height/wkh, 1);
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT); 
 }
