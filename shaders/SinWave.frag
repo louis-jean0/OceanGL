@@ -19,6 +19,8 @@ in vec3 o_normalWorld;
 
 const float PI = 3.14159265359;
 
+uniform samplerCube skyboxTexture;
+
 // Functions
 // ----------------------------------------------------------------------------
 float DistributionGGX(vec3 N, vec3 H, float roughness)
@@ -80,6 +82,8 @@ void main() {
     vec3 F0 = vec3(0.04); 
     F0 = mix(F0, albedo, metallic);
 
+    vec3 envColor = texture(skyboxTexture, reflect(-V, N)).rgb;
+
     float NDF = DistributionGGX(N, H, roughness);
     float G = GeometrySmith(N, V, L, roughness);
     vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
@@ -93,7 +97,7 @@ void main() {
 
     float NdotL = max(dot(N, L), 0.0);
 
-    vec3 Lo = (kD * albedo / PI + specular) * NdotL;
+    vec3 Lo = (kD * albedo / PI + specular) * envColor * NdotL;
 
     vec3 ambient = vec3(0.03) * albedo * ao;
     vec3 color = ambient + Lo;

@@ -18,6 +18,8 @@ uniform sampler2D tex;
 
 void main()
 {   
-    gl_Position = projection * view * vec4(aPos, 1.0);
+    vec3 position = vec3(aPos.x, texture(tex, aTex).y, aPos.z);
+
+    gl_Position = projection * view * vec4(position, 1.0);
     texCoords = aTex;
 }

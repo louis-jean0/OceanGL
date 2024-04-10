@@ -35,6 +35,9 @@ class Plane {
         Shader plane;
         ComputeShader planeComp;
 
+        std::string pathTextures[6];
+        GLuint textureID;
+
     public:
         Plane(float size, int div);
         void createPlane();
@@ -65,4 +68,7 @@ class Plane {
 
         void ComputeWorkGroup();
         void DispatchWorkGroup(int width, int height, int wkw, int wkh);
+
+        void loadCubemap();
+        void bindCubemap(GLenum TextureUnit, int unit);
 };

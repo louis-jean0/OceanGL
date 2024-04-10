@@ -19,6 +19,9 @@ class Skybox {
 
         Shader skybox;
 
+        std::string pathTextures[6];
+        GLuint textureID;
+
     public:
         Skybox();
         void createSkybox();
@@ -37,4 +40,7 @@ class Skybox {
         void ShaderbindMatrix4fv(const GLchar* name, const GLfloat *value);
         void ShaderbindMatrix3fv(const GLchar* name, const GLfloat *value);
         void Shaderbind1i(const GLchar* name, GLint v0);
+
+        void loadCubemap();
+        void bindCubemap(GLenum TextureUnit, int unit);
 };

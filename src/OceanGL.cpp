@@ -41,9 +41,18 @@ float vertical_angle = 0.0f;
 float radius = 20.0f;
 
 // Camera settings
-glm::vec3 cameraPos = glm::vec3(0.0f, 5.0f, -10.0f);
-glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f,  0.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 5.0f, 5.0f);
+glm::vec3 cameraTarget;;
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
+int speedCam = 30;
+bool cameraMouse = true;
+
+
+double previousX = SCR_WIDTH / 2;
+double previousY = SCR_HEIGHT / 2;
+bool firstMouse = true;
+float phi = -90.0f;
+float theta = 0.0f;
 
 
 // Light settings (here for ImGui)
@@ -162,6 +171,9 @@ bool points = false;
 int resolution = 512;
 int taillePlan = 10;
 
+// Skybox
+int resolutionSkybox = 5000;
+
 // Compute Shader
 int tailleImage = 512;
 int nbThreads = 16;
@@ -169,11 +181,43 @@ int nbThreads = 16;
 // Textures
 Texture test;
 
+void mouse_cursor_callback(GLFWwindow* window, double xpos, double ypos){
+    if (cameraMouse){
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Pour masquer la souris sur la fenêtre
+
+        if (firstMouse){
+            previousX = xpos;
+            previousY = ypos;
+            firstMouse = false;
+        }
+
+        double deltaX = xpos - previousX;
+        double deltaY = previousY - ypos;
+
+        phi += deltaX*0.05f;
+        theta += deltaY*0.05f;
+        // On empêche la caméra de s'inverser
+        theta = std::max(std::min(theta, 89.99f), -89.99f);
+
+        float x = cos(glm::radians(phi)) * cos(glm::radians(theta));
+        float y = sin(glm::radians(theta));
+        float z = sin(glm::radians(phi)) * cos(glm::radians(theta));
+        cameraTarget = glm::normalize(glm::vec3(x,y,z));
+
+        previousX=xpos;
+        previousY=ypos;
+    }else{
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+}
+
 int main() {
     
     // Window
     Window window(4, 6, SCR_WIDTH, SCR_HEIGHT, "TER - OceanGL", true);
     window.setup_GLFW();
+
+    glfwSetCursorPosCallback(window.get_window(), mouse_cursor_callback);
 
     // Initialize ImGui
     IMGUI_CHECKVERSION();
@@ -187,6 +231,12 @@ int main() {
     Plane plane(taillePlan, resolution);
     plane.attachShader("../shaders/SinWave.vert", "../shaders/SinWave.frag");
     plane.createPlane();
+    plane.loadCubemap();
+
+    Skybox skybox;
+    skybox.attachShader("../shaders/skybox_vertex.vert", "../shaders/skybox_fragment.frag");
+    skybox.createSkybox();
+    skybox.loadCubemap();
 
     glEnable(GL_DEPTH_TEST);
 
@@ -202,7 +252,7 @@ int main() {
         // Camera
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 modelSkybox = glm::mat4(1.0f);
-        glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
+        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraTarget, cameraUp);
         glm::mat4 projection = glm::perspective(45.0f,(float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 5000000.0f);
 
         // Gestion des entrées
@@ -382,8 +432,19 @@ int main() {
                 plane.getShader().setBind1i("Debug", 5);
             }
                 
+  
+
+            skybox.useShader();
+            skybox.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelSkybox));
+            skybox.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            skybox.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            skybox.getShader().setBind1i("res", resolutionSkybox);
+            skybox.bindCubemap(GL_TEXTURE0,0);
+            skybox.updateSkybox(GL_TRIANGLES);
+
             plane.useShader();
-            plane.updatePlane(GL_TRIANGLES);     
+            plane.bindCubemap(GL_TEXTURE1,1);
+            plane.updatePlane(GL_TRIANGLES); 
             
 
             ImGui::Text("Paramètres du shader sinusoïdal :");
@@ -499,9 +560,17 @@ int main() {
                 plane.getShader().setBind1i("Debug", 5);
             }
 
+            skybox.useShader();
+            skybox.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelSkybox));
+            skybox.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            skybox.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            skybox.getShader().setBind1i("res", resolutionSkybox);
+            skybox.bindCubemap(GL_TEXTURE0,0);
+            skybox.updateSkybox(GL_TRIANGLES);
+
             plane.useShader();
-            plane.updatePlane(GL_TRIANGLES);
-                
+            plane.bindCubemap(GL_TEXTURE1,1);
+            plane.updatePlane(GL_TRIANGLES); 
 
             ImGui::Text("Paramètres du shader Gerstner :");
             ImGui::SliderFloat("Amplitude", &Amplitude_Gerstner, 0.01f, 4.0f);
@@ -642,8 +711,17 @@ int main() {
                 plane.getShader().setBind1i("DW", 1);
             }
 
+            skybox.useShader();
+            skybox.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelSkybox));
+            skybox.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            skybox.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            skybox.getShader().setBind1i("res", resolutionSkybox);
+            skybox.bindCubemap(GL_TEXTURE0,0);
+            skybox.updateSkybox(GL_TRIANGLES);
+
             plane.useShader();
-            plane.updatePlane(GL_TRIANGLES);
+            plane.bindCubemap(GL_TEXTURE1,1);
+            plane.updatePlane(GL_TRIANGLES); 
 
             ImGui::Text("Paramètres du shader SumSine :");
 
@@ -791,8 +869,17 @@ int main() {
             }
 
 
+            skybox.useShader();
+            skybox.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelSkybox));
+            skybox.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            skybox.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            skybox.getShader().setBind1i("res", resolutionSkybox);
+            skybox.bindCubemap(GL_TEXTURE0,0);
+            skybox.updateSkybox(GL_TRIANGLES);
+
             plane.useShader();
-            plane.updatePlane(GL_TRIANGLES);
+            plane.bindCubemap(GL_TEXTURE1,1);
+            plane.updatePlane(GL_TRIANGLES); 
                 
 
             ImGui::Text("Paramètres du shader SumGerstner :");
@@ -916,6 +1003,14 @@ int main() {
             plane.DispatchWorkGroup(tailleImage, tailleImage, nbThreads, nbThreads);
             plane.getShaderComp().setBind1f("time", glfwGetTime());
 
+            skybox.useShader();
+            skybox.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelSkybox));
+            skybox.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            skybox.getShader().setBindMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            skybox.getShader().setBind1i("res", resolutionSkybox);
+            skybox.bindCubemap(GL_TEXTURE0,0);
+            skybox.updateSkybox(GL_TRIANGLES);
+
             plane.useShader();
             plane.updatePlane(GL_TRIANGLES);
 
@@ -956,7 +1051,16 @@ int main() {
             }
         }
 
+        ImGui::Text("Paramètres de la skybox :");
+        ImGui::SliderInt("Résolution de la skybox", &resolutionSkybox, 0, 5000);
+
+        ImGui::Spacing();
+
+        ImGui::SliderInt("Vitesse de la caméra", &speedCam, 10, 500);
+
         ImGui::End();
+
+
 
         // Light
         glm::vec3 viewPos = cameraPos;
@@ -980,12 +1084,41 @@ int main() {
 
 void processInput(GLFWwindow *window) {
     // Camera sensitivity
-    float camera_speed = 3.0f * deltaTime;
+    float camera_speed = speedCam * deltaTime;
 
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window,true);
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) horizontal_angle -= camera_speed;
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) horizontal_angle += camera_speed;
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) vertical_angle += camera_speed;
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) vertical_angle -= camera_speed;
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+        cameraPos += (camera_speed / 5.f) * cameraTarget;
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+        cameraPos -= (camera_speed / 5.f) * cameraTarget;
+    }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+        cameraPos += (camera_speed / 5.f) * cameraUp;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS){
+        cameraPos -= (camera_speed / 5.f) * cameraUp;
+    }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+        cameraPos += (camera_speed / 5.f) * glm::normalize(glm::cross(cameraTarget,cameraUp));;
+    }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
+        cameraPos -= (camera_speed / 5.f) * glm::normalize(glm::cross(cameraTarget,cameraUp));;
+    }
+
+    // Pour sortir de la caméra controlée à la souris
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){ 
+        cameraMouse = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS){ 
+        cameraMouse = true;
+    }
+    
 
     //std::cout << cameraPos[0] << "\t" << cameraPos[1] << "\t" << cameraPos[2] << std::endl;
 

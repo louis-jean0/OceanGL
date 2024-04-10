@@ -35,6 +35,16 @@ void Skybox::createSkybox() {
     this->vb.genVBO(this->verts);
     this->va.genVAOCubemap();
     this->eb.genEBO(this->indices);
+
+    std::string textures[6] = {
+        "../textures/Skybox/px.png",
+        "../textures/Skybox/nx.png",
+        "../textures/Skybox/py.png",
+        "../textures/Skybox/ny.png",
+        "../textures/Skybox/pz.png",
+        "../textures/Skybox/nz.png"
+    };
+    std::copy(std::begin(textures), std::end(textures), std::begin(this->pathTextures));
 }
 
 void Skybox::updateSkybox(GLenum mode) {
@@ -81,4 +91,38 @@ void Skybox::ShaderbindMatrix3fv(const GLchar* name, const GLfloat *value) {
 
 void Skybox::Shaderbind1i(const GLchar* name, GLint v0) {
     this->skybox.setBind1i(name, v0);
+}
+
+void Skybox::loadCubemap(){
+    glGenTextures(1, &(this->textureID));
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->textureID);
+
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < 6; i++)
+    {
+        unsigned char *data = stbi_load(this->pathTextures[i].c_str(), &width, &height, &nrChannels, 0);
+        if (data)
+        {
+            //std::cout << "Text " << i << " : width = " << width << ", height = " << height << ", nr = " << nrChannels << "\n";
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap tex failed to load at path: " << this->pathTextures[i].c_str() << std::endl;
+            stbi_image_free(data);
+            return;
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // Axe x
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); // Axe y
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE); // Axe z
+}
+
+void Skybox::bindCubemap(GLenum TextureUnit, int unit){
+    glActiveTexture(TextureUnit);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->textureID);
+    glUniform1i(glGetUniformLocation(this->skybox.Program, "skyboxTexture"), unit);
 }
