@@ -206,7 +206,7 @@ void mouse_cursor_callback(GLFWwindow* window, double xpos, double ypos){
 
         previousX=xpos;
         previousY=ypos;
-    }else{
+    } else {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 }
@@ -432,8 +432,6 @@ int main() {
                 plane.getShader().setBind1i("Debug", 5);
             }
                 
-  
-
             skybox.useShader();
             skybox.getShader().setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelSkybox));
             skybox.getShader().setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
@@ -1059,8 +1057,6 @@ int main() {
         ImGui::SliderInt("Vitesse de la caméra", &speedCam, 10, 500);
 
         ImGui::End();
-
-
 
         // Light
         glm::vec3 viewPos = cameraPos;

@@ -11,6 +11,8 @@ out vec3 normal;
 out vec2 tex;
 out vec3 binormale;
 out vec3 tangente;
+out vec3 positionWorld;
+out vec3 normalWorld;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -120,8 +122,9 @@ vec3 ComputeBinormale(vec3 Pos, float S, vec3 Direction, float time) {
     float waveInit = 0.0f;
     float wFBM = (2.0 * PI) / L_FBM;
     float AFBM = Amplitude_FBM;
-    float dfdx;
+    float dfdz = 0.0;
     vec3 modifiedPos = aPos;
+    vec2 binormale;
 
     if(FBM == 0) {
         for(int i = 0; i < nbVagues; i++) {
@@ -135,7 +138,7 @@ vec3 ComputeBinormale(vec3 Pos, float S, vec3 Direction, float time) {
                                                                             rand(vec2(float(i) + 0.4, seed))))));
 
             float phi_t = (S * w) * time + randomPhase;
-            wave += randomAmplitude * Direction.x * w * cos(dot(randomDirection, aPos.xyz) * w + phi_t);
+            dfdz += randomDirection.z * cos(dot(randomDirection.xz, aPos.xz));
         }
     } else if(FBM == 1) {
         for(int i = 0; i < nbVagues; i++) {
@@ -143,16 +146,10 @@ vec3 ComputeBinormale(vec3 Pos, float S, vec3 Direction, float time) {
             float phi_t = (S * wFBM) * time;
 
             if(DW == 0) {
-                wave += AFBM * Direction.x * wFBM * cos(dot(randomDirection, aPos.xyz) * wFBM + phi_t);
+                dfdz += randomDirection.z * cos(dot(randomDirection.xz, aPos.xz));
             } else {
-                // Vague qui nous sert pour dériver
-                waveInit = AFBM * sin(dot(randomDirection, aPos.xyz) * wFBM + phi_t);
 
-                wave += AFBM * Direction.x * wFBM * cos(dot(randomDirection, modifiedPos.xyz) * wFBM + phi_t);
-
-                // Domain Warping --> effet qui fait en sorte que les vagues se repoussent
-                dfdx = AFBM * wFBM * randomDirection.x * cos(dot(randomDirection.xyz, aPos.xyz) * wFBM + phi_t);
-                modifiedPos += vec3(dfdx, 0.0, 0.0);
+                dfdz += randomDirection.z * cos(dot(randomDirection.xz, aPos.xz));
             }
 
             wFBM *= Gain_W;
@@ -160,14 +157,12 @@ vec3 ComputeBinormale(vec3 Pos, float S, vec3 Direction, float time) {
         }        
     }
 
-    newPos.y += wave;   
-
-    return normalize(vec3(1.0f, newPos.y, 0.f));
+    return normalize(vec3(0.0, dfdz, 1.0));
 }
 
-vec3 ComputeTangente(vec3 Pos, float S, vec3 Direction, float time) {
-    vec3 newPos = Pos; 
-
+vec3 ComputeNormale(vec3 Pos, float S, vec3 Direction, float time) {
+    vec3 newPos = Pos;
+    
     // Sans FBM
     float wave = 0.0f;
     float L;
@@ -178,7 +173,69 @@ vec3 ComputeTangente(vec3 Pos, float S, vec3 Direction, float time) {
     float waveInit = 0.0f;
     float wFBM = (2.0 * PI) / L_FBM;
     float AFBM = Amplitude_FBM;
-    float dfdx;
+    float dx = 0;
+    float dz = 0;
+    vec3 modifiedPos = aPos;
+    vec2 normal = vec2(0.0,0.0);
+
+    if(FBM == 0) {
+        for(int i = 0; i < nbVagues; i++) {
+            L = mix(L_min, L_max, rand(vec2(float(i), seed))); 
+            w = (2.0 * PI) / L;
+
+            float randomAmplitude = mix(Amplitude_min, Amplitude_max, rand(vec2(float(i), seed)));
+            float randomPhase = rand(vec2(float(i) + 0.1, seed)) * 2.0 * PI;
+            vec3 randomDirection = normalize(reflect(Direction, normalize(vec3(rand(vec2(float(i) + 0.2, seed)), 
+                                                                            rand(vec2(float(i) + 0.3, seed)), 
+                                                                            rand(vec2(float(i) + 0.4, seed))))));
+
+            float phi_t = (S * w) * time + randomPhase;
+            wave += randomAmplitude * sin(dot(randomDirection, aPos.xyz) * w + phi_t);
+            normal += w * randomAmplitude * randomDirection.xz * cos(dot(randomDirection.xz,aPos.xz) * w + phi_t);
+            dx += randomDirection.x * cos(dot(randomDirection.xz, aPos.xz) * w + time);
+            dz += randomDirection.z * cos(dot(randomDirection.xz, aPos.xz) * w + time);
+
+        }
+    } else if(FBM == 1) {
+        for(int i = 0; i < nbVagues; i++) {
+            vec3 randomDirection = randomDir(float(i) + seed);
+            float phi_t = (S * wFBM) * time;
+
+            if(DW == 0) {
+                normal += wFBM * AFBM * randomDirection.xz * cos(dot(randomDirection.xz,aPos.xz) * wFBM + phi_t); 
+                dx += randomDirection.x * cos(dot(randomDirection.xz, aPos.xz) * wFBM + time);
+                dz += randomDirection.z * cos(dot(randomDirection.xz, aPos.xz) * wFBM + time);
+            } else {
+                normal += wFBM * AFBM * randomDirection.xz * cos(dot(randomDirection.xz, aPos.xz) * wFBM + phi_t);
+                dx += randomDirection.x * cos(dot(randomDirection.xz, aPos.xz) * wFBM + time);
+                dz += randomDirection.z * cos(dot(randomDirection.xz, aPos.xz) * wFBM + time);
+            }
+
+            wFBM *= Gain_W;
+            AFBM *= Gain_A;
+        }        
+    }
+
+    vec3 normalTest = vec3(dx, 1.0, dz); 
+
+    //return normalize(vec3(normal.x, normal.y, 0.0));
+    return normalize(normalTest);
+}
+
+vec3 ComputeTangente(vec3 Pos, float S, vec3 Direction, float time) {
+    vec3 newPos = Pos; 
+
+    // Sans FBM
+    float wave = 0.0;
+    float L;
+    float w;
+
+    // Avec FBM
+    // Gain_A < Gain_W obligatoirement
+    float waveInit = 0.0;
+    float wFBM = (2.0 * PI) / L_FBM;
+    float AFBM = Amplitude_FBM;
+    float dfdx = 0.0;
     vec3 modifiedPos = aPos;
 
     if(FBM == 0) {
@@ -193,7 +250,7 @@ vec3 ComputeTangente(vec3 Pos, float S, vec3 Direction, float time) {
                                                                             rand(vec2(float(i) + 0.4, seed))))));
 
             float phi_t = (S * w) * time + randomPhase;
-            wave += randomAmplitude * Direction.z * w * cos(dot(randomDirection, aPos.xyz) * w + phi_t);
+            dfdx += randomDirection.x * cos(dot(randomDirection.xz, aPos.xz));
         }
     } else if(FBM == 1) {
         for(int i = 0; i < nbVagues; i++) {
@@ -201,15 +258,9 @@ vec3 ComputeTangente(vec3 Pos, float S, vec3 Direction, float time) {
             float phi_t = (S * wFBM) * time;
 
             if(DW == 0) {
-                wave += AFBM * Direction.z * wFBM * cos(dot(randomDirection, aPos.xyz) * wFBM + phi_t);
+                dfdx += randomDirection.x * cos(dot(randomDirection.xz, aPos.xz));
             } else {
-                // Vague qui nous sert pour dériver
-                waveInit = AFBM * sin(dot(randomDirection, aPos.xyz) * wFBM + phi_t);
-
-                wave += AFBM * Direction.z * wFBM * cos(dot(randomDirection, modifiedPos.xyz) * wFBM + phi_t);
-
-                // Domain Warping --> effet qui fait en sorte que les vagues se repoussent
-                dfdx = AFBM * wFBM * randomDirection.x * cos(dot(randomDirection.xyz, aPos.xyz) * wFBM + phi_t);
+                dfdx +=  randomDirection.x * cos(dot(randomDirection.xz, aPos.xz));
                 modifiedPos += vec3(dfdx, 0.0, 0.0);
             }
 
@@ -217,13 +268,8 @@ vec3 ComputeTangente(vec3 Pos, float S, vec3 Direction, float time) {
             AFBM *= Gain_A;
         }        
     }
-
-    newPos.y += wave;  
-
-    return normalize(vec3(0.0f, newPos.y, 1.0f));
+    return normalize(vec3(1.0f, dfdx, 0.0f));
 }
-
-
 
 void main() {
     vec3 accPos = vec3(0.0);
@@ -231,12 +277,11 @@ void main() {
     vec3 accTan = vec3(0.0);
     vec3 accNor = vec3(0.0);
 
-    
     accPos = Add_Wave(aPos, S, Direction, time);
     accBin = ComputeBinormale(aPos, S, Direction, time);
     accTan = ComputeTangente(aPos, S, Direction, time);
-    accNor = cross(accTan, accBin);
-
+    accNor = ComputeNormale(aPos, S, Direction, time);
+    // //accNor = cross(accTan, accBin);
 
     vec3 newWave = accPos;
     gl_Position = projection * view * model * vec4(newWave, 1.0f);
@@ -246,5 +291,7 @@ void main() {
     normal = accNor;
     height = newWave.y;
     pos = newWave;
+    normalWorld = normalize(mat3(transpose(inverse(model))) * normalTest); 
+    positionWorld = (model * vec4(newWave, 1.0f)).xyz;
     tex = aTex;
 }
