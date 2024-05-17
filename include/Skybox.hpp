@@ -1,40 +1,46 @@
 #pragma once
 
-#include <Headers.hpp>
-#include <vector>
+#include <VBO.hpp>
+#include <VAO.hpp>
+#include <EBO.hpp>
 #include <Shader.hpp>
 
-struct Face {
-    std::vector<float> verts;
-    std::vector<unsigned int> indices;
-
-    VBO vb;
-    EBO eb;
-    VAO va;
-
-};
+#include <Headers.hpp>
 
 class Skybox {
     private:
+        float x, y, z;
         std::vector<float> verts;
         std::vector<unsigned int> indices;
 
         VBO vb;
         EBO eb;
         VAO va;
-        
-        int sizeFace; // La skybox est composé de 6 faces carrées de taille sizeFace x sizeFace
-        glm::vec3 backBottomLeftCorner; // Ce point permet de placer la skybox
-        std::vector<Face*> facesSkybox;
 
-        Shader shader;
+        Shader skybox;
+
+        std::string pathTextures[6];
+        GLuint textureID;
+
     public:
-        Skybox(int sizeFace, glm::vec3 position);
-        void buildFaces();
+        Skybox();
+        void createSkybox();
+        void updateSkybox(GLenum mode);
+        void delSkybox();
+        void delArrays();
 
+        // Shader
         void useShader();
         void attachShader(const GLchar* vertexPath, const GLchar* fragmentPath);
         void detachShader();
+        Shader getShader();
 
-        void updateSkybox(GLenum mode);
+        void Shaderbind1f(const GLchar* name, GLfloat v0);
+        void Shaderbind3f(const GLchar* name, GLfloat v0, GLfloat v1, GLfloat v2);
+        void ShaderbindMatrix4fv(const GLchar* name, const GLfloat *value);
+        void ShaderbindMatrix3fv(const GLchar* name, const GLfloat *value);
+        void Shaderbind1i(const GLchar* name, GLint v0);
+
+        void loadCubemap();
+        void bindCubemap(GLenum TextureUnit, int unit);
 };

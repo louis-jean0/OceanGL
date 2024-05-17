@@ -11,13 +11,6 @@ in vec3 tangente;
 
 uniform int Debug;
 
-uniform sampler2D nxTexture;
-uniform sampler2D nyTexture;
-uniform sampler2D nzTexture;
-uniform sampler2D pxTexture;
-uniform sampler2D pyTexture;
-uniform sampler2D pzTexture;
-
 void main() {
     vec3 colBase = vec3(0.6, 0.8, 0.98); // Crête
     vec3 ColClaire = vec3(0.01, 0.36, 0.7); // Creux

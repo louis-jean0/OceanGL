@@ -1,2 +1,6 @@
-/build/
-/bin/
+build/
+bin/
+lib/
+.vscode/
+.cache/
+compile_commands.json

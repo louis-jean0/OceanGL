@@ -9,7 +9,6 @@ class Shader
         int use = 0, set = 0;
     public:
         GLuint Program;
-        //Texture tex[10];    // 10 textures max
         
         Shader();
         void setShader(const GLchar* vertexPath, const GLchar* fragmentPath);        
@@ -22,9 +21,5 @@ class Shader
         void setBindMatrix4fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat *value);
         void setBindMatrix3fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat *value);
         void setBind1i(const GLchar* name, GLint v0);
-
-        // // Texture
-        // void setTex(const char* texPath, std::string texName, bool texFlip);
-        // void useTex();
 };
 

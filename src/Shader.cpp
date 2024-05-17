@@ -146,20 +146,3 @@ void Shader::setBind1i(const GLchar* name, GLint v0)
 {
     glUniform1i(glGetUniformLocation(this->Program, name), v0);
 }
-
-// // Texture
-// void Shader::setTex(const char* texPath, std::string texName, bool texFlip) {
-//     this->tex[this->set].setTexture(texPath, texName, texFlip);
-//     this->set+=1; 
-//     if(this->set >= 10) { 
-//         set = 0; 
-//     }
-// }
-
-// void Shader::useTex() {
-//     this->tex[this->use].useTexture();
-//     this->use+=1; 
-//     if(this->use >= 10) { 
-//         use = 0; 
-//     }
-// }

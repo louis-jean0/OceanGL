@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+
 class EBO {
     private:
         unsigned int ElementsBufferObject;
@@ -14,6 +15,4 @@ class EBO {
 
         // Fonction pour supprimer l'EBO
         void delEBO();
-
-        unsigned int getEBO();
 };

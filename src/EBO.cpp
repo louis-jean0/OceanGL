@@ -18,7 +18,3 @@ void EBO::genEBO(std::vector<unsigned int> indics) {
 void EBO::delEBO() {
     glDeleteBuffers(1, &this->ElementsBufferObject);
 }
-
-unsigned int EBO::getEBO(){
-    return this->ElementsBufferObject;
-}

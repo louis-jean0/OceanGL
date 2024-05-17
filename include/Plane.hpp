@@ -4,12 +4,13 @@
 #include <VAO.hpp>
 #include <EBO.hpp>
 #include <Shader.hpp>
+#include <ComputeShader.hpp>
 
 #include <Headers.hpp>
 
 class Plane {
     private:
-        // float x, y, z;
+        float x, y, z;
         std::vector<float> verts;
         std::vector<unsigned int> indices;
 
@@ -32,6 +33,10 @@ class Plane {
         int texIter;
 
         Shader plane;
+        ComputeShader planeComp;
+
+        std::string pathTextures[6];
+        GLuint textureID;
 
     public:
         Plane(float size, int div);
@@ -46,9 +51,14 @@ class Plane {
 
         // Shader
         void useShader();
+        void useComputeShader();
+
         void attachShader(const GLchar* vertexPath, const GLchar* fragmentPath);
+        void attachShaderComp(const GLchar* compPath);
         void detachShader();
         Shader getShader();
+        ComputeShader getShaderComp();
+
 
         void Shaderbind1f(const GLchar* name, GLfloat v0);
         void Shaderbind3f(const GLchar* name, GLfloat v0, GLfloat v1, GLfloat v2);
@@ -56,7 +66,9 @@ class Plane {
         void ShaderbindMatrix3fv(const GLchar* name, const GLfloat *value);
         void Shaderbind1i(const GLchar* name, GLint v0);
 
-        // // Texture
-        // void setTexture(const char* texPath, std::string texName, bool texFlip);
-        // void useTexture(GLenum en, const GLchar* name, GLint v0);
+        void ComputeWorkGroup();
+        void DispatchWorkGroup(int width, int height, int wkw, int wkh);
+
+        void loadCubemap();
+        void bindCubemap(GLenum TextureUnit, int unit);
 };
