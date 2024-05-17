@@ -330,6 +330,20 @@ int main() {
             ImGui::Separator();
         }
 
+        if(ModeleSumGerstner) {
+            ImGui::Text("Paramètres de la lumière :");
+            ImGui::Spacing();
+            ImGui::SliderFloat("Ambient", &ambientStrength, 0.0f, 1.0f);
+            ImGui::SliderFloat("Diffuse", &diffuseStrength, 0.0f, 1.0f);
+            ImGui::SliderFloat("Specular", &specularStrength, 0.0f, 1.0f);
+            ImGui::ColorEdit3("Couleur de la lumière", &LightColor[0]);
+            ImGui::Text("Position de la lumière :");
+            ImGui::SliderFloat("X", &LightPos.x, -10.0f, 10.0f);
+            ImGui::SliderFloat("Y", &LightPos.y, -10.0f, 10.0f);
+            ImGui::SliderFloat("Z", &LightPos.z, -10.0f, 10.0f);
+            ImGui::Separator();
+        }
+
         ImGui::Spacing();
 
         if (ImGui::Checkbox("Modèle sinusoïdal", &ModeleSin)) {
@@ -842,6 +856,9 @@ int main() {
             plane.getShader().setBind1f("Gain_A", Gain_A_SumGerstner);
             plane.getShader().setBind1f("Gain_W", Gain_W_SumGerstner);
             plane.getShader().setBind1f("L_FBM", L_FBM_SumGerstner);
+            plane.getShader().setBind1f("ambientStrength", ambientStrength);
+            plane.getShader().setBind1f("diffuseStrength", diffuseStrength);
+            plane.getShader().setBind1f("specularStrength", specularStrength);
 
             if(materiauSumGerstner == true) {
                 plane.getShader().setBind1i("Debug", 0);
@@ -879,7 +896,6 @@ int main() {
             plane.bindCubemap(GL_TEXTURE1,1);
             plane.updatePlane(GL_TRIANGLES); 
                 
-
             ImGui::Text("Paramètres du shader SumGerstner :");
 
 
