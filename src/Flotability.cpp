@@ -1,19 +1,11 @@
 #include <glad/glad.h>
 #include <Flotability.hpp>
 
-Flotability::Flotability(float hauteurApparition, int squareSize){
+// Les objets apparaissent par ligne de 10
+Flotability::Flotability(float hauteurApparition){
     this->hauteurApparition = hauteurApparition;
-    this->squareSize = squareSize;
-    for (int i = 0 ; i < squareSize ; i++){
-        for (int j = 0 ; j < squareSize ; j++){
-            this->positionsObjets.push_back(glm::vec3(i*4,this->hauteurApparition,j*4));
-            this->massesObjets.push_back(0.1 + (rand()%10)/10.0); // Masse entre 0.1 et 1.0
-            this->stateObjets.push_back(0);
-            this->forceCycle.push_back(0.0f);
-            this->avance.push_back((-M_PI)/2);
-        }
-    }
-
+    this->nbFlottingObject = 15; // Nombre par défaut d'objets qui flotteront
+    this->resetObjets();
     this->shaderObjetsFlottants.setShader("../shaders/flottabilite_vertexShader.vert", "../shaders/flottabilite_fragmentShader.frag");
 }
 
@@ -123,15 +115,22 @@ void Flotability::resetObjets(){
     this->positionsObjets.clear();
     this->massesObjets.clear();
     this->stateObjets.clear();
-    for (int i = 0 ; i < squareSize ; i++){
-        for (int j = 0 ; j < squareSize ; j++){
-            this->positionsObjets.push_back(glm::vec3(i*4,this->hauteurApparition,j*4));
-            this->massesObjets.push_back(0.1 + (rand()%10)/10.0); // Masse entre 0.1 et 1.0
-            this->stateObjets.push_back(0);
-        }
+    this->forceCycle.clear();
+    this->avance.clear();
+
+    for (int i = 0 ; i < this->nbFlottingObject ; i++){
+        this->positionsObjets.push_back(glm::vec3(i%10 * 2,this->hauteurApparition,i/10 * 2));
+        this->massesObjets.push_back(0.1 + (rand()%10)/10.0); // Masse entre 0.1 et 1.0
+        this->stateObjets.push_back(0);
+        this->forceCycle.push_back(0.0f);
+        this->avance.push_back((-M_PI)/2);
     }
 }
 
 void Flotability::setHeightSpawn(float heightSpawn){
     this->hauteurApparition = heightSpawn;
+}
+
+int* Flotability::getRefToNbFlottingObject(){
+    return &(this->nbFlottingObject);
 }

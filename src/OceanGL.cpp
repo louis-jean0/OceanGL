@@ -1,6 +1,8 @@
 #include "imgui.h"
 #include <Headers.hpp>
 
+//#define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio.h"
 
 void processInput(GLFWwindow *window);
 void initGUI(GLFWwindow* window);
@@ -50,6 +52,8 @@ bool cameraMouse = true;
 Flotability *manageFlotability;
 bool objetsApparition = false;
 float heightSpawn = 10.0f;
+
+Sound *soundManager;
 
 double previousX = SCR_WIDTH / 2;
 double previousY = SCR_HEIGHT / 2;
@@ -214,6 +218,14 @@ void mouse_cursor_callback(GLFWwindow* window, double xpos, double ypos){
     }
 }
 
+void soundEffectEndCallback(void* pUserData, ma_sound* pSound) {
+    soundManager->setIsEffectPlayed(false);
+}
+
+void backgroundSoundCallback(void* pUserData, ma_sound* pSound) {
+    soundManager->setIsBackgroundPlayed(false);
+}
+
 int main() {
     
     // Window
@@ -240,8 +252,12 @@ int main() {
     skybox.attachShader("../shaders/skybox_vertex.vert", "../shaders/skybox_fragment.frag");
     skybox.createSkybox();
     skybox.loadCubemap();
+    manageFlotability = new Flotability(heightSpawn); // En paramètre, c'est la hauteur d'apparition des objets
 
-    manageFlotability = new Flotability(heightSpawn, 4); // En paramètre, c'est la hauteur d'apparition des objets
+    soundManager = new Sound();
+    ma_sound_set_end_callback(soundManager->getSeagull1(), soundEffectEndCallback, nullptr);
+    ma_sound_set_end_callback(soundManager->getSeagull2(), soundEffectEndCallback, nullptr);
+    ma_sound_set_end_callback(soundManager->getBackgroundSound(), backgroundSoundCallback, nullptr);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -306,6 +322,21 @@ int main() {
 
         ImGui::Spacing();
         ImGui::Separator();
+
+        // Gestion des sons ----------------------------------------------------
+        if (!soundManager->getEffectPlayed()){
+            int n = rand() % 500;
+            if (n==0){
+                soundManager->playSeagull1();
+            }else if (n==1){
+                soundManager->playSeagull2();
+            }
+        }
+        if (!soundManager->getBackgroundPlayed()){
+            soundManager->playBackgroundSound();
+        }
+        
+        // ---------------------------------------------------------------------
 
         if(ModeleSin) {
             ImGui::Text("Paramètres de la lumière :");
@@ -1082,6 +1113,13 @@ int main() {
 
         ImGui::Spacing();
 
+        if (ImGui::SliderInt("Nombre d'objet", manageFlotability->getRefToNbFlottingObject(), 1, 100)){
+            manageFlotability->resetObjets();
+            manageFlotability->set_l_pressed(glfwGetTime());
+        }
+
+        ImGui::Spacing();
+
         if (ImGui::SliderFloat("Hauteur d'apparition des objets", &heightSpawn, 1.0, 100.0)){
             manageFlotability->setHeightSpawn(heightSpawn);
         }
@@ -1110,6 +1148,8 @@ int main() {
         glfwSwapBuffers(window.get_window());
         glfwPollEvents();
     }
+
+    delete soundManager;
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();

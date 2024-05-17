@@ -23,13 +23,14 @@ class Flotability {
         Shader shaderObjetsFlottants;
         float l_pressed;
         float hauteurApparition;
-        int squareSize;
+        int nbFlottingObject;
 
     public:
-        Flotability(float hauteurApparition, int squareSize);
+        Flotability(float hauteurApparition);
         void buildObject(int nX, int nY, double rayon); // Pour l'instant ça ne construit que des sphères
         void drawObjets(glm::mat4 model, glm::mat4 view, glm::mat4 projection, float Amplitude, float L, float S);
         void set_l_pressed(float value);
         void resetObjets();
         void setHeightSpawn(float heightSpawn);
+        int* getRefToNbFlottingObject();
 };
