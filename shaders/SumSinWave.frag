@@ -170,7 +170,7 @@ void main() {
     vec3 tipColor = vec3(0.5, 0.5, 0.5) * pow(height, 10.0);
 
     // Final color combining all effects
-    vec3 finalColor = texture(skyboxTexture, pos).rgb; //ambient + diffuse + specular + fresnel + tipColor;
+    vec3 finalColor = ambient + diffuse + specular + fresnel + tipColor;
 
     // Debugging outputs
     if (Debug == 0) {

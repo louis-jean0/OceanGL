@@ -47,13 +47,11 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
 int speedCam = 30;
 bool cameraMouse = true;
 
-
 double previousX = SCR_WIDTH / 2;
 double previousY = SCR_HEIGHT / 2;
 bool firstMouse = true;
 float phi = -90.0f;
 float theta = 0.0f;
-
 
 // Light settings (here for ImGui)
 glm::vec3 LightPos = glm::vec3(0., 0., 0.);
@@ -430,7 +428,6 @@ int main() {
             plane.getShader().setBind1f("ao", ao);
             plane.getShader().setBind1f("metallic", metallic);
             plane.getShader().setBind3f("albedo", albedo.x, albedo.y, albedo.z);
-
 
             if(materiauSin == true) {
                 plane.getShader().setBind1i("Debug", 0);
@@ -856,6 +853,9 @@ int main() {
             plane.getShader().setBind1f("Gain_A", Gain_A_SumGerstner);
             plane.getShader().setBind1f("Gain_W", Gain_W_SumGerstner);
             plane.getShader().setBind1f("L_FBM", L_FBM_SumGerstner);
+            plane.getShader().setBind3f("lightPosition", LightPos.x, LightPos.y, LightPos.z);
+            plane.getShader().setBind3f("viewPosition",cameraPos.x,cameraPos.y,cameraPos.z);
+            plane.getShader().setBind3f("lightColor", LightColor.x, LightColor.y, LightColor.z);
             plane.getShader().setBind1f("ambientStrength", ambientStrength);
             plane.getShader().setBind1f("diffuseStrength", diffuseStrength);
             plane.getShader().setBind1f("specularStrength", specularStrength);
