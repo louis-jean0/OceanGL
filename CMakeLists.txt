@@ -55,6 +55,7 @@ add_executable(OceanGL
     src/stb_image.cpp
     src/Texture.cpp
     src/Flotability.cpp
+    src/Flotability_2.cpp
     src/Sound.cpp
     )
 

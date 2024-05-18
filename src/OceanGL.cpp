@@ -49,9 +49,9 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
 int speedCam = 30;
 bool cameraMouse = true;
 
-Flotability *manageFlotability;
+Flotability_2 *manageFlotability;
 bool objetsApparition = false;
-float heightSpawn = 10.0f;
+float heightSpawn = 0.0f;
 
 Sound *soundManager;
 
@@ -252,7 +252,7 @@ int main() {
     skybox.attachShader("../shaders/skybox_vertex.vert", "../shaders/skybox_fragment.frag");
     skybox.createSkybox();
     skybox.loadCubemap();
-    manageFlotability = new Flotability(heightSpawn); // En paramètre, c'est la hauteur d'apparition des objets
+    manageFlotability = new Flotability_2(heightSpawn); // En paramètre, c'est la hauteur d'apparition des objets
 
     soundManager = new Sound();
     ma_sound_set_end_callback(soundManager->getSeagull1(), soundEffectEndCallback, nullptr);
@@ -479,7 +479,7 @@ int main() {
 
             // Affichage des objets flottants
             if (objetsApparition){
-                manageFlotability->drawObjets(model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
+                manageFlotability->drawSphere(model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
             }
 
             plane.useShader();
@@ -611,7 +611,7 @@ int main() {
 
             // Affichage des objets flottants
             if (objetsApparition){
-                manageFlotability->drawObjets(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                manageFlotability->drawSphere(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
             }
 
             plane.useShader();
@@ -767,7 +767,7 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawObjets(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                manageFlotability->drawSphere(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
             }
             plane.useShader();
             plane.bindCubemap(GL_TEXTURE1,1);
@@ -929,7 +929,7 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawObjets(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                manageFlotability->drawSphere(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
             }
 
             plane.useShader();
@@ -1068,7 +1068,7 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawObjets(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                manageFlotability->drawSphere(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
             }
 
             plane.useShader();

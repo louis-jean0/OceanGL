@@ -42,6 +42,7 @@
 #include <Shader.hpp>
 #include <ComputeShader.hpp>
 #include <Flotability.hpp>
+#include <Flotability_2.hpp>
 #include <Sound.hpp>
 
 #include <stb_image.hpp>
