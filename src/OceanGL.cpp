@@ -314,6 +314,20 @@ int main() {
             ImGui::Separator();
         }
 
+        if(ModeleGerstner) {
+            ImGui::Text("Paramètres de la lumière :");
+            ImGui::Spacing();
+            ImGui::SliderFloat("Roughness", &roughness, 0.0f, 1.0f);
+            ImGui::SliderFloat("Occlusion ambiante", &ao, 0.0f, 1.0f);
+            ImGui::SliderFloat("Métallique", &metallic, 0.0f, 1.0f);
+            ImGui::ColorEdit3("Albedo", &albedo[0]);
+            ImGui::Text("Position de la lumière");
+            ImGui::SliderFloat("X_lightpos", &LightPos.x, -10.0f, 10.0f);
+            ImGui::SliderFloat("Y_lightpos", &LightPos.y, -10.0f, 10.0f);
+            ImGui::SliderFloat("Z_lightpos", &LightPos.z, -10.0f, 10.0f);
+            ImGui::Separator();
+        }
+
         if(ModeleSumSine) {
             ImGui::Text("Paramètres de la lumière :");
             ImGui::Spacing();
@@ -554,6 +568,12 @@ int main() {
             plane.getShader().setBind1f("Steepness", Steepness_Gerstner);
             plane.getShader().setBind1f("Speed", S_Gerstner);
             plane.getShader().setBind3f("Direction", Direction_Gerstner.x, Direction_Gerstner.y, Direction_Gerstner.z);
+            plane.getShader().setBind3f("lightPosition", LightPos.x, LightPos.y, LightPos.z);
+            plane.getShader().setBind3f("viewPosition",cameraPos.x,cameraPos.y,cameraPos.z);
+            plane.getShader().setBind3f("lightColor", LightColor.x, LightColor.y, LightColor.z);
+            plane.getShader().setBind1f("ambientStrength", ambientStrength);
+            plane.getShader().setBind1f("diffuseStrength", diffuseStrength);
+            plane.getShader().setBind1f("specularStrength", specularStrength);
 
             if(materiauGerstner == true) {
                 plane.getShader().setBind1i("Debug", 0);
