@@ -41,6 +41,7 @@
 #include <VAO.hpp>
 #include <Shader.hpp>
 #include <ComputeShader.hpp>
+#include <Sound.hpp>
 
 #include <stb_image.hpp>
 #include <Texture.hpp>
