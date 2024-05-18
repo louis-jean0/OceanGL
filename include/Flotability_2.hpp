@@ -37,8 +37,8 @@ class Flotability_2 {
         Sphere* createSphere(glm::vec3 position, int nX, int nY);
         
         void createBuffer();
-        void updateSphere();
-        void drawSphere(glm::mat4 model, glm::mat4 view, glm::mat4 projection, float Amplitude, float L, float S);
+        void updateSphere(float deltaTime);
+        void drawSphere(float deltaTime, glm::mat4 model, glm::mat4 view, glm::mat4 projection, float Amplitude, float L, float S);
         void set_l_pressed(float value);
         void resetObjets();
         void setHeightSpawn(float heightSpawn);

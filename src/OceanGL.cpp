@@ -479,7 +479,7 @@ int main() {
 
             // Affichage des objets flottants
             if (objetsApparition){
-                manageFlotability->drawSphere(model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
             }
 
             plane.useShader();
@@ -611,7 +611,7 @@ int main() {
 
             // Affichage des objets flottants
             if (objetsApparition){
-                manageFlotability->drawSphere(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
             }
 
             plane.useShader();
@@ -767,7 +767,7 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawSphere(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
             }
             plane.useShader();
             plane.bindCubemap(GL_TEXTURE1,1);
@@ -929,7 +929,7 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawSphere(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
             }
 
             plane.useShader();
@@ -1068,7 +1068,7 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawSphere(model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
             }
 
             plane.useShader();
@@ -1115,6 +1115,7 @@ int main() {
 
         if (ImGui::SliderInt("Nombre d'objet", manageFlotability->getRefToNbFlottingObject(), 1, 100)){
             manageFlotability->resetObjets();
+            manageFlotability->createBuffer();
             manageFlotability->set_l_pressed(glfwGetTime());
         }
 
@@ -1122,6 +1123,9 @@ int main() {
 
         if (ImGui::SliderFloat("Hauteur d'apparition des objets", &heightSpawn, 1.0, 100.0)){
             manageFlotability->setHeightSpawn(heightSpawn);
+            manageFlotability->resetObjets();
+            manageFlotability->createBuffer();
+            manageFlotability->set_l_pressed(glfwGetTime());
         }
 
         ImGui::Spacing();
