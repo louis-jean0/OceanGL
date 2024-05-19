@@ -19,6 +19,7 @@ struct Sphere {
     std::vector<float> indexed_vertices;
     std::vector<unsigned int> indices;
     bool inWater;
+    bool hasReachTop;
 };
 
 class Flotability_2 {
@@ -35,10 +36,10 @@ class Flotability_2 {
 		float heightSpawn;
     public:
         Flotability_2(float heightSpawn);
-        Sphere* createSphere(glm::vec3 position, int nX, int nY);
+        Sphere* createSphere(int i, glm::vec3 position, int nX, int nY);
         
         void createBuffer();
-        bool updateSphere(float deltaTime);
+        bool updateSphere(float deltaTime, float Amplitude);
         bool drawSphere(float deltaTime, glm::mat4 model, glm::mat4 view, glm::mat4 projection, float Amplitude, float L, float S);
         void set_l_pressed(float value);
         void resetObjets();

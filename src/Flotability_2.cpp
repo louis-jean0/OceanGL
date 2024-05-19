@@ -10,13 +10,14 @@ Flotability_2::Flotability_2(float heightSpawn){
 	this->createBuffer();
 }
 
-Sphere* Flotability_2::createSphere(glm::vec3 position, int nX, int nY){
+Sphere* Flotability_2::createSphere(int i, glm::vec3 position, int nX, int nY){
 	Sphere *sphere = new Sphere;
 	sphere->position = position;
 	sphere->velocity = glm::vec3(0.0f,0.0f,0.0f);
 	sphere->radius = 1.0f;
-	sphere->mass = 1.0 + (rand() % 20 / 10.0f);
+	sphere->mass = 0.8 + i/100.0f;
 	sphere->inWater = false;
+	sphere->hasReachTop = false;
 	
 	float theta, phi;
     float thetaStep = glm::pi<float>() / nX;
@@ -82,7 +83,7 @@ void Flotability_2::createBuffer(){
     this->ebObjets.genEBO(this->indices);
 }
 
-float computeBuoyantForce(float depthSphere, float radius, bool *inWater, bool *res) {
+float computeBuoyantForce(float Amplitude, float depthSphere, float radius, bool *inWater, bool *res) {
 	*res = false;
 	if (depthSphere <= 0){
 		return 0;
@@ -106,29 +107,44 @@ float computeBuoyantForce(float depthSphere, float radius, bool *inWater, bool *
     return density_water * volume_displaced * gravity;
 }
 
-bool Flotability_2::updateSphere(float deltaTime){
+bool Flotability_2::updateSphere(float deltaTime, float Amplitude){
 	bool switchToWater = false; 
 	bool res;
 	for (int i = 0 ; i < this->listSphere.size() ; i++){
 		Sphere *sphere = this->listSphere[i];
 		
 		float depthSphere = sphere->radius - sphere->position.y;
-		float buoyantForce = computeBuoyantForce(depthSphere, sphere->radius, &(sphere->inWater), &res);
+		float buoyantForce = computeBuoyantForce(Amplitude, depthSphere, sphere->radius, &(sphere->inWater), &res);
 		glm::vec3 gravityForce = glm::vec3(0.0f, -sphere->mass * gravity, 0.0f);
 		glm::vec3 forceNet = gravityForce + glm::vec3(0.0f, buoyantForce, 0.0f);
 		
 		if (res){
 			switchToWater = true;
 		}
-
+		
+		bool onTop = false;
+		
 		glm::vec3 acceleration = forceNet / sphere->mass;
 		sphere->velocity += acceleration * deltaTime;
-		sphere->position += sphere->velocity * deltaTime;
+		if (!(!(sphere->hasReachTop) && sphere->velocity.y > 0.0f && sphere->position.y >= Amplitude)){
+			sphere->position += sphere->velocity * deltaTime;
+		}else{
+			sphere->hasReachTop = true;
+			onTop = true;
+		}
 		
-		Sphere *newSphere = createSphere(sphere->position, 20, 20);
+		if(sphere->hasReachTop && sphere->velocity.y < 0.0f){
+			sphere->hasReachTop = false;
+		}
+		
+		Sphere *newSphere = createSphere(i, sphere->position, 20, 20);
 		newSphere->velocity = sphere->velocity;
+		if (onTop){
+			newSphere->velocity.y /= 1.7;
+		}
 		newSphere->mass = sphere->mass;
 		newSphere->inWater = sphere->inWater;
+		newSphere->hasReachTop = sphere->hasReachTop;
 		delete sphere;
 		this->listSphere[i] = newSphere;
 	}
@@ -144,7 +160,7 @@ bool Flotability_2::drawSphere(float deltaTime, glm::mat4 model, glm::mat4 view,
     glBindVertexArray(this->vaObjets.getVAO()); 
     glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0); 
     
-    return this->updateSphere(deltaTime);
+    return this->updateSphere(deltaTime, Amplitude);
 }
 
 void Flotability_2::set_l_pressed(float value){
@@ -154,7 +170,7 @@ void Flotability_2::set_l_pressed(float value){
 void Flotability_2::resetObjets(){
 	this->listSphere.clear();
     for (int i = 0 ; i < this->nbFlottingObject ; i++){
-    	Sphere* sphere = createSphere(glm::vec3(i%10*3.0, this->heightSpawn, i/10*3.0), 20, 20);
+    	Sphere* sphere = createSphere(i, glm::vec3(i%10*3.0, this->heightSpawn, i/10*3.0), 20, 20);
     	this->listSphere.push_back(sphere);
     }
 }
