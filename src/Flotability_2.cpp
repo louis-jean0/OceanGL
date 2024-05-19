@@ -15,6 +15,8 @@ Sphere* Flotability_2::createSphere(glm::vec3 position, int nX, int nY){
 	sphere->position = position;
 	sphere->velocity = glm::vec3(0.0f,0.0f,0.0f);
 	sphere->radius = 1.0f;
+	sphere->mass = 1.0 + (rand() % 20 / 10.0f);
+	sphere->inWater = false;
 	
 	float theta, phi;
     float thetaStep = glm::pi<float>() / nX;
@@ -80,36 +82,61 @@ void Flotability_2::createBuffer(){
     this->ebObjets.genEBO(this->indices);
 }
 
-float computeBuoyantForce(float depthSphere, float radius) {
-    if (depthSphere <= 0) return 0;
-    float volume_displaced = M_PI * depthSphere * depthSphere * (3.0f * radius - depthSphere) / 3.0f;
+float computeBuoyantForce(float depthSphere, float radius, bool *inWater, bool *res) {
+	*res = false;
+	if (depthSphere <= 0){
+		return 0;
+	}
+
+    // Volume déplacé par la sphère immergée
+    float volume_displaced;
+    if (depthSphere >= 2*radius){ // La sphère est complètement immergée
+        if (!(*inWater)){
+        	*res = true; // A ce moment on joue le bruitage
+        	*inWater = true;
+        }
+        volume_displaced = (4.0f / 3.0f) * M_PI * std::pow(radius, 3);
+    }else{
+        // La sphère est partiellement immergée
+        volume_displaced = M_PI * std::pow(depthSphere, 2) * (3.0f * radius - depthSphere) / 3.0f;
+        if (*inWater){
+        	*inWater = false;
+        }
+    }
     return density_water * volume_displaced * gravity;
 }
 
-void Flotability_2::updateSphere(float deltaTime){
-	/*
+bool Flotability_2::updateSphere(float deltaTime){
+	bool switchToWater = false; 
+	bool res;
 	for (int i = 0 ; i < this->listSphere.size() ; i++){
 		Sphere *sphere = this->listSphere[i];
 		
 		float depthSphere = sphere->radius - sphere->position.y;
-		float buoyantForce = computeBuoyantForce(depthSphere, sphere->radius);
+		float buoyantForce = computeBuoyantForce(depthSphere, sphere->radius, &(sphere->inWater), &res);
 		glm::vec3 gravityForce = glm::vec3(0.0f, -sphere->mass * gravity, 0.0f);
 		glm::vec3 forceNet = gravityForce + glm::vec3(0.0f, buoyantForce, 0.0f);
+		
+		if (res){
+			switchToWater = true;
+		}
 
 		glm::vec3 acceleration = forceNet / sphere->mass;
 		sphere->velocity += acceleration * deltaTime;
 		sphere->position += sphere->velocity * deltaTime;
 		
 		Sphere *newSphere = createSphere(sphere->position, 20, 20);
+		newSphere->velocity = sphere->velocity;
+		newSphere->mass = sphere->mass;
+		newSphere->inWater = sphere->inWater;
 		delete sphere;
 		this->listSphere[i] = newSphere;
 	}
-	
 	this->createBuffer(); // Recrée des nouveaux buffers après avoir mis à jour les sphères
-	*/
+	return switchToWater;
 }
 
-void Flotability_2::drawSphere(float deltaTime, glm::mat4 model, glm::mat4 view, glm::mat4 projection, float Amplitude, float L, float S){
+bool Flotability_2::drawSphere(float deltaTime, glm::mat4 model, glm::mat4 view, glm::mat4 projection, float Amplitude, float L, float S){
     this->shaderObjetsFlottants.useShader();
     this->shaderObjetsFlottants.setBindMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(model));
     this->shaderObjetsFlottants.setBindMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
@@ -117,7 +144,7 @@ void Flotability_2::drawSphere(float deltaTime, glm::mat4 model, glm::mat4 view,
     glBindVertexArray(this->vaObjets.getVAO()); 
     glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0); 
     
-    this->updateSphere(deltaTime);
+    return this->updateSphere(deltaTime);
 }
 
 void Flotability_2::set_l_pressed(float value){
@@ -127,7 +154,7 @@ void Flotability_2::set_l_pressed(float value){
 void Flotability_2::resetObjets(){
 	this->listSphere.clear();
     for (int i = 0 ; i < this->nbFlottingObject ; i++){
-    	Sphere* sphere = createSphere(glm::vec3(i%10*2.0, this->heightSpawn, i/10*2.0), 20, 20);
+    	Sphere* sphere = createSphere(glm::vec3(i%10*3.0, this->heightSpawn, i/10*3.0), 20, 20);
     	this->listSphere.push_back(sphere);
     }
 }

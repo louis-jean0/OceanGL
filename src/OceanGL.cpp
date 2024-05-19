@@ -479,7 +479,9 @@ int main() {
 
             // Affichage des objets flottants
             if (objetsApparition){
-                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
+                if (manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin)){
+                	soundManager->playPlouf();
+                }
             }
 
             plane.useShader();
@@ -611,7 +613,9 @@ int main() {
 
             // Affichage des objets flottants
             if (objetsApparition){
-                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                if (manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin)){
+                	soundManager->playPlouf();
+                }
             }
 
             plane.useShader();
@@ -767,7 +771,9 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                if (manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin)){
+                	soundManager->playPlouf();
+                }
             }
             plane.useShader();
             plane.bindCubemap(GL_TEXTURE1,1);
@@ -929,7 +935,9 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                if (manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin)){
+                	soundManager->playPlouf();
+                }
             }
 
             plane.useShader();
@@ -1068,7 +1076,9 @@ int main() {
 
             // Affichage des objets flottants (n'utilise pas les bons paramètres)
             if (objetsApparition){
-                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Gerstner, L_Gerstner, S_Gerstner);
+                if (manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin)){
+                	soundManager->playPlouf();
+                }
             }
 
             plane.useShader();
