@@ -1,6 +1,8 @@
 #include "imgui.h"
 #include <Headers.hpp>
 
+//#define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio.h"
 
 void processInput(GLFWwindow *window);
 void initGUI(GLFWwindow* window);
@@ -30,6 +32,8 @@ long long GetMemoryUsage() {
 // Window settings
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
+
+Sound *soundManager;
 
 // Timing
 float deltaTime = 0.0f;	
@@ -209,6 +213,14 @@ void mouse_cursor_callback(GLFWwindow* window, double xpos, double ypos){
     }
 }
 
+void soundEffectEndCallback(void* pUserData, ma_sound* pSound) {
+    soundManager->setIsEffectPlayed(false);
+}
+
+void backgroundSoundCallback(void* pUserData, ma_sound* pSound) {
+    soundManager->setIsBackgroundPlayed(false);
+}
+
 int main() {
     
     // Window
@@ -237,6 +249,11 @@ int main() {
     skybox.loadCubemap();
 
     glEnable(GL_DEPTH_TEST);
+    
+    soundManager = new Sound();
+    ma_sound_set_end_callback(soundManager->getSeagull1(), soundEffectEndCallback, nullptr);
+    ma_sound_set_end_callback(soundManager->getSeagull2(), soundEffectEndCallback, nullptr);
+    ma_sound_set_end_callback(soundManager->getBackgroundSound(), backgroundSoundCallback, nullptr);
 
     // Render loop
     while (!glfwWindowShouldClose(window.get_window())) {
@@ -299,6 +316,20 @@ int main() {
 
         ImGui::Spacing();
         ImGui::Separator();
+        
+        // ---------------------------------------------------------------------
+        if (!soundManager->getEffectPlayed()){
+            int n = rand() % 500;
+            if (n==0){
+                soundManager->playSeagull1();
+            }else if (n==1){
+                soundManager->playSeagull2();
+            }
+        }
+        if (!soundManager->getBackgroundPlayed()){
+            soundManager->playBackgroundSound();
+        }
+        // ---------------------------------------------------------------------
 
         if(ModeleSin) {
             ImGui::Text("Paramètres de la lumière :");
@@ -1105,6 +1136,8 @@ int main() {
         glfwPollEvents();
     }
 
+	delete soundManager;
+	
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

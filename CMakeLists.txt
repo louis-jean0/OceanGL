@@ -54,6 +54,7 @@ add_executable(OceanGL
     src/Skybox.cpp
     src/stb_image.cpp
     src/Texture.cpp
+    src/Sound.cpp
     )
 
 # Include directories for our project
