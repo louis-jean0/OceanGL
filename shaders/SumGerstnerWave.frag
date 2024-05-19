@@ -198,15 +198,11 @@ void main() {
     float fresnelFactor = pow(1.0 - dot(viewDir, fresnelNormal), FresnelPower) + FresnelBias;
     vec3 fresnelColor = fresnelFactor * lightColor;
 
-    // Sample skybox texture
+    // Final color computation
     vec3 skyboxColor = texture(skyboxTexture, reflectDir).rgb;
-
-    // Combine lighting and skybox reflection
     vec3 finalColor = ambient + diffuse + specular + fresnelColor;
     finalColor = mix(baseColor, finalColor, 0.7);
     finalColor = mix(finalColor, skyboxColor, fresnelFactor);
-
-    // Clamp final color to avoid negative values
     finalColor = clamp(finalColor, 0.0, 1.0);
 
     if(Debug == 0) {
@@ -216,10 +212,10 @@ void main() {
     } else if(Debug == 2) {
         FragColor = vec4(tex, 0.0, 1.0);
     } else if(Debug == 3) {
-        FragColor = vec4(normal * 0.5 + 0.5, 1.0); // Visualize normal
+        FragColor = vec4(normal * 0.5 + 0.5, 1.0);
     } else if(Debug == 4) {
-        FragColor = vec4(binormale * 0.5 + 0.5, 1.0); // Visualize binormal
+        FragColor = vec4(binormale * 0.5 + 0.5, 1.0);
     } else if(Debug == 5) {
-        FragColor = vec4(tangente * 0.5 + 0.5, 1.0); // Visualize tangent
+        FragColor = vec4(tangente * 0.5 + 0.5, 1.0);
     }
 }
