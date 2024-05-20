@@ -55,6 +55,7 @@ add_executable(OceanGL
     src/stb_image.cpp
     src/Texture.cpp
     src/Sound.cpp
+    src/Flotability_2.cpp
     )
 
 # Include directories for our project

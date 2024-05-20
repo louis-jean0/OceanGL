@@ -33,6 +33,10 @@ long long GetMemoryUsage() {
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
+Flotability_2 *manageFlotability;
+bool objetsApparition = false;
+float heightSpawn = 0.0f;
+
 Sound *soundManager;
 
 // Timing
@@ -249,6 +253,8 @@ int main() {
     skybox.loadCubemap();
 
     glEnable(GL_DEPTH_TEST);
+    
+    manageFlotability = new Flotability_2(heightSpawn);
     
     soundManager = new Sound();
     ma_sound_set_end_callback(soundManager->getSeagull1(), soundEffectEndCallback, nullptr);
@@ -495,6 +501,12 @@ int main() {
             skybox.getShader().setBind1i("res", resolutionSkybox);
             skybox.bindCubemap(GL_TEXTURE0,0);
             skybox.updateSkybox(GL_TRIANGLES);
+            
+            // Affichage des objets flottants
+            if (objetsApparition){
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
+            }
+
 
             plane.useShader();
             plane.bindCubemap(GL_TEXTURE1,1);
@@ -627,6 +639,12 @@ int main() {
             skybox.getShader().setBind1i("res", resolutionSkybox);
             skybox.bindCubemap(GL_TEXTURE0,0);
             skybox.updateSkybox(GL_TRIANGLES);
+            
+            // Affichage des objets flottants
+            if (objetsApparition){
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
+            }
+
 
             plane.useShader();
             plane.bindCubemap(GL_TEXTURE1,1);
@@ -778,6 +796,12 @@ int main() {
             skybox.getShader().setBind1i("res", resolutionSkybox);
             skybox.bindCubemap(GL_TEXTURE0,0);
             skybox.updateSkybox(GL_TRIANGLES);
+            
+            // Affichage des objets flottants
+            if (objetsApparition){
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
+            }
+
 
             plane.useShader();
             plane.bindCubemap(GL_TEXTURE1,1);
@@ -942,6 +966,12 @@ int main() {
             skybox.getShader().setBind1i("res", resolutionSkybox);
             skybox.bindCubemap(GL_TEXTURE0,0);
             skybox.updateSkybox(GL_TRIANGLES);
+            
+            // Affichage des objets flottants
+            if (objetsApparition){
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
+            }
+
 
             plane.useShader();
             plane.bindCubemap(GL_TEXTURE1,1);
@@ -1075,6 +1105,12 @@ int main() {
             skybox.getShader().setBind1i("res", resolutionSkybox);
             skybox.bindCubemap(GL_TEXTURE0,0);
             skybox.updateSkybox(GL_TRIANGLES);
+            
+            // Affichage des objets flottants
+            if (objetsApparition){
+                manageFlotability->drawSphere(deltaTime,model,view,projection,Amplitude_Sin, L_Sin, S_Sin);
+            }
+
 
             plane.useShader();
             plane.updatePlane(GL_TRIANGLES);
@@ -1115,6 +1151,27 @@ int main() {
                 glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             }
         }
+        
+        ImGui::Spacing();
+        
+        ImGui::SliderFloat("Coefficient de restitution", manageFlotability->getRefToCoeffRestitution(), 0.5, 3.0);
+
+        if (ImGui::SliderInt("Nombre d'objet", manageFlotability->getRefToNbFlottingObject(), 1, 100)){
+            manageFlotability->resetObjets();
+            manageFlotability->createBuffer();
+            manageFlotability->set_l_pressed(glfwGetTime());
+        }
+
+        ImGui::Spacing();
+
+        if (ImGui::SliderFloat("Hauteur d'apparition des objets", &heightSpawn, 1.0, 100.0)){
+            manageFlotability->setHeightSpawn(heightSpawn);
+            manageFlotability->resetObjets();
+            manageFlotability->createBuffer();
+            manageFlotability->set_l_pressed(glfwGetTime());
+        }
+
+        ImGui::Spacing();
 
         ImGui::Text("Paramètres de la skybox :");
         ImGui::SliderInt("Résolution de la skybox", &resolutionSkybox, 0, 5000);
@@ -1184,6 +1241,12 @@ void processInput(GLFWwindow *window) {
         cameraMouse = true;
     }
     
+    // Fais appaitre les objets qui vont flotter
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){ 
+        objetsApparition = true;
+        manageFlotability->resetObjets();
+        manageFlotability->set_l_pressed(glfwGetTime());
+    }
 
     //std::cout << cameraPos[0] << "\t" << cameraPos[1] << "\t" << cameraPos[2] << std::endl;
 

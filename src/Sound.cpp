@@ -11,9 +11,11 @@ Sound::Sound(){
     this->isBackgroundSoundPlayed = false;
     this->seagull_1 = new ma_sound;
     this->seagull_2 = new ma_sound;
+    this->plouf = new ma_sound;
     this->backgroundSound = new ma_sound;
     ma_sound_init_from_file(&(this->engine), "../sound/soundEffect/seagull_1.mp3", 0, NULL, NULL, this->seagull_1);
     ma_sound_init_from_file(&(this->engine), "../sound/soundEffect/seagull_2.mp3", 0, NULL, NULL, this->seagull_2);
+    ma_sound_init_from_file(&(this->engine), "../sound/soundEffect/plouf.mp3", 0, NULL, NULL, this->plouf);
     ma_sound_init_from_file(&(this->engine), "../sound/backgroundMusic/wave_background.mp3", 0, NULL, NULL, this->backgroundSound);
 }
 
@@ -22,6 +24,8 @@ Sound::~Sound(){
     delete this->seagull_1;
     ma_sound_uninit(this->seagull_2);
     delete this->seagull_2;
+    ma_sound_uninit(this->plouf);
+    delete this->plouf;
 
     ma_engine_uninit(&(this->engine));
 }
@@ -36,6 +40,10 @@ void Sound::playSeagull2(){
     ma_sound_start(this->seagull_2);
 }
 
+void Sound::playPlouf(){
+	ma_sound_start(this->plouf);
+}
+
 void Sound::playBackgroundSound(){
     this->isBackgroundSoundPlayed = true;
     ma_sound_start(this->backgroundSound);
@@ -47,6 +55,10 @@ ma_sound* Sound::getSeagull1(){
 
 ma_sound* Sound::getSeagull2(){
     return this->seagull_2;
+}
+
+ma_sound* Sound::getPlouf(){
+    return this->plouf;
 }
 
 ma_sound* Sound::getBackgroundSound(){
@@ -70,6 +82,5 @@ void Sound::setIsBackgroundPlayed(bool value){
 }
 
 
-// ma_engine* Sound::getRefToEngine(){
-// 	return &(this->engine);
-// }
+
+
