@@ -30,8 +30,8 @@ long long GetMemoryUsage() {
 }
 
 // Window settings
-const unsigned int SCR_WIDTH = 1920;
-const unsigned int SCR_HEIGHT = 1080;
+int SCR_WIDTH = 1920;
+int SCR_HEIGHT = 1080;
 
 Flotability_2 *manageFlotability;
 bool objetsApparition = false;
@@ -65,9 +65,9 @@ float theta = 0.0f;
 glm::vec3 LightPos = glm::vec3(0., 0., 0.);
 glm::vec3 ViewPos = cameraPos;
 glm::vec3 LightColor = glm::vec3(0.2,0.2,0.85);
-float ambientStrength = 0.5f;
-float diffuseStrength = 1.0f;
-float specularStrength = 0.5f;
+float ambientStrength = 0.1f;
+float diffuseStrength = 0.1f;
+float specularStrength = 0.1f;
 float roughness = 0.5f;
 float ao = 0.5f;
 float metallic = 0.5f;
@@ -80,8 +80,8 @@ float S_Sin = 1.0;  // Vitesse
 glm::vec3 Direction_Sin = glm::vec3(1.0f, 0.f, 0.f);
 
 // Gerstner 
-float Amplitude_Gerstner = 1.0;
-float L_Gerstner = 1.0;
+float Amplitude_Gerstner = 0.5;
+float L_Gerstner = 3.0;
 float S_Gerstner = 1.0;
 float Steepness_Gerstner = 1.0;
 glm::vec3 Direction_Gerstner = glm::vec3(1.0f, 0.f, 0.f);
@@ -103,9 +103,9 @@ glm::vec3 Direction_SumSines = glm::vec3(1.0f, 0.f, 0.f);
 
 // Avec FBM
 float Amplitude_SumSines_FBM = 0.5;
-float Gain_A_SumSines = 0.8;
+float Gain_A_SumSines = 0.7;
 float Gain_W_SumSines = 1.2;
-float L_FBM_SumSines = 20.0;
+float L_FBM_SumSines = 18.0;
 
 // SumGerstner
 // Généraux
@@ -114,14 +114,14 @@ float Amplitude_SumGerstner_max = 1.0;
 
 float L_SumGerstner_min = 1.0;
 float L_SumGerstner_max = 1.0;
-float Steepness_SumGerstner = 0.5;
+float Steepness_SumGerstner = 0.34;
 float S_SumGerstner = 20.0;
 glm::vec3 Direction_SumGerstner = glm::vec3(1.0f, 0.f, 0.f);
 int numWave_SumGerstner = 50;
 
 // Avec FBM
-float Amplitude_SumGerstner_FBM = 0.5;
-float Gain_A_SumGerstner = 0.5;
+float Amplitude_SumGerstner_FBM = 0.35;
+float Gain_A_SumGerstner = 0.54;
 float Gain_W_SumGerstner = 1.5;
 float L_FBM_SumGerstner = 25;
 bool FBM_SumGerstner = true;
@@ -187,6 +187,8 @@ int nbThreads = 16;
 // Textures
 Texture test;
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
 void mouse_cursor_callback(GLFWwindow* window, double xpos, double ypos){
     if (cameraMouse){
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Pour masquer la souris sur la fenêtre
@@ -232,6 +234,10 @@ int main() {
     window.setup_GLFW();
 
     glfwSetCursorPosCallback(window.get_window(), mouse_cursor_callback);
+    glfwSetFramebufferSizeCallback(window.get_window(), framebuffer_size_callback);
+
+    glfwGetFramebufferSize(window.get_window(), &SCR_WIDTH, &SCR_HEIGHT);
+    framebuffer_size_callback(window.get_window(), SCR_WIDTH, SCR_HEIGHT);
 
     // Initialize ImGui
     IMGUI_CHECKVERSION();
@@ -279,7 +285,6 @@ int main() {
         // Gestion des entrées
         processInput(window.get_window());
 
-        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -1256,4 +1261,9 @@ void processInput(GLFWwindow *window) {
 
     // Limiter l'angle vertical
     vertical_angle = std::max(-1.57f, std::min(1.57f, vertical_angle));
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    // Adjust the viewport
+    glViewport(0, 0, width, height);
 }

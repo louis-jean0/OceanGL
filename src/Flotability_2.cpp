@@ -98,7 +98,7 @@ float computeBuoyantForce(float Amplitude, float depthSphere, float radius, bool
         	*inWater = true;
         }
         volume_displaced = (4.0f / 3.0f) * M_PI * std::pow(radius, 3);
-    }else{
+    } else{
         // La sphère est partiellement immergée
         volume_displaced = M_PI * std::pow(depthSphere, 2) * (3.0f * radius - depthSphere) / 3.0f;
         if (*inWater){
