@@ -32,7 +32,7 @@ For a detailed technical breakdown, please see our [full project report (in Fren
     <img src="screens/ImGui.png" height="700"/>
 </div>
 
-## Build & Run Instructions
+## Build & run instructions
 
 ### 1. Clone the repository
 ```bash
